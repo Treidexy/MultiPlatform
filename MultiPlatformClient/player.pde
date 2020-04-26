@@ -74,15 +74,6 @@ class Player {
           }
         }
       }
-
-      //if (position.x + _width > _plat.position.x && 
-      //  position.x < _plat.position.x + _plat.w && 
-      //  position.y + _height > _plat.position.y && 
-      //  position.y < _plat.position.y + _plat.h) {
-
-      //  if (position.x < _plat.position.x + _plat.w/2) position.x = _plat.position.x - _width;
-      //  else position.x = _plat.position.x + _plat.w;
-      //}
     }
   }
 
