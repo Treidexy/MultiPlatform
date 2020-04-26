@@ -58,7 +58,9 @@ class Player {
       Platform _plat = platforms.get(i);
 
       if (position.y + _height >= _plat.position.y &&
-        position.y+_height < _plat.position.y + _plat.h/2) {
+        position.y + _height < _plat.position.y + _plat.h/2 &&
+        position.x < _plat.position.x + _plat.w &&
+        position.x + _width > _plat.position.x) {
         acceleration.y = 0;
         if (isJump)jump();
         position.y = _plat.position.y - _height;
