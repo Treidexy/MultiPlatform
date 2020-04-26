@@ -1,5 +1,3 @@
-ArrayList<Shot> shots = new ArrayList<Shot>();
-
 class Player {
   PVector position;
 

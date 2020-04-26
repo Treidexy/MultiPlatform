@@ -7,7 +7,9 @@ int id;
 Camera camera;
 Player player;
 ArrayList<Player> players = new ArrayList<Player>();
+ArrayList<Shot> shots = new ArrayList<Shot>();
 
+Platform testPlat;
 ArrayList<Platform> platforms = new ArrayList<Platform>();
 
 void setup() {
