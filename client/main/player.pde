@@ -19,11 +19,9 @@ class Player {
 
   void show() {
     noFill();
-    if (myPlayer) {
-      stroke(0, 255, 0);
-    } else {
-      stroke(255, 0, 0);
-    }
+    if (myPlayer) stroke(0, 255, 0);
+    else stroke(255, 0, 0);
+    
     rect(position.x, position.y, _width, _height);
     for(int i = 0; i < shots.size(); i++) shots.get(i).show();
   }
@@ -31,7 +29,7 @@ class Player {
   void update() {
     if (isJump)jump();
     acceleration.add(gravity);
-    if (PVector.add(position, acceleration).y < highestY)position.add(acceleration); 
+    if (PVector.add(position, acceleration).y < highestY) position.add(acceleration); 
     else {
       position.y = highestY;
       acceleration = new PVector(0, 0);
@@ -45,9 +43,7 @@ class Player {
 
   void jump() {
     println("jumped");
-    if (position.y >= highestY) {
-      acceleration.add(new PVector(0, -jumpHeight));
-    }
+    if (position.y >= highestY) acceleration.add(new PVector(0, -jumpHeight));
   }
 
   void newPos(float x, float y) {
