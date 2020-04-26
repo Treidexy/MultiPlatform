@@ -4,7 +4,7 @@ Client c;
 String cInput, input[], data[]; 
 int id;
 
-Camera camera;
+//Camera camera;
 Player player;
 ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Shot> shots = new ArrayList<Shot>();
@@ -20,7 +20,7 @@ void setup() {
 
   surface.setTitle("Multi Platform - " + c.ip());
 
-  camera = new Camera();
+  //camera = new Camera();
   player = new Player(true);
 }
 
@@ -36,7 +36,7 @@ void draw() {
       id = Integer.valueOf(data[1]);
     }
 
-    camera.update();
+    //camera.update();
     
     player.update();
 
@@ -48,7 +48,7 @@ void draw() {
       switch(data[0]) {
       case "c":
         if (data[1].equals(String.valueOf(id))) {
-          camera.focus(player.position);
+          //camera.focus(player.position);
         } else {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         }
