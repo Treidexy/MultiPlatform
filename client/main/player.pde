@@ -1,6 +1,7 @@
+ArrayList<Shot> shots = new ArrayList<Shot>();
+
 class Player {
   PVector position = new PVector(625, 400);
-  boolean facingLeft = false;
 
   final PVector gravity = new PVector(0, 1);
   PVector acceleration = new PVector(0, 0);
@@ -24,6 +25,7 @@ class Player {
       stroke(255, 0, 0);
     }
     rect(position.x, position.y, _width, _height);
+    for(int i = 0; i < shots.size(); i++) shots.get(i).show();
   }
 
   void update() {
@@ -35,8 +37,10 @@ class Player {
       acceleration = new PVector(0, 0);
     }
 
-    if (isA)position.x-= speed;
-    if (isD)position.x+= speed;
+    if (isA) position.x-= speed;
+    if (isD) position.x+= speed;
+    
+    for(int i = 0; i < shots.size(); i++) shots.get(i).update();
   }
 
   void jump() {
@@ -49,12 +53,18 @@ class Player {
   void newPos(float x, float y) {
     position = new PVector(x, y);
   }
+  
+  void newShot(boolean facingLeft) {
+    shots.add(new Shot(0, facingLeft, (int) position.x, (int) position.y));
+  }
 }
 
 boolean isA, isD, isJump, isLeft, isRight; 
 
 void keyPressed() {
-  setMove(keyCode, true);
+  if(keyCode == LEFT) player.newShot(true);
+  else if(keyCode == RIGHT) player.newShot(false);
+  else setMove(keyCode, true);
 }
 
 void keyReleased() {
@@ -63,11 +73,11 @@ void keyReleased() {
 
 boolean setMove(int k, boolean b) {
   switch (k) {
-  case LEFT:
-    return isLeft = b;
+  //case LEFT:
+  //  return isLeft = b;
 
-  case RIGHT:
-    return isRight = b;
+  //case RIGHT:
+  //  return isRight = b;
 
   case 65:
     return isA = b;
