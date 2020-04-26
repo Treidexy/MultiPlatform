@@ -7,4 +7,5 @@ void setup() {
 void draw() {
   background(100, 100, 255);
   player.show();
+  player.update();
 }

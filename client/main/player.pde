@@ -4,6 +4,8 @@ class Player {
   
   PVector acceleration;
   boolean myPlayer;
+  float jumpHeight = 20;
+  float speed = 5;
   final int _height = 100;
   final int _width = 50;
   
@@ -22,7 +24,24 @@ class Player {
   }
   
   void update() {
+    if(keyPressed) {
+      switch (keyCode) {
+        case 38:
+          jump();
+          break;
+        case 37:
+          position.x-= speed;
+          break;
+        case 39:
+          position.x+= speed;
+          break;
+        default: println(keyCode);
+      }
+    }
+  }
   
+  void jump() {
+    position.add(new PVector(0, -jumpHeight));
   }
   
   void newPos(float x, float y) {
