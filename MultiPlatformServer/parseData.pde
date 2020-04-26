@@ -45,8 +45,8 @@ void parseData() {
             clients.get(l).write(pubMsg + "\n");
           println("OUT:", pubMsg);
         }
-        console.draw(0, 0, width, height);
-        console.print();
+        //console.draw(0, 0, width, height);
+        //console.print();
       }
     } 
     catch(Exception e) {

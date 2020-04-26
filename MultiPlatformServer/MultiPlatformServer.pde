@@ -1,7 +1,5 @@
 import java.awt.Point;
 
-import at.mukprojects.console.*;
-
 import processing.net.*;
 
 Server s;
@@ -14,7 +12,6 @@ ArrayList<Point> players = new ArrayList<Point>();
 
 ArrayList<Shot> shots = new ArrayList<Shot>();
 
-Console console;
 final boolean showErr = false;
 
 final float
@@ -26,9 +23,6 @@ void setup() {
   frameRate(60);
 
   s = new Server(this, 6969);
-
-  console = new Console(this);
-  console.start();
 
   surface.setTitle("Multi Platform | Server - " + Server.ip());
 }

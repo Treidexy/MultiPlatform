@@ -26,6 +26,7 @@ void setup() {
 }
 
 void draw() {
+  println(players.size());
   if (c.available() > 0) {
     cInput = c.readString(); 
     input = cInput.split("\n");
