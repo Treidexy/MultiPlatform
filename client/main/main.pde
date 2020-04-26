@@ -19,9 +19,9 @@ void setup() {
 }
 
 void draw() {
-  background(100, 100, 255);
-
   if (c.available() > 0) {
+    background(100, 100, 255);
+
     cInput = c.readString(); 
     input = cInput.split("\n");
     data = split(input[0], ' ');
@@ -41,18 +41,25 @@ void draw() {
 
       switch(data[0]) {
       case "c":
-        println(int(data[1]), Integer.parseInt(data[1]));
         if (data[1].equals(String.valueOf(id))) {
-          player.show();
         } else {
           players.get(int(data[1])).newPos(float(data[2]), float(data[3]));
-          players.get(int(data[1])).show();
         }
         break;
       case "pC":
-        players.add(new Player(false));
+        while (players.size() < int(data[1]) - 1) {
+          players.add(new Player(false));
+        }
         break;
       }
     }
   }
+  for (int i = 0; i < players.size(); i++) {
+    players.get(i).show();
+  }
+  player.show();
+}
+
+void disconnectEvent(Client client) {
+  player.disconnect();
 }

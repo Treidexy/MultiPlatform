@@ -4,8 +4,7 @@ Server s;
 Client c;
 ArrayList<Client> clients = new ArrayList<Client>();
 String cInput, input[], data[];
-int framesNoFeedback = 0, 
-  selectedClient = 0;
+int framesNoFeedback = 0;
 
 void setup() { 
   size(500, 800);
@@ -18,9 +17,9 @@ void setup() {
 void draw() {
   framesNoFeedback++;
 
-  background(217);
-
   if (framesNoFeedback >= 60) {
+    background(217);
+    
     fill(200);
     textSize(50);
     textAlign(CENTER, CENTER);
@@ -56,15 +55,6 @@ void serverEvent(Server server, Client client) {
   client.write("id " + (clients.size() - 1) + "\n");
 
   for (int i = 0; i < clients.size(); i++) {
-    clients.get(i).write("pC");
+    clients.get(i).write("pC " + clients.size());
   }
-}
-
-void keyTyped() {
-  if (key == 'a')
-    selectedClient--;
-  if (key == 'd')
-    selectedClient++;
-
-  selectedClient = constrain(selectedClient, 1, clients.size());
 }

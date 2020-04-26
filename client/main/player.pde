@@ -53,6 +53,14 @@ class Player {
   void newShot(boolean facingLeft) {
     shots.add(new Shot(0, facingLeft, (int) position.x, (int) position.y));
   }
+  
+  void disconnect() {
+    if (myPlayer)
+      ;
+    else {
+      players.remove(this);
+    }
+  }
 }
 
 boolean isA, isD, isJump, isLeft, isRight; 
