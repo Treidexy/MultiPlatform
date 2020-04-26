@@ -2,6 +2,7 @@ ArrayList<Shot> shots = new ArrayList<Shot>();
 
 class Player {
   PVector position;
+  float health = 20;
 
   final PVector gravity;
   PVector acceleration, desPos;
@@ -12,6 +13,7 @@ class Player {
   final int _height = 100;
   final int _width = 50;
   final int highestY;
+  float shotDamage = 3;
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
@@ -65,7 +67,7 @@ class Player {
   }
 
   void newShot(boolean facingLeft) {
-    shots.add(new Shot(0, facingLeft, (int) position.x, (int) position.y));
+    shots.add(new Shot(0, shotDamage, facingLeft, (int) position.x, (int) position.y));
   }
 
   void dispose() {
@@ -74,6 +76,15 @@ class Player {
     else {
       players.remove(this);
     }
+  }
+  
+  void takeDamage(float damage) {
+    health-= damage;
+    if(health <= 0) die();
+  }
+  
+  void die() {
+    println("dead");
   }
 }
 
