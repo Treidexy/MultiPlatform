@@ -36,20 +36,43 @@ class Player {
   }
 
   void update() {
-    if (isJump)jump();
-      acceleration.add(gravity);
-
     if (isA)
       position.x-= speed;
     if (isD)
       position.x+= speed;
 
+    checkForPlatforms();
+    
+    if (isJump)jump();
+    acceleration.add(gravity);
+
     for (int i = 0; i < shots.size(); i++)
       shots.get(i).update();
-    
+
     desPos = PVector.add(acceleration, position);
-    
+
     position = PVector.lerp(position, desPos, smoothness);
+  }
+
+  void checkForPlatforms() {
+    for (int i = 0; i < platforms.size(); i++) {
+      Platform _plat = platforms.get(i);
+
+      if (position.y + _height >= _plat.position.y &&
+        position.y+_height < _plat.position.y + _plat.h/2) {
+        acceleration.y = 0;
+        position.y = _plat.position.y - _height;
+      }
+
+      //if (position.x + _width > _plat.position.x && 
+      //  position.x < _plat.position.x + _plat.w && 
+      //  position.y + _height > _plat.position.y && 
+      //  position.y < _plat.position.y + _plat.h) {
+
+      //  if (position.x < _plat.position.x + _plat.w/2) position.x = _plat.position.x - _width;
+      //  else position.x = _plat.position.x + _plat.w;
+      //}
+    }
   }
 
   void jump() {
@@ -75,12 +98,12 @@ class Player {
       players.remove(this);
     }
   }
-  
+
   void takeDamage(float damage) {
     health-= damage;
-    if(health <= 0) die();
+    if (health <= 0) die();
   }
-  
+
   void die() {
     println("dead");
   }

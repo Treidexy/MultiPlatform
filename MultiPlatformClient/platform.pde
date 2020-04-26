@@ -4,10 +4,9 @@ class Platform {
   float w, h;
   
   Platform(float x, float y, float _w, float _h) {
+    position = new PVector(x, y);
     w = _w;
     h = _h;
-    
-    position = new PVector(x, y);
   }
   
   void show() {

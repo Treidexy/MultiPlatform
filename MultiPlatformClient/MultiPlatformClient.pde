@@ -1,4 +1,4 @@
-import processing.net.*; //<>//
+import processing.net.*; //<>// //<>//
 
 Client c;
 String cInput, input[], data[]; 
@@ -9,7 +9,7 @@ Player player;
 ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Shot> shots = new ArrayList<Shot>();
 
-Platform testPlat;
+//Platform testPlat;
 ArrayList<Platform> platforms = new ArrayList<Platform>();
 
 void setup() {
@@ -22,6 +22,8 @@ void setup() {
 
   //camera = new Camera();
   player = new Player(true);
+  
+  platforms.add(new Platform(300, 600, 500, 50));
 }
 
 void draw() {
@@ -65,6 +67,9 @@ void draw() {
     }
   }
   background(100, 100, 255);
+  for (int i = 0; i < platforms.size(); i++) {
+    platforms.get(i).show();
+  }
   for (int i = 0; i < players.size(); i++) {
     players.get(i).show();
   }
