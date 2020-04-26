@@ -1,3 +1,5 @@
+import at.mukprojects.console.*;
+
 import processing.net.*;
 
 Server s;
@@ -5,6 +7,8 @@ Client c;
 ArrayList<Client> clients = new ArrayList<Client>();
 String cInput, input[], data[];
 int framesNoFeedback = 0;
+
+Console console;
 
 //Testing perpisis only
 final boolean showErr = false;
@@ -15,6 +19,9 @@ void setup() {
 
   s = new Server(this, 6969);
 
+  console = new Console(this);
+  console.start();
+
   surface.setTitle("Multi Platform | Server - " + Server.ip());
 }
 void draw() {
@@ -23,10 +30,10 @@ void draw() {
   if (framesNoFeedback >= 60) {
     background(217);
 
-    fill(200);
-    textSize(50);
+    fill(151);
+    textSize(35);
     textAlign(CENTER, CENTER);
-    text("Waiting for players...", width/2, height/2);
+    text("Waiting for Players...", width/2, height/2);
   }
 
   // Receive data from client
@@ -40,7 +47,7 @@ void draw() {
         cInput = c.readString();
         input = cInput.split("\n");
 
-        println("s", cInput);
+        println("IN:", "s", cInput);
 
         for (int j = 0; j < input.length; j++) {
           String pubMsg = null;
@@ -49,19 +56,24 @@ void draw() {
           if (data[0].equals(String.valueOf(i))) {
             pubMsg = "c " + i + " " + data[1] + " " + data[2];
           }
-          
+
           if (data[0].equals("dispose") && data[1].equals(String.valueOf(i))) {
             pubMsg = "dispose " + i;
 
             clients.remove(i);
-            
-            for (int l = 0; l < clients.size(); l++)
+
+            for (int l = 0; l < clients.size(); l++) {
               clients.get(l).write("id " + l + "\n");
+              println("OUT:", "id " + l + "\n");
+            }
           }
-          
+
           for (int l = 0; l < clients.size(); l++)
-              clients.get(l).write(pubMsg + "\n");
+            clients.get(l).write(pubMsg + "\n");
+          println("OUT:", pubMsg);
         }
+        console.draw(0, 0, width, height);
+        console.print();
       }
     } 
     catch(Exception e) {

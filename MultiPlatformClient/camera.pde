@@ -3,7 +3,7 @@ class Camera {
   PVector location, wantLocation, desPos, offset, smoothPos;
   
   public Camera() {
-    smoothness = 0.98f;
+    smoothness = 0.69f;
     
     location = new PVector();
     wantLocation = new PVector();

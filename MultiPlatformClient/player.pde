@@ -1,11 +1,12 @@
 ArrayList<Shot> shots = new ArrayList<Shot>();
 
 class Player {
-  PVector position = new PVector(625, 400);
+  PVector position;
 
-  final PVector gravity = new PVector(0, 1);
-  PVector acceleration = new PVector(0, 0);
+  final PVector gravity;
+  PVector acceleration, desPos;
   boolean myPlayer;
+  float smoothness = 0.69;
   float jumpHeight = 20;
   float speed = 5;
   final int _height = 100;
@@ -15,49 +16,58 @@ class Player {
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
     highestY = height - _height;
+
+    position = new PVector(625, 400);
+    gravity = new PVector(0, 1);
+    acceleration = new PVector(0, 0);
+    desPos = new PVector();
   }
 
   void show() {
     noFill();
-    if (myPlayer) stroke(0, 255, 0);
-    else stroke(255, 0, 0);
-    
+    if (myPlayer)
+      stroke(0, 255, 0);
+    else
+      stroke(255, 0, 0);
+
     rect(position.x, position.y, _width, _height);
-    for(int i = 0; i < shots.size(); i++) shots.get(i).show();
+    for (int i = 0; i < shots.size(); i++)
+      shots.get(i).show();
   }
 
   void update() {
     if (isJump)jump();
-    acceleration.add(gravity);
-    if (PVector.add(position, acceleration).y < highestY) position.add(acceleration); 
-    else {
-      position.y = highestY;
-      acceleration = new PVector(0, 0);
-    }
+      acceleration.add(gravity);
 
-    if (isA) position.x-= speed;
-    if (isD) position.x+= speed;
+    if (isA)
+      position.x-= speed;
+    if (isD)
+      position.x+= speed;
+
+    for (int i = 0; i < shots.size(); i++)
+      shots.get(i).update();
     
-    for(int i = 0; i < shots.size(); i++) shots.get(i).update();
+    desPos = PVector.add(acceleration, position);
+    
+    position = PVector.lerp(position, desPos, smoothness);
   }
 
   void jump() {
-    println("jumped");
     if (position.y >= highestY) acceleration.add(new PVector(0, -jumpHeight));
   }
 
   void setPos(float x, float y) {
     position = new PVector(x, y);
   }
-  
+
   void setPos(PVector newPos) {
     position = newPos;
   }
-  
+
   void newShot(boolean facingLeft) {
     shots.add(new Shot(0, facingLeft, (int) position.x, (int) position.y));
   }
-  
+
   void dispose() {
     if (myPlayer)
       ;
@@ -70,8 +80,8 @@ class Player {
 boolean isA, isD, isJump, isLeft, isRight; 
 
 void keyPressed() {
-  if(keyCode == LEFT) player.newShot(true);
-  else if(keyCode == RIGHT) player.newShot(false);
+  if (keyCode == LEFT) player.newShot(true);
+  else if (keyCode == RIGHT) player.newShot(false);
   else setMove(keyCode, true);
 }
 
@@ -81,11 +91,11 @@ void keyReleased() {
 
 boolean setMove(int k, boolean b) {
   switch (k) {
-  //case LEFT:
-  //  return isLeft = b;
+    //case LEFT:
+    //  return isLeft = b;
 
-  //case RIGHT:
-  //  return isRight = b;
+    //case RIGHT:
+    //  return isRight = b;
 
   case 65:
     return isA = b;

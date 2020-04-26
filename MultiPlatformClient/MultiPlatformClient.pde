@@ -8,6 +8,8 @@ Camera camera;
 Player player;
 ArrayList<Player> players = new ArrayList<Player>();
 
+ArrayList<Platform> platforms = new ArrayList<Platform>();
+
 void setup() {
   size(1250, 800);
   frameRate(60);
@@ -22,8 +24,6 @@ void setup() {
 
 void draw() {
   if (c.available() > 0) {
-    background(100, 100, 255);
-
     cInput = c.readString(); 
     input = cInput.split("\n");
     data = split(input[0], ' ');
@@ -62,6 +62,7 @@ void draw() {
       }
     }
   }
+  background(100, 100, 255);
   for (int i = 0; i < players.size(); i++) {
     players.get(i).show();
   }
