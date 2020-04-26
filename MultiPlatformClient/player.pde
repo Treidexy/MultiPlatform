@@ -103,7 +103,8 @@ class Player {
 
   void takeDamage(float damage) {
     health-= damage;
-    if (health <= 0) die();
+    if (health <= 0)
+      die();
   }
 
   void die() {

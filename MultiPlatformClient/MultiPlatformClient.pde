@@ -1,10 +1,9 @@
-import processing.net.*; //<>// //<>//
+import processing.net.*; //<>// //<>// //<>//
 
 Client c;
 String cInput, input[], data[]; 
 int id;
 
-//Camera camera;
 Player player;
 ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Shot> shots = new ArrayList<Shot>();
@@ -20,9 +19,8 @@ void setup() {
 
   surface.setTitle("Multi Platform - " + c.ip());
 
-  //camera = new Camera();
   player = new Player(true);
-  
+
   platforms.add(new Platform(300, 600, 500, 50));
 }
 
@@ -39,7 +37,7 @@ void draw() {
     }
 
     //camera.update();
-    
+
     player.update();
 
     c.write(id + " " + player.position.x + " " + player.position.y + "\n");
@@ -50,7 +48,6 @@ void draw() {
       switch(data[0]) {
       case "c":
         if (data[1].equals(String.valueOf(id))) {
-          //camera.focus(player.position);
         } else {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         }
@@ -83,5 +80,10 @@ void disconnect() {
 
 void exit() {
   disconnect();
+  try {
+    Thread.sleep(50);
+  } 
+  catch (Exception e) {
+  }
   super.exit();
 }
