@@ -12,14 +12,14 @@ void setup() {
   frameRate(60);
 
   s = new Server(this, 6969);
-  
+
   surface.setTitle("Multi Platform | Server - " + s.ip());
 }
-void draw() { 
+void draw() {
   framesNoFeedback++;
 
   background(217);
-  
+
   if (framesNoFeedback >= 60) {
     fill(200);
     textSize(50);
@@ -45,7 +45,7 @@ void draw() {
 
         if (data[0].equalsIgnoreCase(String.valueOf(i))) {
           for (int l = 0; l < clients.size(); l++)
-            clients.get(l).write("c " + i + " " + data[1] + " " + data[2] + " " + data[3] + "\n");
+            clients.get(l).write("c " + i + " " + data[1] + " " + data[2] + "\n");
         }
       }
     }
