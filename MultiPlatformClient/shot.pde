@@ -1,5 +1,6 @@
 class Shot {
   int player;
+  float damage;
   boolean facingLeft;
   int x;
   int y;
@@ -7,8 +8,9 @@ class Shot {
   int h;
   int speed;
   
-  Shot(int _player, boolean _facingLeft, int _x, int _y) {
+  Shot(int _player, float _damage, boolean _facingLeft, int _x, int _y) {
     player = _player;
+    damage = _damage;
     facingLeft = _facingLeft;
     x = _x;
     y = _y;
@@ -26,7 +28,7 @@ class Shot {
   void update() {
     if(facingLeft) x-= speed;
     else x+= speed;
-    for(int i = 0; i < players.size(); i++) if (collidingWithPlayer(players.get(i))) ;
+    for(int i = 0; i < players.size(); i++) if (collidingWithPlayer(players.get(i))) players.get(i).takeDamage(damage);
   }
   
   boolean collidingWithPlayer(Player _p) {
