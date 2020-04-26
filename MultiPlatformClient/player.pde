@@ -46,15 +46,19 @@ class Player {
     if (position.y >= highestY) acceleration.add(new PVector(0, -jumpHeight));
   }
 
-  void newPos(float x, float y) {
+  void setPos(float x, float y) {
     position = new PVector(x, y);
+  }
+  
+  void setPos(PVector newPos) {
+    position = newPos;
   }
   
   void newShot(boolean facingLeft) {
     shots.add(new Shot(0, facingLeft, (int) position.x, (int) position.y));
   }
   
-  void disconnect() {
+  void dispose() {
     if (myPlayer)
       ;
     else {

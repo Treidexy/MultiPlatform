@@ -4,6 +4,7 @@ Client c;
 String cInput, input[], data[]; 
 int id;
 
+Camera camera;
 Player player;
 ArrayList<Player> players = new ArrayList<Player>();
 
@@ -15,6 +16,7 @@ void setup() {
 
   surface.setTitle("Multi Platform - " + c.ip());
 
+  camera = new Camera();
   player = new Player(true);
 }
 
@@ -32,9 +34,11 @@ void draw() {
       id = Integer.valueOf(data[1]);
     }
 
+    camera.update();
+    
     player.update();
 
-    c.write(id + " " + player.position.x + " " + player.position.y);
+    c.write(id + " " + player.position.x + " " + player.position.y + "\n");
 
     for (int i = 0; i < input.length; i++) {
       data = split(input[i], ' ');
@@ -42,14 +46,18 @@ void draw() {
       switch(data[0]) {
       case "c":
         if (data[1].equals(String.valueOf(id))) {
+          camera.focus(player.position);
         } else {
-          players.get(int(data[1])).newPos(float(data[2]), float(data[3]));
+          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         }
         break;
       case "pC":
         while (players.size() <= int(data[1])) {
           players.add(new Player(false));
         }
+        break;
+      case "dispose":
+        players.remove(int(data[1]));
         break;
       }
     }
@@ -60,6 +68,12 @@ void draw() {
   player.show();
 }
 
-void disconnectEvent(Client client) {
-  player.disconnect();
+void disconnect() {
+  player.dispose();
+  c.write("dispose " + id + "\n");
+}
+
+void exit() {
+  disconnect();
+  super.exit();
 }
