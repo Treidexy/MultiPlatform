@@ -54,7 +54,7 @@ void draw() {
 void serverEvent(Server server, Client client) {
   clients.add(client);
   client.write("id " + (clients.size() - 1) + "\n");
-  
+
   for (int i = 0; i < clients.size(); i++) {
     clients.get(i).write("pC");
   }
