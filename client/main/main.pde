@@ -42,7 +42,6 @@ void draw() {
       switch(data[0]) {
         case "c":
           if (data[1].equals(String.valueOf(id))) {
-            player.newPos(float(data[2]), float(data[3]));
             player.show();
           } else {
              players.get(int(data[1])).newPos(float(data[2]), float(data[3]));
