@@ -4,7 +4,7 @@ Client c;
 String cInput, input[], data[]; 
 int id;
 
-Player player = new Player(true);
+Player player;
 
 void setup() {
   size(1250, 800);
@@ -12,6 +12,8 @@ void setup() {
   c = new Client(this, "127.0.0.1", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
+  
+  player = new Player(true);
 }
 
 void draw() {

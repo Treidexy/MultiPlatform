@@ -2,7 +2,7 @@ class Player {
   PVector position = new PVector(625, 400);
   boolean facingLeft = false;
   
-  final PVector gravity = new PVector(0, 10);
+  final PVector gravity = new PVector(0, 1);
   PVector acceleration = new PVector(0, 0);
   boolean myPlayer;
   float jumpHeight = 20;
@@ -27,7 +27,6 @@ class Player {
   }
 
   void update() {
-    println(highestY);
     acceleration.add(gravity);
     if (PVector.add(position, acceleration).y < highestY) {
       position.add(acceleration);
@@ -57,7 +56,7 @@ class Player {
 
   void jump() {
     if (position.y >= highestY) {
-      position.add(new PVector(0, -jumpHeight));
+      acceleration.add(new PVector(0, -jumpHeight));
     }
   }
 
