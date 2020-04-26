@@ -1,7 +1,7 @@
 class Player {
   PVector position = new PVector(625, 400);
   boolean facingLeft = false;
-  
+
   final PVector gravity = new PVector(0, 1);
   PVector acceleration = new PVector(0, 0);
   boolean myPlayer;
@@ -27,34 +27,20 @@ class Player {
   }
 
   void update() {
+    if (isJump)jump();
     acceleration.add(gravity);
-    if (PVector.add(position, acceleration).y < highestY) {
-      position.add(acceleration);
-    } else {
+    if (PVector.add(position, acceleration).y < highestY)position.add(acceleration); 
+    else {
       position.y = highestY;
+      acceleration = new PVector(0, 0);
     }
-    
-    if (keyPressed) {
-      switch (keyCode) {
-      case 0:
-        jump();
-        break;
-      case 38:
-        jump();
-        break;
-      case 37:
-        position.x-= speed;
-        break;
-      case 39:
-        position.x+= speed;
-        break;
-      default: 
-        println(keyCode);
-      }
-    }
+
+    if (isA)position.x-= speed;
+    if (isD)position.x+= speed;
   }
 
   void jump() {
+    println("jumped");
     if (position.y >= highestY) {
       acceleration.add(new PVector(0, -jumpHeight));
     }
@@ -62,5 +48,41 @@ class Player {
 
   void newPos(float x, float y) {
     position = new PVector(x, y);
+  }
+}
+
+boolean isA, isD, isJump, isLeft, isRight; 
+
+void keyPressed() {
+  setMove(keyCode, true);
+}
+
+void keyReleased() {
+  setMove(keyCode, false);
+}
+
+boolean setMove(int k, boolean b) {
+  switch (k) {
+  case LEFT:
+    return isLeft = b;
+
+  case RIGHT:
+    return isRight = b;
+
+  case 65:
+    return isA = b;
+
+  case 68:
+    return isD = b;
+
+  case 32:
+    return isJump = b;
+
+  case 87:
+    return isJump = b;
+
+  default:
+    println(keyCode);
+    return b;
   }
 }
