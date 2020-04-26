@@ -15,8 +15,8 @@ void setup() {
   size(1250, 800);
   frameRate(60);
 
-  //c = new Client(this, "192.168.86.140", 6969);
-  c = new Client(this, "localhost", 6969);
+  c = new Client(this, "192.168.86.140", 6969);
+  //c = new Client(this, "localhost", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
 
