@@ -26,5 +26,11 @@ class Shot {
   void update() {
     if(facingLeft) x-= speed;
     else x+= speed;
+    for(int i = 0; i < players.size(); i++) if (collidingWithPlayer(players.get(i))) ;
+  }
+  
+  boolean collidingWithPlayer(Player _p) {
+    if(x + w > _p.position.x && x < _p.position.x + _p._width && y + h > _p.position.y && y < _p.position.y + _p._height) return true;
+    return false;
   }
 }
