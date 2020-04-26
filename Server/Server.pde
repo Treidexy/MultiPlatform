@@ -31,14 +31,13 @@ void draw() {
   for (int i = 0; i < clients.size(); i++) {
     c = clients.get(i);
     if (c.available() > 0) {
+      background(272);
       framesNoFeedback = 0;
 
       cInput = c.readString();
       input = cInput.split("\n");
 
       println("s", cInput);
-
-      float px = 0, py = 0;
 
       for (int j = 0; j < input.length; j++) {
         data = split(input[j], ' ');  // Split values into an array
