@@ -47,7 +47,7 @@ void draw() {
         }
         break;
       case "pC":
-        while (players.size() < int(data[1]) - 1) {
+        while (players.size() <= int(data[1])) {
           players.add(new Player(false));
         }
         break;
