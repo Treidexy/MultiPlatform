@@ -5,6 +5,7 @@ String cInput, input[], data[];
 int id;
 
 Player player;
+ArrayList<Player> players = new ArrayList<Player>();
 
 void setup() {
   size(1250, 800);
@@ -41,11 +42,15 @@ void draw() {
       switch(data[0]) {
         case "c":
           if (data[1].equals(String.valueOf(id))) {
-            println(1);
+            player.newPos(float(data[2]), float(data[3]));
             player.show();
           } else {
-             new Player(false).show();
+             players.get(int(data[1])).newPos(float(data[2]), float(data[3]));
+             players.get(int(data[1])).show();
           }
+          break;
+        case "pC":
+          players.add(new Player(false));
           break;
       }
     }
