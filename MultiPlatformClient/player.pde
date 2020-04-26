@@ -42,8 +42,7 @@ class Player {
       position.x+= speed;
 
     checkForPlatforms();
-    
-    if (isJump)jump();
+
     acceleration.add(gravity);
 
     for (int i = 0; i < shots.size(); i++)
@@ -61,6 +60,7 @@ class Player {
       if (position.y + _height >= _plat.position.y &&
         position.y+_height < _plat.position.y + _plat.h/2) {
         acceleration.y = 0;
+        if (isJump)jump();
         position.y = _plat.position.y - _height;
       }
 
@@ -76,7 +76,7 @@ class Player {
   }
 
   void jump() {
-    if (position.y >= highestY) acceleration.add(new PVector(0, -jumpHeight));
+    acceleration.add(new PVector(0, -jumpHeight));
   }
 
   void setPos(float x, float y) {
