@@ -1,6 +1,6 @@
 class Shot {
   int player;
-  float damage;
+  int damage;
   boolean facingLeft;
   int x;
   int y;
@@ -8,15 +8,17 @@ class Shot {
   int h;
   int speed;
   
-  Shot(int _player, float _damage, boolean _facingLeft, int _x, int _y) {
-    player = _player;
-    damage = _damage;
-    facingLeft = _facingLeft;
-    x = _x;
-    y = _y;
+  Shot(int player, int damage, boolean facingLeft, int x, int y) {
+    this.player = player;
+    this.damage = damage;
+    this.facingLeft = facingLeft;
+    this.x = x;
+    this.y = y;
     w = 50;
     h = 50;
     speed = 6;
+    
+    c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y);
   }
   
   void show() {
@@ -26,9 +28,21 @@ class Shot {
   }
   
   void update() {
-    if(facingLeft) x-= speed;
-    else x+= speed;
-    for(int i = 0; i < players.size(); i++) if (collidingWithPlayer(players.get(i))) players.get(i).takeDamage(damage);
+    if(facingLeft)
+      x-= speed;
+    else
+      x+= speed;
+      
+    if (x < -w)
+      shots.remove(this);
+    if (x > width)
+      shots.remove(this);
+    
+    for(int i = 0; i < players.size(); i++)
+      if (collidingWithPlayer(players.get(i))) {
+        players.get(i).takeDamage(damage);
+        shots.remove(this);
+      }
   }
   
   boolean collidingWithPlayer(Player _p) {

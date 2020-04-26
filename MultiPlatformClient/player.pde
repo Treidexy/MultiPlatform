@@ -48,9 +48,7 @@ class Player {
     for (int i = 0; i < shots.size(); i++)
       shots.get(i).update();
 
-    desPos = PVector.add(acceleration, position);
-
-    position = PVector.lerp(position, desPos, smoothness);
+    position.add(acceleration);
   }
 
   void checkForPlatforms() {
@@ -90,7 +88,7 @@ class Player {
   }
 
   void newShot(boolean facingLeft) {
-    shots.add(new Shot(0, shotDamage, facingLeft, (int) position.x, (int) position.y));
+    shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y));
   }
 
   void dispose() {

@@ -1,3 +1,5 @@
+import java.awt.Point;
+
 import at.mukprojects.console.*;
 
 import processing.net.*;
@@ -8,10 +10,16 @@ ArrayList<Client> clients = new ArrayList<Client>();
 String cInput, input[], data[];
 int framesNoFeedback = 0;
 
-Console console;
+ArrayList<Point> players = new ArrayList<Point>();
 
-//Testing perpisis only
+ArrayList<Shot> shots = new ArrayList<Shot>();
+
+Console console;
 final boolean showErr = false;
+
+final float
+  pWidth = 100, 
+  pHeight = 50;
 
 void setup() { 
   size(500, 800);
@@ -35,58 +43,16 @@ void draw() {
     textAlign(CENTER, CENTER);
     text("Waiting for Players...", width/2, height/2);
   }
-
-  // Receive data from client
-  for (int i = 0; i < clients.size(); i++) {
-    c = clients.get(i);
-    try {
-      if (c.active()) {
-        background(272);
-        framesNoFeedback = 0;
-
-        cInput = c.readString();
-        input = cInput.split("\n");
-
-        println("IN:", "s", cInput);
-
-        for (int j = 0; j < input.length; j++) {
-          String pubMsg = null;
-          data = split(input[j], ' ');
-
-          if (data[0].equals(String.valueOf(i))) {
-            pubMsg = "c " + i + " " + data[1] + " " + data[2];
-          }
-
-          if (data[0].equals("dispose") && data[1].equals(String.valueOf(i))) {
-            pubMsg = "dispose " + i;
-
-            clients.remove(i);
-
-            for (int l = 0; l < clients.size(); l++) {
-              clients.get(l).write("id " + l + "\n");
-              println("OUT:", "id " + l + "\n");
-            }
-          }
-
-          for (int l = 0; l < clients.size(); l++)
-            clients.get(l).write(pubMsg + "\n");
-          println("OUT:", pubMsg);
-        }
-        console.draw(0, 0, width, height);
-        console.print();
-      }
-    } 
-    catch(Exception e) {
-      if (showErr)
-        System.err.println(e);
-    }
-  }
+  
+  parseData();
 }
 
 void serverEvent(Server server, Client client) {
   try {
     clients.add(client);
     client.write("id " + (clients.size() - 1) + "\n");
+
+    players.add(new Point());
 
     for (int i = 0; i < clients.size(); i++) {
 
