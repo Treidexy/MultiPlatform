@@ -7,22 +7,19 @@ String cInput, input[], data[];
 int framesNoFeedback = 0, 
   selectedClient = 0;
 
-float w = 500, h = 800, 
-  startX = 260, 
-  startY = 15;
-
 void setup() { 
   size(500, 800);
   frameRate(60);
 
-  s = new Server(this, 23118);
+  s = new Server(this, 6969);
+  
+  surface.setTitle("Multi Platform | Server - " + s.ip());
 }
 void draw() { 
   framesNoFeedback++;
-  surface.setTitle("Bike Game | Server - " + Server.ip());
 
-  background(151);
-
+  background(217);
+  
   if (framesNoFeedback >= 60) {
     fill(200);
     textSize(50);
@@ -35,7 +32,7 @@ void draw() {
     c = clients.get(i);
     if (c.available() > 0) {
       framesNoFeedback = 0;
-      
+
       cInput = c.readString();
       input = cInput.split("\n");
 
@@ -48,7 +45,7 @@ void draw() {
 
         if (data[0].equalsIgnoreCase(String.valueOf(i))) {
           for (int l = 0; l < clients.size(); l++)
-            clients.get(l).write("c " + i + " " + data[1] + " " + data[2] + "\n");
+            clients.get(l).write("c " + i + " " + data[1] + " " + data[2] + " " + data[3] + "\n");
         }
       }
     }
