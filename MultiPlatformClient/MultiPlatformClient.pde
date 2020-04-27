@@ -7,16 +7,18 @@ int id;
 Player player;
 ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Shot> shots = new ArrayList<Shot>();
-
-//Platform testPlat;
 ArrayList<Platform> platforms = new ArrayList<Platform>();
+
+PImage shot;
 
 void setup() {
   size(1250, 800);
   frameRate(60);
+  
+  shot = loadImage("assets/shot.png");
 
   c = new Client(this, "192.168.86.140", 6969);
-  //c = new Client(this, "localhost", 6969);
+  //c = new Client(this, "127.0.0.1", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
 

@@ -6,7 +6,7 @@ class Player {
   PVector acceleration, desPos;
   boolean myPlayer;
   float smoothness = 0.69;
-  float jumpHeight = 20;
+  float jumpHeight = 30;
   float speed = 5;
   final int _height = 100;
   final int _width = 50;

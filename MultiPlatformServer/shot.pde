@@ -15,7 +15,7 @@ class Shot {
     x = _x;
     y = _y;
     w = 50;
-    h = 50;
+    h = 15;
     speed = 6;
   }
   

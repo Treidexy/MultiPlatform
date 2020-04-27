@@ -12,11 +12,13 @@ void parseData() {
         println("IN:", "s", cInput);
 
         for (int j = 0; j < input.length; j++) {
-          String pubMsg = null, 
-            data[] = split(input[j], ' ');
+          String pubMsg = null; 
+          String[] data = split(input[j], ' ');
 
-          if (data[0].equals(i)) {
+          if (data[0].equals(String.valueOf(i))) {
             pubMsg = "c " + i + " " + data[1] + " " + data[2];
+            
+            println("f");
 
             players.get(i).x = int(data[1]);
             players.get(i).y = int(data[2]);

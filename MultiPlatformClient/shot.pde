@@ -15,7 +15,7 @@ class Shot {
     this.x = x;
     this.y = y;
     w = 50;
-    h = 50;
+    h = 15;
     speed = 6;
     
     c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y);
@@ -25,6 +25,7 @@ class Shot {
     noFill();
     stroke(255, 0, 0);
     rect(x, y, w, h);
+    image(shot, x, y);
   }
   
   void update() {
