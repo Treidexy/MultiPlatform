@@ -25,7 +25,11 @@ class Shot {
     noFill();
     stroke(255, 0, 0);
     rect(x, y, w, h);
-    image(shot, x, y);
+    
+    if (facingLeft)
+      image(shot_left, x, y);
+    else
+      image(shot_right, x, y);
   }
   
   void update() {

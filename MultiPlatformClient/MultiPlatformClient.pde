@@ -9,13 +9,14 @@ ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Shot> shots = new ArrayList<Shot>();
 ArrayList<Platform> platforms = new ArrayList<Platform>();
 
-PImage shot;
+PImage shot_left, shot_right;
 
 void setup() {
   size(1250, 800);
   frameRate(60);
   
-  shot = loadImage("assets/shot.png");
+  shot_left = loadImage("assets/shot_left.png");
+  shot_right = loadImage("assets/shot_right.png");
 
   c = new Client(this, "192.168.86.140", 6969);
   //c = new Client(this, "127.0.0.1", 6969);
@@ -55,6 +56,9 @@ void draw() {
         } else {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         }
+        break;
+      case "shot":
+        shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
         break;
       case "pC":
         while (players.size() <= int(data[1])) {

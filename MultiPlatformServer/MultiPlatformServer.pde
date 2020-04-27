@@ -39,6 +39,9 @@ void draw() {
   }
   
   parseData();
+  
+  for (int i = 0; i < shots.size(); i++)
+    shots.get(i).update();
 }
 
 void serverEvent(Server server, Client client) {
