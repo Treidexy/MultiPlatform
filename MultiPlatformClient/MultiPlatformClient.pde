@@ -58,7 +58,7 @@ void draw() {
         }
         break;
       case "shot":
-        shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
+        shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5]), true));
         break;
       case "pC":
         while (players.size() <= int(data[1])) {
