@@ -31,7 +31,7 @@ class Shot {
       shots.remove(this);
     
     for(int i = 0; i < clients.size(); i++)
-      if (collidingWithPlayer(players.get(i))) {
+      if (collidingWithPlayer(players.get(i)) && i != selId) {
         //players.get(i).takeDamage(damage);
         shots.remove(this);
       }

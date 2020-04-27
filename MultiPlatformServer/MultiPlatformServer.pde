@@ -9,6 +9,7 @@ String cInput, input[], data[];
 int framesNoFeedback = 0;
 
 ArrayList<Point> players = new ArrayList<Point>();
+int selId;
 
 ArrayList<Shot> shots = new ArrayList<Shot>();
 
@@ -33,7 +34,7 @@ void draw() {
     background(217);
 
     fill(151);
-    textSize(35);
+    textSize(50);
     textAlign(CENTER, CENTER);
     text("Waiting for Players...", width/2, height/2);
   }

@@ -1,6 +1,9 @@
 void parseData() {
   for (int i = 0; i < clients.size(); i++) {
     c = clients.get(i);
+    
+    selId = i;
+    
     try {
       if (c.active()) {
         background(272);

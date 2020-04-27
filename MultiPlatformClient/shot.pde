@@ -45,7 +45,7 @@ class Shot {
       shots.remove(this);
 
     for (int i = 0; i < players.size(); i++)
-      if (collidingWithPlayer(players.get(i))) {
+      if (collidingWithPlayer(players.get(i)) && i != id) {
         players.get(i).takeDamage(damage);
         shots.remove(this);
       }

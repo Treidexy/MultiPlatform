@@ -1,4 +1,4 @@
-import processing.net.*; //<>// //<>// //<>// //<>//
+import processing.net.*; //<>//
 
 Client c;
 String cInput, input[], data[]; 
