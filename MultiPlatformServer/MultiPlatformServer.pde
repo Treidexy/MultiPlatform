@@ -16,10 +16,11 @@ ArrayList<Shot> shots = new ArrayList<Shot>();
 final boolean showErr = false;
 
 final float
-  pWidth = 100, 
-  pHeight = 50;
+  pWidth = 50, 
+  pHeight = 100,
+  pCrouchHeight = 50;
 
-void setup() { 
+void setup() {
   size(500, 800);
   frameRate(60);
 
@@ -54,7 +55,7 @@ void serverEvent(Server server, Client client) {
 
     for (int i = 0; i < clients.size(); i++) {
       if (clients.get(i).active())
-        clients.get(i).write("pc " + clients.size());
+        clients.get(i).write("pc " + clients.size() + "\n");
     }
   } 
   catch (Exception e) {

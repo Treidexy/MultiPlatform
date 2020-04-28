@@ -5,11 +5,12 @@ String cInput, input[], data[];
 int id;
 
 Player player;
-ArrayList<Player> players = new ArrayList<Player>();
+Player[] players = new Player[4];
 ArrayList<Shot> shots = new ArrayList<Shot>();
 ArrayList<Platform> platforms = new ArrayList<Platform>();
 
 PImage shot_left, shot_right;
+PImage[][] playerSprites = new PImage[4][2];
 
 void setup() {
   size(1250, 800);
@@ -18,8 +19,20 @@ void setup() {
   shot_left = loadImage("assets/shot_left.png");
   shot_right = loadImage("assets/shot_right.png");
 
-  //c = new Client(this, "192.168.86.140", 6969);
-  c = new Client(this, "127.0.0.1", 6969);
+  playerSprites[0][0] = loadImage("assets/red_player_left.png");
+  playerSprites[0][1] = loadImage("assets/red_player_right.png");
+
+  playerSprites[1][0] = loadImage("assets/blue_player_left.png");
+  playerSprites[1][1] = loadImage("assets/blue_player_right.png");
+
+  playerSprites[2][0] = loadImage("assets/green_player_left.png");
+  playerSprites[2][1] = loadImage("assets/green_player_right.png");
+
+  playerSprites[3][0] = loadImage("assets/pink_player_left.png");
+  playerSprites[3][1] = loadImage("assets/pink_player_right.png");
+
+    //c = new Client(this, "192.168.86.23", 6969);
+    c = new Client(this, "127.0.0.1", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
 
@@ -29,19 +42,38 @@ void setup() {
 }
 
 void draw() {
+  //try {
   if (c.available() > 0) {
     parseData();
   }
-  
+
+  //player.update();
+
+  for (int i = 0; i < shots.size(); i++)
+    shots.get(i).update();
+
   for (int i = 0; i < platforms.size(); i++) {
     platforms.get(i).show();
   }
-  
-  for (int i = 0; i < players.size(); i++) {
+
+  for (int i = 0; i < shots.size(); i++)
+    shots.get(i).show();
+
+  for (int i = 0; i < player.getActive(); i++) {
     if (i != id)
-      players.get(i).show();
+        players[i].show();
   }
+
+  player.setId(id);
   player.show();
+  //} 
+  //catch (Exception e) {
+  //  fill(151);
+  //  textSize(15);
+  //  textAlign(CENTER, CENTER);
+  //  text("Error compiling", width/2, height/2);
+  //  print("~");
+  //}
 
   fill(151);
   textSize(15);
@@ -51,12 +83,12 @@ void draw() {
 
 void disconnect() {
   player.dispose();
-  c.write("dispose " + id + "\n");
+  c.write("dc " + id + "\n");
 }
 
 void exit() {
-  disconnect();
   try {
+    disconnect();
     Thread.sleep(50);
   } 
   catch (Exception e) {
@@ -70,7 +102,7 @@ void parseData() {
     input = cInput.split("\n");
     data = split(input[0], ' ');
 
-    //println("c" + id, cInput);
+    println(cInput);
 
     if (data[0].equals("id")) {
       id = Integer.valueOf(data[1]);
@@ -88,41 +120,55 @@ void parseData() {
       switch(data[0]) {
       case "c":
         if (data[1].equals(String.valueOf(id))) {
-          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
+          players[int(data[1])].setPos(float(data[2]), float(data[3]));
         } else {
-          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
+          if (players[int(data[1])] == null)
+            players[int(data[1])] = new Player(false);
+          players[int(data[1])].setPos(float(data[2]), float(data[3]));
+          //players[int(data[1])].isCrouching = boolean(data[4]);
+        }
+        break;
+      case "cp":
+        if (data[1].equals(String.valueOf(id))) {
+          switch(data[2]) {
+          case "hp":
+            player.health = float(data[3]);
+            break;
+          case "":
+          }
         }
         break;
       case "shot":
         shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
         break;
-      case "pC":
-        while (players.size() <= int(data[1])) {
-          players.add(new Player(false));
+      case "pc":
+        for (int j = 0; j < int(data[1]); j++) {
+          players[j] = new Player(false);
+          players[j].setId(j);
         }
         break;
-      case "dispose":
-        players.remove(int(data[1]));
+      case "dc":
+        players[int(data[1])] = null;
         break;
       }
     }
   } 
   catch (Exception e) {
-    System.err.println(e);
+    e.getCause();
   }
 }
 //
 class Platform {
   PVector position;
-  
+
   float w, h;
-  
+
   Platform(float x, float y, float _w, float _h) {
     position = new PVector(x, y);
     w = _w;
     h = _h;
   }
-  
+
   void show() {
     noFill();
     stroke(0, 0, 255);
@@ -131,26 +177,41 @@ class Platform {
 }
 //
 class Player {
+  int playerId;
+
   PVector position;
   float health = 20;
+  boolean facingLeft;
 
   final PVector gravity;
-  PVector acceleration, 
+  PVector
+    acceleration, 
     desPos;
-  boolean myPlayer;
-  float smoothness = 0.69, 
-    jumpHeight = 30,
+  boolean
+    myPlayer, 
+    isCrouching;
+  float
+    smoothness = 0.69, 
+    jumpHeight = 20, 
     speed = 5;
-  final int _height = 100, 
+  final int
+    crouchHeight, 
+    normHeight;
+  int
+    _height = 100, 
     _width = 50, 
+    _rwidth = 80, 
     highestY;
-  float shotDamage = 3, 
+  float
+    shotDamage = 3, 
     reloadFrames = 60, 
     pastFramesSinceReload = 0;
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
     highestY = height - _height;
+    crouchHeight = 50;
+    normHeight = 100;
 
     position = new PVector(625, 400);
     gravity = new PVector(0, 1);
@@ -159,6 +220,9 @@ class Player {
   }
 
   void show() {
+    if (facingLeft) image(playerSprites[playerId][0], position.x - _width/2, position.y, _rwidth, _height);
+    else image(playerSprites[playerId][1], position.x, position.y, _rwidth, _height);
+
     noFill();
     if (myPlayer)
       stroke(0, 255, 0);
@@ -166,24 +230,30 @@ class Player {
       stroke(255, 0, 0);
 
     rect(position.x, position.y, _width, _height);
-    for (int i = 0; i < shots.size(); i++)
-      shots.get(i).show();
   }
 
   void update() {
-    pastFramesSinceReload++;
+    checkShot();
+    highestY = height - _height;
 
-    if (isA)
+    if (isA) {
       position.x-= speed;
-    if (isD)
+      facingLeft = true;
+    }
+    if (isD) {
       position.x+= speed;
+      facingLeft = false;
+    }
+
+    if (isCrouching) {
+      _height = crouchHeight;
+    } else {
+      _height = normHeight;
+    }
 
     checkForPlatforms();
 
     acceleration.add(gravity);
-
-    for (int i = 0; i < shots.size(); i++)
-      shots.get(i).update();
 
     position.add(acceleration);
   }
@@ -226,19 +296,48 @@ class Player {
     position = newPos;
   }
 
-  void newShot(boolean facingLeft) {
+  void setId(int value) {
+    playerId = value;
+  }
+
+  void crouchChange() {
+  }
+
+  int getActive() {
+    int active = 0;
+
+    for (int i = 0; i < players.length; i++)
+      if (players[i] != null)
+        active++;
+    return active;
+  }
+
+  void checkShot() {
     if (pastFramesSinceReload >= reloadFrames) {
-      shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y));
-      pastFramesSinceReload = 0;
-    }
+      if (isLeft) {
+        facingLeft = true;
+        shots.add(new Shot(id, (int) shotDamage, true, (int) position.x, (int) position.y + _height/4));
+        sendShot(true);
+        pastFramesSinceReload = 0;
+      } else if (isRight) {
+        facingLeft = false;
+        shots.add(new Shot(id, (int) shotDamage, false, (int) position.x, (int) position.y + _height/4));
+        sendShot(false);
+        pastFramesSinceReload = 0;
+      }
+    } else pastFramesSinceReload++;
+  }
+
+  void sendShot(boolean facingLeft) {
+    c.write("shot " + id + " " + int(shotDamage) + " " + (facingLeft ? 1 : 0) + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
   }
 
   void dispose() {
-    if (myPlayer)
-      ;
-    else {
-      players.remove(this);
-    }
+    //if (myPlayer)
+    //  ;
+    //else {
+    //  players.remove(this);
+    //}
   }
 
   void takeDamage(float damage) {
@@ -255,13 +354,7 @@ class Player {
 boolean isA, isD, isJump, isLeft, isRight; 
 
 void keyPressed() {
-  if (keyCode == LEFT)
-    player.newShot(true);
-  else if (keyCode == RIGHT)
-    player.newShot(false);
-
-  else
-    setMove(keyCode, true);
+  setMove(keyCode, true);
 }
 
 void keyReleased() {
@@ -270,11 +363,11 @@ void keyReleased() {
 
 boolean setMove(int k, boolean b) {
   switch (k) {
-    //case LEFT:
-    //  return isLeft = b;
+  case LEFT:
+    return isLeft = b;
 
-    //case RIGHT:
-    //  return isRight = b;
+  case RIGHT:
+    return isRight = b;
 
   case 65:
     return isA = b;
@@ -287,6 +380,9 @@ boolean setMove(int k, boolean b) {
 
   case 87:
     return isJump = b;
+  case 16:
+    println(b);
+    return player.isCrouching = b;
 
   default:
     //println(keyCode);
@@ -296,28 +392,27 @@ boolean setMove(int k, boolean b) {
 //
 class Shot {
   boolean facingLeft;
-  int player, 
+  int playerSender, 
     damage, 
     x, 
     y, 
     w, 
     h, 
+    rw, 
+    rh, 
     speed;
 
-  Shot(int player, int damage, boolean facingLeft, int x, int y) {
-    this.player = player;
+  Shot(int playerSender, int damage, boolean facingLeft, int x, int y) {
+    this.playerSender = playerSender;
     this.damage = damage;
     this.facingLeft = facingLeft;
     this.x = x;
     this.y = y;
-    w = 50;
-    h = 15;
+    w = 48;
+    h = 16;
+    rw = 96;
+    rh = 16;
     speed = 6;
-    
-    update();
-    update();
-    update();
-    c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
   }
 
   void show() {
@@ -326,9 +421,9 @@ class Shot {
     rect(x, y, w, h);
 
     if (facingLeft)
-      image(shot_left, x, y);
+      image(shot_left, x, y, rw, rh);
     else
-      image(shot_right, x, y);
+      image(shot_right, x - w, y, rw, rh);
   }
 
   void update() {
@@ -342,15 +437,15 @@ class Shot {
     if (x > width)
       shots.remove(this);
 
-    for (int i = 0; i < players.size(); i++)
-      if (collidingWithPlayer(players.get(i)) && i != id) {
-        players.get(i).takeDamage(damage);
+    for (int i = 0; i < player.getActive(); i++)
+      if (collidingWithPlayer(players[i]) && i != id) {
         shots.remove(this);
       }
   }
 
   boolean collidingWithPlayer(Player _p) {
-    if (x + w > _p.position.x && x < _p.position.x + _p._width && y + h > _p.position.y && y < _p.position.y + _p._height) return true;
+    if (x + w > _p.position.x && x < _p.position.x + _p._width && y + h > _p.position.y && y < _p.position.y + _p._height)
+      return true;
     return false;
   }
 }

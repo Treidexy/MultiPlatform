@@ -1,26 +1,39 @@
 class Player {
+  int playerId;
+
   PVector position;
   float health = 20;
   boolean facingLeft;
 
   final PVector gravity;
-  PVector acceleration, 
+  PVector
+    acceleration, 
     desPos;
-  boolean myPlayer;
-  float smoothness = 0.69, 
+  boolean
+    myPlayer, 
+    isCrouching;
+  float
+    smoothness = 0.69, 
     jumpHeight = 20, 
     speed = 5;
-  final int _height = 100, 
+  final int
+    crouchHeight, 
+    normHeight;
+  int
+    _height = 100, 
     _width = 50, 
     _rwidth = 80, 
     highestY;
-  float shotDamage = 3, 
+  float
+    shotDamage = 3, 
     reloadFrames = 60, 
     pastFramesSinceReload = 0;
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
     highestY = height - _height;
+    crouchHeight = 50;
+    normHeight = 100;
 
     position = new PVector(625, 400);
     gravity = new PVector(0, 1);
@@ -28,9 +41,9 @@ class Player {
     desPos = new PVector();
   }
 
-  void show(int id) {
-    if (facingLeft) image(playerSprites[id][0], position.x - _width/2, position.y, _rwidth, _height);
-    else image(playerSprites[id][1], position.x, position.y, _rwidth, _height);
+  void show() {
+    if (facingLeft) image(playerSprites[playerId][0], position.x - _width/2, position.y, _rwidth, _height);
+    else image(playerSprites[playerId][1], position.x, position.y, _rwidth, _height);
 
     noFill();
     if (myPlayer)
@@ -43,6 +56,7 @@ class Player {
 
   void update() {
     checkShot();
+    highestY = height - _height;
 
     if (isA) {
       position.x-= speed;
@@ -51,6 +65,12 @@ class Player {
     if (isD) {
       position.x+= speed;
       facingLeft = false;
+    }
+
+    if (isCrouching) {
+      _height = crouchHeight;
+    } else {
+      _height = normHeight;
     }
 
     checkForPlatforms();
@@ -98,6 +118,22 @@ class Player {
     position = newPos;
   }
 
+  void setId(int value) {
+    playerId = value;
+  }
+
+  void crouchChange() {
+  }
+
+  int getActive() {
+    int active = 0;
+
+    for (int i = 0; i < players.length; i++)
+      if (players[i] != null)
+        active++;
+    return active;
+  }
+
   void checkShot() {
     if (pastFramesSinceReload >= reloadFrames) {
       if (isLeft) {
@@ -115,7 +151,7 @@ class Player {
   }
 
   void sendShot(boolean facingLeft) {
-    c.write("shot " + id + " " + shotDamage + " " + facingLeft + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
+    c.write("shot " + id + " " + int(shotDamage) + " " + (facingLeft ? 1 : 0) + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
   }
 
   void dispose() {
@@ -166,6 +202,9 @@ boolean setMove(int k, boolean b) {
 
   case 87:
     return isJump = b;
+  case 16:
+    println(b);
+    return player.isCrouching = b;
 
   default:
     //println(keyCode);

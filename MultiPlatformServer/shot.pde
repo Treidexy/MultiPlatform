@@ -32,10 +32,8 @@ class Shot {
       shots.remove(this);
 
     for (int i = 0; i < clients.size(); i++) {
-      println(shots.size());
       if (collidingWithPlayer(players.get(i)) && i != selId) {
         players.get(i).health(Player.SUB, damage);
-        println("Player id: " + i + "HIt");
         shots.remove(this);
       }
     }

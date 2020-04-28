@@ -17,16 +17,18 @@ void parseData() {
           String pubMsg = null; 
           String[] data = split(input[j], ' ');
 
-          if (data[0].equals(String.valueOf(i))) {
+          if (data[0].equals(String.valueOf(selId))) {
             pubMsg = "c " + i + " " + data[1] + " " + data[2];
 
             players.get(i).setPos(int(data[1]), int(data[2]));
+            //players.get(i).isCrough
           }
 
           switch (data[0]) {
           case "shot":
             shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
             pubMsg = input[j];
+            println(pubMsg);
             break;
           case "dc":
             if (data[1].equals(String.valueOf(i))) {

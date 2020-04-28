@@ -1,6 +1,6 @@
 class Shot {
   boolean facingLeft;
-  int player, 
+  int playerSender, 
     damage, 
     x, 
     y, 
@@ -10,8 +10,8 @@ class Shot {
     rh, 
     speed;
 
-  Shot(int player, int damage, boolean facingLeft, int x, int y) {
-    this.player = player;
+  Shot(int playerSender, int damage, boolean facingLeft, int x, int y) {
+    this.playerSender = playerSender;
     this.damage = damage;
     this.facingLeft = facingLeft;
     this.x = x;
@@ -45,14 +45,15 @@ class Shot {
     if (x > width)
       shots.remove(this);
 
-    for (int i = 0; i < players.length; i++)
+    for (int i = 0; i < player.getActive(); i++)
       if (collidingWithPlayer(players[i]) && i != id) {
         shots.remove(this);
       }
   }
 
   boolean collidingWithPlayer(Player _p) {
-    if (x + w > _p.position.x && x < _p.position.x + _p._width && y + h > _p.position.y && y < _p.position.y + _p._height) return true;
+    if (x + w > _p.position.x && x < _p.position.x + _p._width && y + h > _p.position.y && y < _p.position.y + _p._height) //<>//
+      return true;
     return false;
   }
 }

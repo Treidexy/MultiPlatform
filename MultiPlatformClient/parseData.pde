@@ -24,18 +24,19 @@ void parseData() {
         if (data[1].equals(String.valueOf(id))) {
           players[int(data[1])].setPos(float(data[2]), float(data[3]));
         } else {
-          if (players[int(data[1])] != null)
+          if (players[int(data[1])] == null)
             players[int(data[1])] = new Player(false);
           players[int(data[1])].setPos(float(data[2]), float(data[3]));
+          //players[int(data[1])].isCrouching = boolean(data[4]);
         }
         break;
       case "cp":
         if (data[1].equals(String.valueOf(id))) {
           switch(data[2]) {
-            case "hp":
-              player.health = float(data[3]);
-              break;
-            case "":
+          case "hp":
+            player.health = float(data[3]);
+            break;
+          case "":
           }
         }
         break;
@@ -43,8 +44,9 @@ void parseData() {
         shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
         break;
       case "pc":
-        for (int j = 0; i < int(data[1]); i++) {
+        for (int j = 0; j < int(data[1]); j++) {
           players[j] = new Player(false);
+          players[j].setId(j);
         }
         break;
       case "dc":
@@ -54,6 +56,6 @@ void parseData() {
     }
   } 
   catch (Exception e) {
-    System.err.println(e);
+    e.getCause();
   }
 }

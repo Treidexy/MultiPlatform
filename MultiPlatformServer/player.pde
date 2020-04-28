@@ -2,6 +2,7 @@ class Player {
   final static int ADD = 1, SUB = -1;
   int x, y, health, 
     id;
+  boolean isCrouching;
 
   Player(int id) {
     this.id = id;
