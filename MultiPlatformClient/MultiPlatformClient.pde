@@ -1,4 +1,4 @@
-import processing.net.*; //<>// //<>//
+import processing.net.*; //<>// //<>// //<>//
 
 Client c;
 String cInput, input[], data[]; 
@@ -31,8 +31,8 @@ void setup() {
   playerSprites[3][0] = loadImage("assets/pink_player_left.png");
   playerSprites[3][1] = loadImage("assets/pink_player_right.png");
 
-  //c = new Client(this, "192.168.86.140", 6969);
-  c = new Client(this, "127.0.0.1", 6969);
+  c = new Client(this, "192.168.86.140", 6969);
+  //c = new Client(this, "127.0.0.1", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
 
