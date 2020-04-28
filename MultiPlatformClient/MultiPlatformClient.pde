@@ -1,4 +1,4 @@
-import processing.net.*; //<>// //<>// //<>//
+import processing.net.*; //<>// //<>// //<>// //<>//
 
 Client c;
 String cInput, input[], data[]; 
@@ -59,6 +59,7 @@ void draw() {
       shots.get(i).show();
 
   for (int i = 0; i < players.size(); i++) {
+    println(i);
     if (i != id)
       players.get(i).show();
   }
