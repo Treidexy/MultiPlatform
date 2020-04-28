@@ -14,7 +14,7 @@ PImage shot_left, shot_right;
 void setup() {
   size(1250, 800);
   frameRate(60);
-  
+
   shot_left = loadImage("assets/shot_left.png");
   shot_right = loadImage("assets/shot_right.png");
 
@@ -29,13 +29,12 @@ void setup() {
 }
 
 void draw() {
-  println(players.size());
   if (c.available() > 0) {
     cInput = c.readString(); 
     input = cInput.split("\n");
     data = split(input[0], ' ');
 
-    println("c" + id, cInput);
+    //println("c" + id, cInput);
 
     if (data[0].equals("id")) {
       id = Integer.valueOf(data[1]);
@@ -53,6 +52,7 @@ void draw() {
       switch(data[0]) {
       case "c":
         if (data[1].equals(String.valueOf(id))) {
+          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         } else {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         }
@@ -61,7 +61,7 @@ void draw() {
         shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5]), true));
         break;
       case "pC":
-        while (players.size() <= int(data[1])) {
+        while (players.size() < int(data[1])) {
           players.add(new Player(false));
         }
         break;
@@ -76,9 +76,15 @@ void draw() {
     platforms.get(i).show();
   }
   for (int i = 0; i < players.size(); i++) {
-    players.get(i).show();
+    if (i != id)
+      players.get(i).show();
   }
   player.show();
+
+  fill(151);
+  textSize(15);
+  textAlign(LEFT, TOP);
+  text("FPS: " + frameRate, 0, 0);
 }
 
 void disconnect() {

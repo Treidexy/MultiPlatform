@@ -17,8 +17,8 @@ class Shot {
     w = 50;
     h = 15;
     speed = 6;
-
-    if (!isSent)
+    
+    if (isSent)
       c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
   }
 

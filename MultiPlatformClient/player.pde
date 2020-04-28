@@ -3,15 +3,18 @@ class Player {
   float health = 20;
 
   final PVector gravity;
-  PVector acceleration, desPos;
+  PVector acceleration, 
+    desPos;
   boolean myPlayer;
-  float smoothness = 0.69;
-  float jumpHeight = 30;
-  float speed = 5;
-  final int _height = 100;
-  final int _width = 50;
-  final int highestY;
-  float shotDamage = 3;
+  float smoothness = 0.69, 
+    jumpHeight = 30,
+    speed = 5;
+  final int _height = 100, 
+    _width = 50, 
+    highestY;
+  float shotDamage = 3, 
+    reloadFrames = 60, 
+    pastFramesSinceReload = 0;
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
@@ -36,6 +39,8 @@ class Player {
   }
 
   void update() {
+    pastFramesSinceReload++;
+
     if (isA)
       position.x-= speed;
     if (isD)
@@ -66,11 +71,11 @@ class Player {
         position.y < _plat.position.y + _plat.h) {
         if (position.x + _width > _plat.position.x &&
           position.x < _plat.position.x) {
-            position.x = _plat.position.x - _width;
+          position.x = _plat.position.x - _width;
         } else {
           if (position.x + _width > _plat.position.x + _plat.w &&
             position.x < _plat.position.x + _plat.w) {
-              position.x = _plat.position.x + _plat.w;
+            position.x = _plat.position.x + _plat.w;
           }
         }
       }
@@ -90,7 +95,10 @@ class Player {
   }
 
   void newShot(boolean facingLeft) {
-    shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y, false));
+    if (pastFramesSinceReload >= reloadFrames) {
+      shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y, false));
+      pastFramesSinceReload = 0;
+    }
   }
 
   void dispose() {
@@ -115,9 +123,13 @@ class Player {
 boolean isA, isD, isJump, isLeft, isRight; 
 
 void keyPressed() {
-  if (keyCode == LEFT) player.newShot(true);
-  else if (keyCode == RIGHT) player.newShot(false);
-  else setMove(keyCode, true);
+  if (keyCode == LEFT)
+    player.newShot(true);
+  else if (keyCode == RIGHT)
+    player.newShot(false);
+
+  else
+    setMove(keyCode, true);
 }
 
 void keyReleased() {
@@ -145,7 +157,7 @@ boolean setMove(int k, boolean b) {
     return isJump = b;
 
   default:
-    println(keyCode);
+    //println(keyCode);
     return b;
   }
 }
