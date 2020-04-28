@@ -14,8 +14,8 @@ class Shot {
     facingLeft = _facingLeft;
     x = _x;
     y = _y;
-    w = 50;
-    h = 15;
+    w = 48;
+    h = 16;
     speed = 6;
   }
 
