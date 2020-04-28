@@ -5,7 +5,7 @@ String cInput, input[], data[];
 int id;
 
 Player player;
-ArrayList<Player> players = new ArrayList<Player>();
+Player[] players = new Player[4];
 ArrayList<Shot> shots = new ArrayList<Shot>();
 ArrayList<Platform> platforms = new ArrayList<Platform>();
 
@@ -58,9 +58,9 @@ void draw() {
   for (int i = 0; i < shots.size(); i++)
       shots.get(i).show();
 
-  for (int i = 0; i < players.size(); i++) {
+  for (int i = 0; i < players.length; i++) {
     if (i != id)
-      players.get(i).show(i);
+     players[i].show(i);
   }
   player.show(id);
 

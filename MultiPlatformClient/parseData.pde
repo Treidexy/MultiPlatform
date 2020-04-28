@@ -22,12 +22,11 @@ void parseData() {
       switch(data[0]) {
       case "c":
         if (data[1].equals(String.valueOf(id))) {
-          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
+          players[int(data[1])].setPos(float(data[2]), float(data[3]));
         } else {
-          if (players.get(int(data[1])) == null)
-            players.add(int(data[1]), new Player(false));
-          
-          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
+          if (players[int(data[1])] != null)
+            players[int(data[1])] = new Player(false);
+          players[int(data[1])].setPos(float(data[2]), float(data[3]));
         }
         break;
       case "cp":
@@ -44,12 +43,12 @@ void parseData() {
         shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
         break;
       case "pc":
-        while (players.size() < int(data[1])) {
-          players.add(new Player(false));
+        for (int j = 0; i < int(data[1]); i++) {
+          players[j] = new Player(false);
         }
         break;
       case "dc":
-        players.remove(int(data[1]));
+        players[int(data[1])] = null;
         break;
       }
     }

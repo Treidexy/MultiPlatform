@@ -119,11 +119,11 @@ class Player {
   }
 
   void dispose() {
-    if (myPlayer)
-      ;
-    else {
-      players.remove(this);
-    }
+    //if (myPlayer)
+    //  ;
+    //else {
+    //  players.remove(this);
+    //}
   }
 
   void takeDamage(float damage) {
