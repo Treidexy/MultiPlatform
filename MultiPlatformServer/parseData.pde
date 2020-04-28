@@ -6,9 +6,7 @@ void parseData() {
         background(272);
         framesNoFeedback = 0;
         
-        println(selId);
         selId = i;
-        println(selId);
 
         cInput = c.readString();
         input = cInput.split("\n");

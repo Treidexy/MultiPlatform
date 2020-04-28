@@ -21,9 +21,6 @@ class Shot {
     rw = 96;
     rh = 16;
     speed = 6;
-
-    //if (true)
-    //c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
   }
 
   void show() {
@@ -50,7 +47,6 @@ class Shot {
 
     for (int i = 0; i < players.size(); i++)
       if (collidingWithPlayer(players.get(i)) && i != id) {
-        players.get(i).takeDamage(damage);
         shots.remove(this);
       }
   }

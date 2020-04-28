@@ -103,14 +103,20 @@ class Player {
     if (pastFramesSinceReload >= reloadFrames) {
       if (isLeft) {
         facingLeft = true;
-        shots.add(new Shot(0, (int) shotDamage, true, (int) position.x, (int) position.y + _height/4));
+        shots.add(new Shot(id, (int) shotDamage, true, (int) position.x, (int) position.y + _height/4));
+        sendShot(true);
       } else if (isRight) {
         facingLeft = false;
-        shots.add(new Shot(0, (int) shotDamage, false, (int) position.x, (int) position.y + _height/4));
+        shots.add(new Shot(id, (int) shotDamage, false, (int) position.x, (int) position.y + _height/4));
+        sendShot(false);
       }
 
       pastFramesSinceReload = 0;
     }
+  }
+
+  void sendShot(boolean facingLeft) {
+    c.write("shot " + id + " " + shotDamage + " " + facingLeft + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
   }
 
   void dispose() {

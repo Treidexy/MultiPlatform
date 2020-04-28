@@ -2,11 +2,11 @@ class Shot {
   int player;
   int damage;
   boolean facingLeft;
-  int x;
-  int y;
-  int w;
-  int h;
-  int speed;
+  int x, 
+    y, 
+    w, 
+    h;
+  final int speed;
 
   Shot(int player, int damage, boolean facingLeft, int x, int y) {
     this.player = player;
@@ -20,6 +20,7 @@ class Shot {
   }
 
   void update() {
+    println(x, y);
     if (facingLeft)
       x-= speed;
     else
@@ -31,9 +32,10 @@ class Shot {
       shots.remove(this);
 
     for (int i = 0; i < clients.size(); i++) {
-      println(i, selId, i != selId);
+      println(shots.size());
       if (collidingWithPlayer(players.get(i)) && i != selId) {
         players.get(i).health(Player.SUB, damage);
+        println("err");
         shots.remove(this);
       }
     }
