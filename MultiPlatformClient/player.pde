@@ -1,16 +1,18 @@
 class Player {
   PVector position;
   float health = 20;
+  boolean facingLeft;
 
   final PVector gravity;
   PVector acceleration, 
     desPos;
   boolean myPlayer;
   float smoothness = 0.69, 
-    jumpHeight = 30,
+    jumpHeight = 30, 
     speed = 5;
   final int _height = 100, 
     _width = 50, 
+    _rwidth = 80, 
     highestY;
   float shotDamage = 3, 
     reloadFrames = 60, 
@@ -27,6 +29,9 @@ class Player {
   }
 
   void show() {
+    if (facingLeft) image(playerSprites[id][0], position.x - _width/2, position.y, _rwidth, _height);
+    else image(playerSprites[id][1], position.x, position.y, _rwidth, _height);
+
     noFill();
     if (myPlayer)
       stroke(0, 255, 0);
@@ -34,24 +39,24 @@ class Player {
       stroke(255, 0, 0);
 
     rect(position.x, position.y, _width, _height);
-    for (int i = 0; i < shots.size(); i++)
-      shots.get(i).show();
   }
 
   void update() {
     pastFramesSinceReload++;
+    checkShot();
 
-    if (isA)
+    if (isA) {
       position.x-= speed;
-    if (isD)
+      facingLeft = true;
+    }
+    if (isD) {
       position.x+= speed;
+      facingLeft = false;
+    }
 
     checkForPlatforms();
 
     acceleration.add(gravity);
-
-    for (int i = 0; i < shots.size(); i++)
-      shots.get(i).update();
 
     position.add(acceleration);
   }
@@ -94,9 +99,16 @@ class Player {
     position = newPos;
   }
 
-  void newShot(boolean facingLeft) {
+  void checkShot() {
     if (pastFramesSinceReload >= reloadFrames) {
-      shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y));
+      if (isLeft) {
+        facingLeft = true;
+        shots.add(new Shot(0, (int) shotDamage, true, (int) position.x, (int) position.y + _height/4));
+      } else if (isRight) {
+        facingLeft = false;
+        shots.add(new Shot(0, (int) shotDamage, false, (int) position.x, (int) position.y + _height/4));
+      }
+
       pastFramesSinceReload = 0;
     }
   }
@@ -123,13 +135,7 @@ class Player {
 boolean isA, isD, isJump, isLeft, isRight; 
 
 void keyPressed() {
-  if (keyCode == LEFT)
-    player.newShot(true);
-  else if (keyCode == RIGHT)
-    player.newShot(false);
-
-  else
-    setMove(keyCode, true);
+  setMove(keyCode, true);
 }
 
 void keyReleased() {
@@ -138,11 +144,11 @@ void keyReleased() {
 
 boolean setMove(int k, boolean b) {
   switch (k) {
-    //case LEFT:
-    //  return isLeft = b;
+  case LEFT:
+    return isLeft = b;
 
-    //case RIGHT:
-    //  return isRight = b;
+  case RIGHT:
+    return isRight = b;
 
   case 65:
     return isA = b;

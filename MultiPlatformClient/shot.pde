@@ -6,6 +6,8 @@ class Shot {
     y, 
     w, 
     h, 
+    rw, 
+    rh, 
     speed;
 
   Shot(int player, int damage, boolean facingLeft, int x, int y) {
@@ -14,10 +16,12 @@ class Shot {
     this.facingLeft = facingLeft;
     this.x = x;
     this.y = y;
-    w = 50;
-    h = 15;
+    w = 48;
+    h = 16;
+    rw = 96;
+    rh = 16;
     speed = 6;
-    
+
     //if (true)
     //c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
   }
@@ -28,9 +32,9 @@ class Shot {
     rect(x, y, w, h);
 
     if (facingLeft)
-      image(shot_left, x, y);
+      image(shot_left, x, y, rw, rh);
     else
-      image(shot_right, x, y);
+      image(shot_right, x - w, y, rw, rh);
   }
 
   void update() {

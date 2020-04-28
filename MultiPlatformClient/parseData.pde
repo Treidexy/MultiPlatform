@@ -11,7 +11,7 @@ void parseData() {
     }
 
     //camera.update();
-
+    
     player.update();
 
     c.write(id + " " + player.position.x + " " + player.position.y + "\n");
