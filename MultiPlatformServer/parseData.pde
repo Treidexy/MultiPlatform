@@ -12,7 +12,7 @@ void parseData() {
         cInput = c.readString();
         input = cInput.split("\n");
 
-        println("IN:", "s", cInput);
+        //println("IN:", "s", cInput);
 
         for (int j = 0; j < input.length; j++) {
           String pubMsg = null; 
@@ -38,7 +38,7 @@ void parseData() {
 
               for (int l = 0; l < clients.size(); l++) {
                 clients.get(l).write("id " + l + "\n");
-                println("OUT:", "id " + l + "\n");
+                //println("OUT:", "id " + l + "\n");
               }
             }
             break;
@@ -46,7 +46,7 @@ void parseData() {
 
           for (int l = 0; l < clients.size(); l++)
             clients.get(l).write(pubMsg + "\n");
-          println("OUT:", pubMsg);
+          //println("OUT:", pubMsg);
         }
         //console.draw(0, 0, width, height);
         //console.print();
