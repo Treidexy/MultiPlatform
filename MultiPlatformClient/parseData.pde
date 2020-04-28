@@ -44,6 +44,7 @@ void parseData() {
         shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
         break;
       case "pc":
+      println("new player");
         while (players.size() < int(data[1])) {
           players.add(new Player(false));
         }
