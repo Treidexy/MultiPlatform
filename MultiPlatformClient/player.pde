@@ -42,7 +42,6 @@ class Player {
   }
 
   void update() {
-    pastFramesSinceReload++;
     checkShot();
 
     if (isA) {
@@ -104,13 +103,13 @@ class Player {
       if (isLeft) {
         facingLeft = true;
         shots.add(new Shot(0, (int) shotDamage, true, (int) position.x, (int) position.y + _height/4));
+        pastFramesSinceReload = 0;
       } else if (isRight) {
         facingLeft = false;
         shots.add(new Shot(0, (int) shotDamage, false, (int) position.x, (int) position.y + _height/4));
+        pastFramesSinceReload = 0;
       }
-
-      pastFramesSinceReload = 0;
-    }
+    } else pastFramesSinceReload++;
   }
 
   void dispose() {
