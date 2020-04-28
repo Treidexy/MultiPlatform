@@ -1,13 +1,14 @@
 void parseData() {
   for (int i = 0; i < clients.size(); i++) {
     c = clients.get(i);
-    
-    selId = i;
-    
     try {
       if (c.active()) {
         background(272);
         framesNoFeedback = 0;
+        
+        println(selId);
+        selId = i;
+        println(selId);
 
         cInput = c.readString();
         input = cInput.split("\n");

@@ -8,7 +8,7 @@ class Shot {
     h, 
     speed;
 
-  Shot(int player, int damage, boolean facingLeft, int x, int y, boolean isSent) {
+  Shot(int player, int damage, boolean facingLeft, int x, int y) {
     this.player = player;
     this.damage = damage;
     this.facingLeft = facingLeft;
@@ -18,8 +18,8 @@ class Shot {
     h = 15;
     speed = 6;
     
-    if (isSent)
-      c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
+    //if (true)
+    //c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
   }
 
   void show() {

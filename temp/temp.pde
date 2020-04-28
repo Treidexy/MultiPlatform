@@ -18,8 +18,8 @@ void setup() {
   shot_left = loadImage("assets/shot_left.png");
   shot_right = loadImage("assets/shot_right.png");
 
-  c = new Client(this, "192.168.86.140", 6969);
-  //c = new Client(this, "127.0.0.1", 6969);
+  //c = new Client(this, "192.168.86.140", 6969);
+  c = new Client(this, "127.0.0.1", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
 
@@ -30,51 +30,13 @@ void setup() {
 
 void draw() {
   if (c.available() > 0) {
-    cInput = c.readString(); 
-    input = cInput.split("\n");
-    data = split(input[0], ' ');
-
-    //println("c" + id, cInput);
-
-    if (data[0].equals("id")) {
-      id = Integer.valueOf(data[1]);
-    }
-
-    //camera.update();
-
-    player.update();
-
-    c.write(id + " " + player.position.x + " " + player.position.y + "\n");
-
-    for (int i = 0; i < input.length; i++) {
-      data = split(input[i], ' ');
-
-      switch(data[0]) {
-      case "c":
-        if (data[1].equals(String.valueOf(id))) {
-          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
-        } else {
-          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
-        }
-        break;
-      case "shot":
-        shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5]), true));
-        break;
-      case "pC":
-        while (players.size() < int(data[1])) {
-          players.add(new Player(false));
-        }
-        break;
-      case "dispose":
-        players.remove(int(data[1]));
-        break;
-      }
-    }
+    parseData();
   }
-  background(100, 100, 255);
+  
   for (int i = 0; i < platforms.size(); i++) {
     platforms.get(i).show();
   }
+  
   for (int i = 0; i < players.size(); i++) {
     if (i != id)
       players.get(i).show();
@@ -100,6 +62,54 @@ void exit() {
   catch (Exception e) {
   }
   super.exit();
+}
+//
+void parseData() {
+  try {
+    cInput = c.readString(); 
+    input = cInput.split("\n");
+    data = split(input[0], ' ');
+
+    //println("c" + id, cInput);
+
+    if (data[0].equals("id")) {
+      id = Integer.valueOf(data[1]);
+    }
+
+    //camera.update();
+
+    player.update();
+
+    c.write(id + " " + player.position.x + " " + player.position.y + "\n");
+    background(100, 100, 255);
+    for (int i = 0; i < input.length; i++) {
+      data = split(input[i], ' ');
+
+      switch(data[0]) {
+      case "c":
+        if (data[1].equals(String.valueOf(id))) {
+          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
+        } else {
+          players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
+        }
+        break;
+      case "shot":
+        shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
+        break;
+      case "pC":
+        while (players.size() <= int(data[1])) {
+          players.add(new Player(false));
+        }
+        break;
+      case "dispose":
+        players.remove(int(data[1]));
+        break;
+      }
+    }
+  } 
+  catch (Exception e) {
+    System.err.println(e);
+  }
 }
 //
 class Platform {
@@ -218,7 +228,7 @@ class Player {
 
   void newShot(boolean facingLeft) {
     if (pastFramesSinceReload >= reloadFrames) {
-      shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y, false));
+      shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y));
       pastFramesSinceReload = 0;
     }
   }
@@ -294,7 +304,7 @@ class Shot {
     h, 
     speed;
 
-  Shot(int player, int damage, boolean facingLeft, int x, int y, boolean isSent) {
+  Shot(int player, int damage, boolean facingLeft, int x, int y) {
     this.player = player;
     this.damage = damage;
     this.facingLeft = facingLeft;
@@ -304,8 +314,10 @@ class Shot {
     h = 15;
     speed = 6;
     
-    if (isSent)
-      c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
+    update();
+    update();
+    update();
+    c.write("shot " + player + " " + damage + " " + facingLeft + " " + x + " " + y + "\n");
   }
 
   void show() {

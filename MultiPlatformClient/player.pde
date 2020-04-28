@@ -96,7 +96,7 @@ class Player {
 
   void newShot(boolean facingLeft) {
     if (pastFramesSinceReload >= reloadFrames) {
-      shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y, false));
+      shots.add(new Shot(0, (int) shotDamage, facingLeft, (int) position.x, (int) position.y));
       pastFramesSinceReload = 0;
     }
   }
