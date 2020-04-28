@@ -35,7 +35,7 @@ class Shot {
       println(shots.size());
       if (collidingWithPlayer(players.get(i)) && i != selId) {
         players.get(i).health(Player.SUB, damage);
-        println("err");
+        println("Player id: " + i + "HIt");
         shots.remove(this);
       }
     }

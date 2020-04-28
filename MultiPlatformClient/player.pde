@@ -28,7 +28,7 @@ class Player {
     desPos = new PVector();
   }
 
-  void show() {
+  void show(int id) {
     if (facingLeft) image(playerSprites[id][0], position.x - _width/2, position.y, _rwidth, _height);
     else image(playerSprites[id][1], position.x, position.y, _rwidth, _height);
 

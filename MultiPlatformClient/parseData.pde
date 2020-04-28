@@ -4,7 +4,7 @@ void parseData() {
     input = cInput.split("\n");
     data = split(input[0], ' ');
 
-    //println("c" + id, cInput);
+    println(cInput);
 
     if (data[0].equals("id")) {
       id = Integer.valueOf(data[1]);
@@ -24,6 +24,9 @@ void parseData() {
         if (data[1].equals(String.valueOf(id))) {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         } else {
+          if (players.get(int(data[1])) == null)
+            players.add(int(data[1]), new Player(false));
+          
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         }
         break;
