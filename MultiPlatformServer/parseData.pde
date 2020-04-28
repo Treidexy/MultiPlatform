@@ -22,8 +22,7 @@ void parseData() {
           if (data[0].equals(String.valueOf(i))) {
             pubMsg = "c " + i + " " + data[1] + " " + data[2];
 
-            players.get(i).x = int(data[1]);
-            players.get(i).y = int(data[2]);
+            players.get(i).setPos(int(data[1]), int(data[2]));
           }
 
           switch (data[0]) {
@@ -31,9 +30,9 @@ void parseData() {
             shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
             pubMsg = input[j];
             break;
-          case "dispose":
+          case "dc":
             if (data[1].equals(String.valueOf(i))) {
-              pubMsg = "dispose " + i;
+              pubMsg = "dc " + i;
 
               clients.remove(i);
 

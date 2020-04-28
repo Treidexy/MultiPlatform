@@ -8,7 +8,7 @@ ArrayList<Client> clients = new ArrayList<Client>();
 String cInput, input[], data[];
 int framesNoFeedback = 0;
 
-ArrayList<Point> players = new ArrayList<Point>();
+ArrayList<Player> players = new ArrayList<Player>();
 int selId;
 
 ArrayList<Shot> shots = new ArrayList<Shot>();
@@ -50,12 +50,12 @@ void serverEvent(Server server, Client client) {
     clients.add(client);
     client.write("id " + (clients.size() - 1) + "\n");
 
-    players.add(new Point());
+    players.add(new Player(clients.size() - 1));
 
     for (int i = 0; i < clients.size(); i++) {
 
       if (clients.get(i).active())
-        clients.get(i).write("pC " + clients.size());
+        clients.get(i).write("pc " + clients.size());
     }
   } 
   catch (Exception e) {

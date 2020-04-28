@@ -8,7 +8,7 @@ class Player {
     desPos;
   boolean myPlayer;
   float smoothness = 0.69, 
-    jumpHeight = 30, 
+    jumpHeight = 20, 
     speed = 5;
   final int _height = 100, 
     _width = 50, 

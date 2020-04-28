@@ -11,7 +11,7 @@ void parseData() {
     }
 
     //camera.update();
-    
+
     player.update();
 
     c.write(id + " " + player.position.x + " " + player.position.y + "\n");
@@ -27,15 +27,25 @@ void parseData() {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         }
         break;
+      case "cp":
+        if (data[1].equals(String.valueOf(id))) {
+          switch(data[2]) {
+            case "hp":
+              player.health = float(data[3]);
+              break;
+            case "":
+          }
+        }
+        break;
       case "shot":
         shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
         break;
-      case "pC":
-        while (players.size() <= int(data[1])) {
+      case "pc":
+        while (players.size() < int(data[1])) {
           players.add(new Player(false));
         }
         break;
-      case "dispose":
+      case "dc":
         players.remove(int(data[1]));
         break;
       }

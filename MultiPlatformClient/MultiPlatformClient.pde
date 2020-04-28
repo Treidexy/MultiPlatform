@@ -72,7 +72,7 @@ void draw() {
 
 void disconnect() {
   player.dispose();
-  c.write("dispose " + id + "\n");
+  c.write("dc " + id + "\n");
 }
 
 void exit() {

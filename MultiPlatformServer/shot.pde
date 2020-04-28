@@ -8,12 +8,12 @@ class Shot {
   int h;
   int speed;
 
-  Shot(int _player, int _damage, boolean _facingLeft, int _x, int _y) {
-    player = _player;
-    damage = _damage;
-    facingLeft = _facingLeft;
-    x = _x;
-    y = _y;
+  Shot(int player, int damage, boolean facingLeft, int x, int y) {
+    this.player = player;
+    this.damage = damage;
+    this.facingLeft = facingLeft;
+    this.x = x;
+    this.y = y;
     w = 48;
     h = 16;
     speed = 6;
@@ -33,13 +33,13 @@ class Shot {
     for (int i = 0; i < clients.size(); i++) {
       println(i, selId, i != selId);
       if (collidingWithPlayer(players.get(i)) && i != selId) {
-        //players.get(i).takeDamage(damage);
+        players.get(i).health(Player.SUB, damage);
         shots.remove(this);
       }
     }
   }
 
-  boolean collidingWithPlayer(Point _p) {
+  boolean collidingWithPlayer(Player _p) {
     if (x + w > _p.x && x < _p.x + pWidth && y + h > _p.y && y < _p.y + pHeight)
       return true;
     return false;
