@@ -31,8 +31,8 @@ void setup() {
   playerSprites[3][0] = loadImage("assets/pink_player_left.png");
   playerSprites[3][1] = loadImage("assets/pink_player_right.png");
 
-    //c = new Client(this, "192.168.86.23", 6969);
-    c = new Client(this, "127.0.0.1", 6969);
+  //c = new Client(this, "192.168.86.23", 6969);
+  c = new Client(this, "127.0.0.1", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
 
@@ -46,7 +46,7 @@ void draw() {
   if (c.available() > 0) {
     parseData();
   }
-  
+
   background(100, 100, 255);
 
   for (int i = 0; i < shots.size(); i++)
@@ -62,14 +62,14 @@ void draw() {
 
   for (int i = 0; i < players.size(); i++) {
     if (i != id)
-        players.get(i).show();
+      players.get(i).show();
   }
-  
+
   //camera.update();
 
   player.update();
 
-  c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + "\n");
+  c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
 
   player.setId(id);
   player.show();
@@ -86,6 +86,11 @@ void draw() {
   textSize(15);
   textAlign(LEFT, TOP);
   text("FPS: " + frameRate, 0, 0);
+
+  fill(151);
+  textSize(15);
+  textAlign(RIGHT, TOP);
+  text("HP: " + player.health, width, 0);
 }
 
 void disconnect() {

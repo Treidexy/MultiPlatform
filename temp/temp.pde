@@ -31,8 +31,8 @@ void setup() {
   playerSprites[3][0] = loadImage("assets/pink_player_left.png");
   playerSprites[3][1] = loadImage("assets/pink_player_right.png");
 
-    //c = new Client(this, "192.168.86.23", 6969);
-    c = new Client(this, "127.0.0.1", 6969);
+  //c = new Client(this, "192.168.86.23", 6969);
+  c = new Client(this, "127.0.0.1", 6969);
 
   surface.setTitle("Multi Platform - " + c.ip());
 
@@ -46,7 +46,7 @@ void draw() {
   if (c.available() > 0) {
     parseData();
   }
-  
+
   background(100, 100, 255);
 
   for (int i = 0; i < shots.size(); i++)
@@ -62,14 +62,14 @@ void draw() {
 
   for (int i = 0; i < players.size(); i++) {
     if (i != id)
-        players.get(i).show();
+      players.get(i).show();
   }
-  
+
   //camera.update();
 
   player.update();
 
-  c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + "\n");
+  c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
 
   player.setId(id);
   player.show();
@@ -86,6 +86,11 @@ void draw() {
   textSize(15);
   textAlign(LEFT, TOP);
   text("FPS: " + frameRate, 0, 0);
+
+  fill(151);
+  textSize(15);
+  textAlign(RIGHT, TOP);
+  text("HP: " + player.health, width, 0);
 }
 
 void disconnect() {
@@ -114,9 +119,9 @@ void parseData() {
     if (data[0].equals("id")) {
       id = Integer.valueOf(data[1]);
     }
-    
-    for (int i = 0; i < input.length; i++) {
-      data = split(input[i], ' ');
+
+    for (String in : input) {
+      data = split(in, ' ');
 
       switch(data[0]) {
       case "c":
@@ -126,16 +131,19 @@ void parseData() {
           while (players.get(int(data[1])) == null)
             players.add(new Player(false));
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
-          //players[int(data[1])].isCrouching = boolean(data[4]);
+          players.get(int(data[1])).isCrouching = boolean(data[5]);
+          players.get(int(data[1])).facingLeft = boolean(data[6]);
         }
         break;
       case "cp":
+        println(1);
         if (data[1].equals(String.valueOf(id))) {
+          println(2);
           switch(data[2]) {
           case "hp":
-            player.health = float(data[3]);
+            player.health = int(data[3]);
+            println(in, player.health, int(data[3]));
             break;
-          case "":
           }
         }
         break;
@@ -205,8 +213,9 @@ class Player {
     highestY;
   float
     shotDamage = 3, 
-    reloadFrames = 60, 
-    pastFramesSinceReload = 0;
+    reloadMillis = 500, 
+    pastMillis, 
+    millisSinceReload;
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
@@ -218,6 +227,8 @@ class Player {
     gravity = new PVector(0, 1);
     acceleration = new PVector(0, 0);
     desPos = new PVector();
+
+    pastMillis = millis();
   }
 
   void show() {
@@ -236,6 +247,8 @@ class Player {
   void update() {
     checkShot();
     highestY = height - _height;
+
+    millisSinceReload = millis() - pastMillis;
 
     if (isA) {
       position.x-= speed;
@@ -305,19 +318,19 @@ class Player {
   }
 
   void checkShot() {
-    if (pastFramesSinceReload >= reloadFrames) {
+    if (millisSinceReload >= reloadMillis) {
       if (isLeft) {
         facingLeft = true;
         shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
         sendShot(true);
-        pastFramesSinceReload = 0;
+        pastMillis = millis();
       } else if (isRight) {
         facingLeft = false;
         shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
         sendShot(false);
-        pastFramesSinceReload = 0;
+        pastMillis = millis();
       }
-    } else pastFramesSinceReload++;
+    }
   }
 
   void sendShot(boolean facingLeft) {
@@ -332,11 +345,11 @@ class Player {
     //}
   }
 
-  void takeDamage(float damage) {
-    health-= damage;
-    if (health <= 0)
-      die();
-  }
+  //void takeDamage(float damage) {
+  //  health-= damage;
+  //  if (health <= 0)
+  //    die();
+  //}
 
   void die() {
     println("dead");
@@ -373,7 +386,6 @@ boolean setMove(int k, boolean b) {
   case 87:
     return isJump = b;
   case 16:
-    println(b);
     return player.isCrouching = b;
 
   default:

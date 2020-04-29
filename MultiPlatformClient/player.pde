@@ -26,8 +26,9 @@ class Player {
     highestY;
   float
     shotDamage = 3, 
-    reloadFrames = 60, 
-    pastFramesSinceReload = 0;
+    reloadMillis = 500, 
+    pastMillis, 
+    millisSinceReload;
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
@@ -39,6 +40,8 @@ class Player {
     gravity = new PVector(0, 1);
     acceleration = new PVector(0, 0);
     desPos = new PVector();
+
+    pastMillis = millis();
   }
 
   void show() {
@@ -57,6 +60,8 @@ class Player {
   void update() {
     checkShot();
     highestY = height - _height;
+
+    millisSinceReload = millis() - pastMillis;
 
     if (isA) {
       position.x-= speed;
@@ -126,19 +131,19 @@ class Player {
   }
 
   void checkShot() {
-    if (pastFramesSinceReload >= reloadFrames) {
+    if (millisSinceReload >= reloadMillis) {
       if (isLeft) {
         facingLeft = true;
         shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
         sendShot(true);
-        pastFramesSinceReload = 0;
+        pastMillis = millis();
       } else if (isRight) {
         facingLeft = false;
         shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
         sendShot(false);
-        pastFramesSinceReload = 0;
+        pastMillis = millis();
       }
-    } else pastFramesSinceReload++;
+    }
   }
 
   void sendShot(boolean facingLeft) {
@@ -153,11 +158,11 @@ class Player {
     //}
   }
 
-  void takeDamage(float damage) {
-    health-= damage;
-    if (health <= 0)
-      die();
-  }
+  //void takeDamage(float damage) {
+  //  health-= damage;
+  //  if (health <= 0)
+  //    die();
+  //}
 
   void die() {
     println("dead");
@@ -194,7 +199,6 @@ boolean setMove(int k, boolean b) {
   case 87:
     return isJump = b;
   case 16:
-    println(b);
     return player.isCrouching = b;
 
   default:

@@ -5,7 +5,7 @@ import processing.net.*;
 Server s;
 Client c;
 ArrayList<Client> clients = new ArrayList<Client>();
-String cInput, input[], data[];
+String cInput, inputs[], data[];
 int framesNoFeedback = 0;
 
 ArrayList<Player> players = new ArrayList<Player>();
@@ -17,8 +17,11 @@ final boolean showErr = false;
 
 final float
   pWidth = 50, 
-  pHeight = 100,
+  pHeight = 100, 
   pCrouchHeight = 50;
+int
+  screenHeight = 1250, 
+  screenWidth = 800;
 
 void setup() {
   size(500, 800);
@@ -57,9 +60,22 @@ void serverEvent(Server server, Client client) {
       if (clients.get(i).active())
         clients.get(i).write("pc " + clients.size() + "\n");
     }
+
+    while (clients.size() > 4) {
+      disposeClient(clients.size() - 1);
+    }
   } 
   catch (Exception e) {
     if (showErr)
       System.err.println(e);
+  }
+}
+
+void disposeClient(int id) {
+  clients.remove(selId);
+
+  for (int l = 0; l < clients.size(); l++) {
+    clients.get(l).write("id " + l + "\n");
+    clients.get(l).write("dc " + id + "\n");
   }
 }

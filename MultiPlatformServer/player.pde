@@ -1,21 +1,27 @@
 class Player {
   final static int ADD = 1, SUB = -1;
-  int x, y, health, 
+  int
+    x, 
+    y, 
+    health, 
     id;
-  boolean isCrouching;
+  boolean isCrouching, facingLeft;
 
   Player(int id) {
     this.id = id;
+
+    health = 20;
   }
 
   void health(int operation, int value) {
     switch(operation) {
-      case ADD:
-        break;
-      case SUB:
-        health -= value;
+    case ADD:
+      break;
+    case SUB:
+      health -= value;
     }
-    c.write("cp " + id + " hp " + health);
+    for (int l = 0; l < clients.size(); l++)
+      clients.get(l).write("cp " + id + " hp " + health + "\n");
   }
 
   void setPos(int nx, int ny) {

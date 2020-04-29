@@ -27,11 +27,12 @@ class Shot {
 
     if (x < -w)
       shots.remove(this);
-    if (x > width)
+    if (x > screenWidth)
       shots.remove(this);
 
     for (int i = 0; i < clients.size(); i++) {
-      if (collidingWithPlayer(players.get(i)) && i != selId) {
+      if (collidingWithPlayer(players.get(i)) && i != player) {
+        println("Player", i, "got hit!");
         players.get(i).health(Player.SUB, damage);
         shots.remove(this);
       }
