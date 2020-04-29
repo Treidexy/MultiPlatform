@@ -46,7 +46,7 @@ class Shot {
       shots.remove(this);
 
     for (int i = 0; i < players.size(); i++)
-      if (collidingWithPlayer(players.get(i)) && i != id) {
+      if (collidingWithPlayer(players.get(i)) && i != playerSender) {
         shots.remove(this);
       }
   }

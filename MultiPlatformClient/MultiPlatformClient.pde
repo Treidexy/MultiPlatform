@@ -56,8 +56,9 @@ void draw() {
     platforms.get(i).show();
   }
 
-  for (int i = 0; i < shots.size(); i++)
+  for (int i = 0; i < shots.size(); i++) {
     shots.get(i).show();
+  }
 
   for (int i = 0; i < players.size(); i++) {
     if (i != id)

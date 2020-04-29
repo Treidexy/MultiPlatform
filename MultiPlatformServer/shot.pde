@@ -20,7 +20,6 @@ class Shot {
   }
 
   void update() {
-    println(x, y);
     if (facingLeft)
       x-= speed;
     else

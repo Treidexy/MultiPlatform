@@ -18,7 +18,7 @@ void parseData() {
         if (data[1].equals(String.valueOf(id))) {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
         } else {
-          if (players.get(int(data[1])) == null)
+          while (players.get(int(data[1])) == null)
             players.add(new Player(false));
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
           //players[int(data[1])].isCrouching = boolean(data[4]);
@@ -38,9 +38,9 @@ void parseData() {
         shots.add(new Shot(int(data[1]), int(data[2]), boolean(data[3]), int(data[4]), int(data[5])));
         break;
       case "pc":
-        while (players.size() < int(data[1])) {
+        for (int j = players.size(); j  < int(data[1]); j++) {
           players.add(new Player(false));
-          players.get(players.size() - 1).setId(int(data[1]));
+          players.get(j).setId(j);
         }
         break;
       case "dc":
