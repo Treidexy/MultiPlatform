@@ -45,8 +45,8 @@ class Shot {
     if (x > width)
       shots.remove(this);
 
-    for (int i = 0; i < player.getActive(); i++)
-      if (collidingWithPlayer(players[i]) && i != id) {
+    for (int i = 0; i < players.size(); i++)
+      if (collidingWithPlayer(players.get(i)) && i != id) {
         shots.remove(this);
       }
   }

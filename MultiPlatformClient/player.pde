@@ -125,25 +125,16 @@ class Player {
   void crouchChange() {
   }
 
-  int getActive() {
-    int active = 0;
-
-    for (int i = 0; i < players.length; i++)
-      if (players[i] != null)
-        active++;
-    return active;
-  }
-
   void checkShot() {
     if (pastFramesSinceReload >= reloadFrames) {
       if (isLeft) {
         facingLeft = true;
-        shots.add(new Shot(id, (int) shotDamage, true, (int) position.x, (int) position.y + _height/4));
+        shots.add(new Shot(id, (int) shotDamage, facingLeft, (int) position.x, (int) position.y + _height/4));
         sendShot(true);
         pastFramesSinceReload = 0;
       } else if (isRight) {
         facingLeft = false;
-        shots.add(new Shot(id, (int) shotDamage, false, (int) position.x, (int) position.y + _height/4));
+        shots.add(new Shot(id, (int) shotDamage, facingLeft, (int) position.x, (int) position.y + _height/4));
         sendShot(false);
         pastFramesSinceReload = 0;
       }
@@ -151,7 +142,7 @@ class Player {
   }
 
   void sendShot(boolean facingLeft) {
-    c.write("shot " + id + " " + int(shotDamage) + " " + (facingLeft ? 1 : 0) + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
+    c.write("shot " + id + " " + int(shotDamage) + " " + facingLeft + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
   }
 
   void dispose() {

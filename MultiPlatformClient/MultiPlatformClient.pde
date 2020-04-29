@@ -5,7 +5,7 @@ String cInput, input[], data[];
 int id;
 
 Player player;
-Player[] players = new Player[4];
+ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Shot> shots = new ArrayList<Shot>();
 ArrayList<Platform> platforms = new ArrayList<Platform>();
 
@@ -46,8 +46,8 @@ void draw() {
   if (c.available() > 0) {
     parseData();
   }
-
-  //player.update();
+  
+  background(100, 100, 255);
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();
@@ -59,10 +59,16 @@ void draw() {
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).show();
 
-  for (int i = 0; i < player.getActive(); i++) {
+  for (int i = 0; i < players.size(); i++) {
     if (i != id)
-        players[i].show();
+        players.get(i).show();
   }
+  
+  //camera.update();
+
+  player.update();
+
+  c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + "\n");
 
   player.setId(id);
   player.show();
