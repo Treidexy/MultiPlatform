@@ -1,8 +1,6 @@
 import processing.net.*; //<>//
 
-//
-String gameMode = "pro_gamer_mode";
-//
+String gameMode;
 
 Client c;
 String cInput, input[], data[]; 
@@ -62,18 +60,15 @@ void setup() {
 
   //c = new Client(this, "192.168.86.23", 6969);
   c = new Client(this, "127.0.0.1", 6969);
+  parseData();
 
   surface.setTitle("Multi Platform - " + c.ip());
-
-  player = new Player(true);
-  camera = new Camera();
 }
 
 void draw() {
   //try {
   if (c.available() > 0) {
     parseData();
-  }
 
   background(100, 100, 255);
 
@@ -133,6 +128,7 @@ void draw() {
   //noStroke();
   //fill(0);
   //rect(camera.location.x, 800, width, height);
+  }
 }
 
 void disconnect() {

@@ -26,24 +26,28 @@ class Shot {
         rw = 96;
         rh = 16;
         speed = 9;
+        break;
       case 2:
         w = 48;
         h = 16;
         rw = 96;
         rh = 16;
-        speed = 6;
+        speed = 7;
+        break;
       case 3:
         w = 48;
         h = 16;
         rw = 96;
         rh = 16;
         speed = 5;
+        break;
       case 4:
         w = 48;
         h = 16;
         rw = 96;
         rh = 16;
         speed = 3;
+        break;
     }
   }
 

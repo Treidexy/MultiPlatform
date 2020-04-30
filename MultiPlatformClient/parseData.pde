@@ -2,20 +2,22 @@ void parseData() {
   try {
     cInput = c.readString(); 
     input = cInput.split("\n");
-    data = split(input[0], ' ');
-
-    //println(cInput);
-
-    if (data[0].equals("id")) {
-      id = Integer.valueOf(data[1]);
-    }
-
     for (String in : input) {
       data = split(in, ' ');
 
+      //println(cInput);
+
+      if (data[0].equals("id")) {
+        id = Integer.valueOf(data[1]);
+      }
+
       switch(data[0]) {
-      case "map":
+      case "setting":
         initMap(data[1]);
+        gameMode = data[2];
+
+        player = new Player(true);
+        camera = new Camera();
         break;
       case "c":
         if (data[1].equals(String.valueOf(id))) {
@@ -56,6 +58,5 @@ void parseData() {
     }
   } 
   catch (Exception e) {
-    e.getCause();
   }
 }

@@ -1,11 +1,16 @@
 class Camera {
-  PVector location, wantLocation, velocity, acceleration;
-  float shakiness = 10;
+  PVector location, wantLocation, acceleration;
+  float shakiness;
   
   public Camera() {
+    if (gameMode.equals("pro_gamer_mode"))
+      shakiness = 7;
+    else if (gameMode.equals("tank_mode"))
+      shakiness = 1;
+    else
+      shakiness = 0;
     location = new PVector();
     wantLocation = new PVector();
-    velocity = new PVector();
     acceleration = new PVector();
   }
   
@@ -19,13 +24,9 @@ class Camera {
   
   void update() {
     acceleration = PVector.sub(new PVector(wantLocation.x - width/2, wantLocation.y - height/2), location);
-    
-    velocity.add(acceleration);
-    velocity.limit(shakiness);
-    
-    if (gameMode == "pro_gamer_mode")
-      location.add(velocity);
-    else
+
+    acceleration.add(random(-shakiness, shakiness), random(-shakiness, shakiness));
+
       location.add(acceleration);
     
     translate(-location.x, -location.y);

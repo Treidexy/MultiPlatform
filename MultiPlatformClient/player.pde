@@ -17,7 +17,9 @@ class Player {
     maxSpeed, 
     jumpHeight, 
     bounceHeight, 
-    speed;
+    speed,
+    normSpeed,
+    crouchSpeed;
   final int
     crouchHeight, 
     normHeight;
@@ -37,20 +39,22 @@ class Player {
     highestY = height * 2;
     crouchHeight = 50;
     normHeight = 100;
-
-    if (gameMode == "pro_gamer_mode") {
+    
+    if (gameMode.equals("pro_gamer_mode")) {
       maxSpeed = 50;
       jumpHeight = 25;
       bounceHeight = 15;
-      speed = 7;
+      normSpeed = 7;
+      crouchSpeed = 5;
 
       shotDamage = 1;
       reloadMillis = 400;
-    } else if (gameMode == "tank_mode") {
+    } else if (gameMode.equals("tank_mode")) {
       maxSpeed = 50;
       jumpHeight = 10;
       bounceHeight = 2.5;
-      speed = 3;
+      normSpeed = 3;
+      crouchSpeed = 2;
 
       shotDamage = 4;
       reloadMillis = 1000;
@@ -58,7 +62,8 @@ class Player {
       maxSpeed = 50;
       jumpHeight = 20;
       bounceHeight = 5;
-      speed = 5;
+      normSpeed = 5;
+      crouchSpeed = 3;
 
       shotDamage = 2;
       reloadMillis = 500;
@@ -109,8 +114,10 @@ class Player {
 
     if (isCrouching) {
       _height = crouchHeight;
+      speed = crouchSpeed;
     } else {
       _height = normHeight;
+      speed = normSpeed;
     }
     if (pCrouching == true && isCrouching == false) {
       unCrouch();

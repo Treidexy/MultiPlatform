@@ -4,6 +4,7 @@ import processing.net.*;
 
 //
 String map = "sky_map";
+String gameMode = "tank_mode";
 //
 
 Server s;
@@ -44,7 +45,9 @@ void draw() {
     fill(151);
     textSize(50);
     textAlign(CENTER, CENTER);
-    text("Waiting for Players...", width/2, height/2);
+    text("Waiting for Players...", width/2, height/2 - 45);
+    textSize(40);
+    text("IP: " + Server.ip() + ":6969", width/2, height/2 + 45);
   }
 
   parseData();
@@ -57,7 +60,7 @@ void serverEvent(Server server, Client client) {
   try {
     clients.add(client);
     client.write("id " + (clients.size() - 1) + "\n");
-    client.write("map " + map + "\n");
+    client.write("setting " + map + " " + gameMode + "\n");
 
     players.add(new Player(clients.size() - 1));
 
