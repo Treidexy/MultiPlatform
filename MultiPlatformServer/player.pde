@@ -16,9 +16,11 @@ class Player {
   void health(int operation, int value) {
     switch(operation) {
     case ADD:
+      health += value;
       break;
     case SUB:
       health -= value;
+      break;
     }
     for (int l = 0; l < clients.size(); l++)
       clients.get(l).write("cp " + id + " hp " + health + "\n");
@@ -28,7 +30,7 @@ class Player {
     x = nx;
     y = ny;
   }
-  
+
   void setId(int value) {
     id = value;
   }
