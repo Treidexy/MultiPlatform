@@ -3,7 +3,7 @@ import java.awt.Point;
 import processing.net.*;
 
 //
-String map = "sky_map";
+String map = "hell_map";
 String gameMode = "";
 //
 
