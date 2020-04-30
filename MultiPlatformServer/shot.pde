@@ -32,7 +32,7 @@ class Shot {
 
     for (int i = 0; i < clients.size(); i++) {
       if (collidingWithPlayer(players.get(i)) && i != player) {
-        players.get(player).health(Player.ADD, damage);
+        //players.get(player).health(Player.ADD, damage);
         players.get(i).health(Player.SUB, damage);
         shots.remove(this);
       }
