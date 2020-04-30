@@ -5,6 +5,7 @@ String cInput, input[], data[];
 int id;
 
 Player player;
+Camera camera;
 ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Shot> shots = new ArrayList<Shot>();
 ArrayList<Platform> platforms = new ArrayList<Platform>();
@@ -12,10 +13,13 @@ ArrayList<Platform> platforms = new ArrayList<Platform>();
 PImage shot_left, shot_right;
 PImage[][] playerSprites = new PImage[4][2];
 
-String map;
+HashMap<String, Integer> maps = new HashMap<String, Integer>();
+
+PImage backgroundImg;
 PImage[]
   sky_map = new PImage[2],
-  hell_map = new PImage[2];
+  hell_map = new PImage[2],
+  land_map = new PImage[2];
 
 void setup() {
   size(1250, 800);
@@ -46,6 +50,9 @@ void setup() {
     //Hell
       hell_map[0] = loadImage("assets/hell_map/background.png");
       hell_map[1] = loadImage("assets/hell_map/platform.png");
+    //Land
+      land_map[0] = loadImage("assets/land_map/background.png");
+      land_map[1] = loadImage("assets/land_map/platform.png");
 
   //c = new Client(this, "192.168.86.23", 6969);
   c = new Client(this, "127.0.0.1", 6969);
@@ -53,6 +60,7 @@ void setup() {
   surface.setTitle("Multi Platform - " + c.ip());
 
   player = new Player(true);
+  camera = new Camera();
 }
 
 void draw() {
@@ -63,7 +71,11 @@ void draw() {
 
   background(100, 100, 255);
   
-  displayMap(map);
+  camera.update();
+  
+  try {
+    background(backgroundImg);
+  } catch (Exception e) {}
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();
@@ -81,9 +93,9 @@ void draw() {
       players.get(i).show();
   }
 
-  //camera.update();
-
   player.update();
+  
+  camera.focus(player.position);
 
   c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
 
@@ -98,15 +110,20 @@ void draw() {
   //  print("~");
   //}
 
-  fill(151);
-  textSize(15);
-  textAlign(LEFT, TOP);
-  text("FPS: " + frameRate, 0, 0);
 
   fill(151);
   textSize(15);
+  textAlign(LEFT, TOP);
+  text("FPS: " + frameRate, camera.location.x, camera.location.y);
+
+  fill(#ff0000);
+  textSize(15);
   textAlign(RIGHT, TOP);
-  text("HP: " + player.health, width, 0);
+  text("HP: " + player.health, camera.location.x + width, camera.location.y);
+  
+  noStroke();
+  fill(0);
+  rect(camera.location.x, 800, width, height);
 }
 
 void disconnect() {

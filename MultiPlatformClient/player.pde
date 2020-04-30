@@ -72,8 +72,10 @@ class Player {
       facingLeft = false;
     }
     
-    if (health <= 0 || position.y > highestY)
+    if (health <= 0)
       die();
+    if (position.y > highestY)
+      health--;
 
     if (isCrouching) {
       _height = crouchHeight;

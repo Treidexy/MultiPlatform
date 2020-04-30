@@ -15,7 +15,7 @@ void parseData() {
 
       switch(data[0]) {
       case "map":
-        map = data[1];
+        initMap(data[1]);
         break;
       case "c":
         if (data[1].equals(String.valueOf(id))) {

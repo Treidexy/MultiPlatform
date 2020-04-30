@@ -3,7 +3,7 @@ import java.awt.Point;
 import processing.net.*;
 
 //
-String map = "hell_map";
+String map = "land_map";
 //
 
 Server s;
