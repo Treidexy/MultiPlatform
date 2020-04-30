@@ -4,7 +4,7 @@ import processing.net.*;
 
 //
 String map = "sky_map";
-String gameMode = "tank_mode";
+String gameMode = "";
 //
 
 Server s;

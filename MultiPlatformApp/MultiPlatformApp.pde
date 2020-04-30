@@ -23,10 +23,10 @@ PImage[]
   hell_map = new PImage[2], 
   land_map = new PImage[2];
 
-boolean mouseLock;
+HashMap<String, Button> buttons = new HashMap<String, Button>();
 
 void setup() {
-  size(1250, 800);
+  fullScreen();
   frameRate(60);
   noSmooth();
 
@@ -63,6 +63,8 @@ void setup() {
   parseData();
 
   surface.setTitle("Multi Platform - " + c.ip());
+  
+  initButtons();
 }
 
 void draw() {
@@ -106,14 +108,9 @@ void draw() {
 
   player.setId(id);
   player.show();
-  //} 
-  //catch (Exception e) {
-  //  fill(151);
-  //  textSize(15);
-  //  textAlign(CENTER, CENTER);
-  //  text("Error compiling", width/2, height/2);
-  //  print("~");
-  //}
+  
+  updateButtons();
+  drawButtons();
 
   fill(151);
   textSize(15);
