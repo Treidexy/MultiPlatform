@@ -31,7 +31,6 @@ void parseData() {
         }
         break;
       case "cp":
-        println(1);
         if (data[1].equals(String.valueOf(id))) {
           println(2);
           switch(data[2]) {
