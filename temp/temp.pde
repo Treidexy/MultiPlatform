@@ -17,42 +17,44 @@ HashMap<String, Integer> maps = new HashMap<String, Integer>();
 
 PImage backgroundImg;
 PImage[]
-  sky_map = new PImage[2],
-  hell_map = new PImage[2],
+  sky_map = new PImage[2], 
+  hell_map = new PImage[2], 
   land_map = new PImage[2];
+
+boolean mouseLock;
 
 void setup() {
   size(1250, 800);
   frameRate(60);
   noSmooth();
-  
+
   //Shot sprites
-    shot_left = loadImage("assets/shot/shot_left.png");
-    shot_right = loadImage("assets/shot/shot_right.png");
+  shot_left = loadImage("assets/shot/shot_left.png");
+  shot_right = loadImage("assets/shot/shot_right.png");
 
   //Player sprites
-    playerSprites[0][0] = loadImage("assets/player/red_player_left.png");
-    playerSprites[0][1] = loadImage("assets/player/red_player_right.png");
-  
-    playerSprites[1][0] = loadImage("assets/player/blue_player_left.png");
-    playerSprites[1][1] = loadImage("assets/player/blue_player_right.png");
-  
-    playerSprites[2][0] = loadImage("assets/player/green_player_left.png");
-    playerSprites[2][1] = loadImage("assets/player/green_player_right.png");
-  
-    playerSprites[3][0] = loadImage("assets/player/pink_player_left.png");
-    playerSprites[3][1] = loadImage("assets/player/pink_player_right.png");
-    
+  playerSprites[0][0] = loadImage("assets/player/red_player_left.png");
+  playerSprites[0][1] = loadImage("assets/player/red_player_right.png");
+
+  playerSprites[1][0] = loadImage("assets/player/blue_player_left.png");
+  playerSprites[1][1] = loadImage("assets/player/blue_player_right.png");
+
+  playerSprites[2][0] = loadImage("assets/player/green_player_left.png");
+  playerSprites[2][1] = loadImage("assets/player/green_player_right.png");
+
+  playerSprites[3][0] = loadImage("assets/player/pink_player_left.png");
+  playerSprites[3][1] = loadImage("assets/player/pink_player_right.png");
+
   //Maps
-    //Sky
-      sky_map[0] = loadImage("assets/sky_map/background.png");
-      sky_map[1] = loadImage("assets/sky_map/platform.png");
-    //Hell
-      hell_map[0] = loadImage("assets/hell_map/background.png");
-      hell_map[1] = loadImage("assets/hell_map/platform.png");
-    //Land
-      land_map[0] = loadImage("assets/land_map/background.png");
-      land_map[1] = loadImage("assets/land_map/platform.png");
+  //Sky
+  sky_map[0] = loadImage("assets/sky_map/background.png");
+  sky_map[1] = loadImage("assets/sky_map/platform.png");
+  //Hell
+  hell_map[0] = loadImage("assets/hell_map/background.png");
+  hell_map[1] = loadImage("assets/hell_map/platform.png");
+  //Land
+  land_map[0] = loadImage("assets/land_map/background.png");
+  land_map[1] = loadImage("assets/land_map/platform_large.png");
 
   //c = new Client(this, "192.168.86.23", 6969);
   c = new Client(this, "127.0.0.1", 6969);
@@ -70,12 +72,14 @@ void draw() {
   }
 
   background(100, 100, 255);
-  
+
   camera.update();
-  
+
   try {
     background(backgroundImg);
-  } catch (Exception e) {}
+  } 
+  catch (Exception e) {
+  }
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();
@@ -94,8 +98,10 @@ void draw() {
   }
 
   player.update();
-  
-  camera.focus(player.position);
+
+  if (player.position.y > height); 
+  else
+    camera.focus(player.position);
 
   c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
 
@@ -110,7 +116,6 @@ void draw() {
   //  print("~");
   //}
 
-
   fill(151);
   textSize(15);
   textAlign(LEFT, TOP);
@@ -120,10 +125,10 @@ void draw() {
   textSize(15);
   textAlign(RIGHT, TOP);
   text("HP: " + player.health, camera.location.x + width, camera.location.y);
-  
-  noStroke();
-  fill(0);
-  rect(camera.location.x, 800, width, height);
+
+  //noStroke();
+  //fill(0);
+  //rect(camera.location.x, 800, width, height);
 }
 
 void disconnect() {
@@ -142,6 +147,7 @@ void exit() {
 //
 class Camera {
   PVector location, wantLocation, velocity, acceleration;
+  float shakiness = 1;
   
   public Camera() {
     location = new PVector();
@@ -159,9 +165,12 @@ class Camera {
   }
   
   void update() {
-    acceleration = new PVector(wantLocation.x - width/2, wantLocation.y - height/2);
+    acceleration = PVector.sub(new PVector(wantLocation.x - width/2, wantLocation.y - height/2), location);
     
-    location = acceleration;
+    velocity.add(acceleration);
+    velocity.limit(shakiness);
+    
+    location.add(acceleration);
     
     translate(-location.x, -location.y);
   }
@@ -299,10 +308,12 @@ class Player {
     desPos;
   boolean
     myPlayer, 
-    isCrouching;
+    isCrouching, 
+    pCrouching;
   float
-    smoothness = 0.69, 
-    jumpHeight = 20, 
+    maxSpeed = 50, 
+    jumpHeight = 20,
+    bounceHeight = 5,
     speed = 5;
   final int
     crouchHeight, 
@@ -320,7 +331,7 @@ class Player {
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
-    highestY = height - _height;
+    highestY = height * 2;
     crouchHeight = 50;
     normHeight = 100;
 
@@ -347,7 +358,6 @@ class Player {
 
   void update() {
     checkShot();
-    highestY = height - _height;
 
     millisSinceReload = millis() - pastMillis;
 
@@ -360,6 +370,9 @@ class Player {
       facingLeft = false;
     }
     
+    //if (mousePressed)
+    //  player.shoot(mouseX, mouseY);
+
     if (health <= 0)
       die();
     if (position.y > highestY)
@@ -370,15 +383,50 @@ class Player {
     } else {
       _height = normHeight;
     }
-
-    checkForPlatforms();
+    if (pCrouching == true && isCrouching == false) {
+      unCrouch();
+    }
 
     acceleration.add(gravity);
+    acceleration.limit(maxSpeed);
+
+    for (int i = 0; i < acceleration.y; i++) {
+      checkForPlatforms(position.x, position.y + i);
+    }
 
     position.add(acceleration);
+
+    pCrouching = isCrouching;
   }
 
-  void checkForPlatforms() {
+  void checkForPlatforms(PVector position) {
+    for (int i = 0; i < platforms.size(); i++) {
+      Platform _plat = platforms.get(i);
+
+      if (position.y + _height >= _plat.position.y &&
+        position.y + _height < _plat.position.y + _plat.h/2 &&
+        position.x < _plat.position.x + _plat.w &&
+        position.x + _width > _plat.position.x) {
+        acceleration.y = 0;
+        if (isJump)jump();
+        position.y = _plat.position.y - _height;
+      } else if (position.y + _height > _plat.position.y &&
+        position.y < _plat.position.y + _plat.h) {
+        if (position.x + _width > _plat.position.x &&
+          position.x < _plat.position.x) {
+          position.x = _plat.position.x - _width;
+        } else {
+          if (position.x + _width > _plat.position.x + _plat.w &&
+            position.x < _plat.position.x + _plat.w) {
+            position.x = _plat.position.x + _plat.w;
+          }
+        }
+      }
+    }
+  }
+
+  void checkForPlatforms(float x, float y) {
+    PVector position = new PVector(x, y);
     for (int i = 0; i < platforms.size(); i++) {
       Platform _plat = platforms.get(i);
 
@@ -405,7 +453,7 @@ class Player {
   }
 
   void jump() {
-    acceleration.add(new PVector(0, -jumpHeight));
+    acceleration.add(0, -jumpHeight);
   }
 
   void setPos(float x, float y) {
@@ -420,7 +468,10 @@ class Player {
     playerId = value;
   }
 
-  void crouchChange() {
+  void unCrouch() {
+    position.add(0, crouchHeight - normHeight);
+    //acceleration.add(0, -bounceHeight);
+    acceleration.y = 0;
   }
 
   void checkShot() {
@@ -431,6 +482,22 @@ class Player {
         sendShot(true);
         pastMillis = millis();
       } else if (isRight) {
+        facingLeft = false;
+        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+        sendShot(false);
+        pastMillis = millis();
+      }
+    }
+  }
+
+  void shoot(float dx, float dy) {
+    if (millisSinceReload >= reloadMillis) {
+      if (dx < width / 2) {
+        facingLeft = true;
+        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+        sendShot(true);
+        pastMillis = millis();
+      } else {
         facingLeft = false;
         shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
         sendShot(false);

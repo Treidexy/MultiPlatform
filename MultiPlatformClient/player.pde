@@ -11,11 +11,12 @@ class Player {
     desPos;
   boolean
     myPlayer, 
-    isCrouching,
+    isCrouching, 
     pCrouching;
   float
     maxSpeed = 50, 
-    jumpHeight = 20, 
+    jumpHeight = 20,
+    bounceHeight = 5,
     speed = 5;
   final int
     crouchHeight, 
@@ -72,6 +73,9 @@ class Player {
       facingLeft = false;
     }
     
+    //if (mousePressed)
+    //  player.shoot(mouseX, mouseY);
+
     if (health <= 0)
       die();
     if (position.y > highestY)
@@ -88,13 +92,13 @@ class Player {
 
     acceleration.add(gravity);
     acceleration.limit(maxSpeed);
-    
+
     for (int i = 0; i < acceleration.y; i++) {
       checkForPlatforms(position.x, position.y + i);
     }
 
     position.add(acceleration);
-    
+
     pCrouching = isCrouching;
   }
 
@@ -123,7 +127,7 @@ class Player {
       }
     }
   }
-  
+
   void checkForPlatforms(float x, float y) {
     PVector position = new PVector(x, y);
     for (int i = 0; i < platforms.size(); i++) {
@@ -169,6 +173,8 @@ class Player {
 
   void unCrouch() {
     position.add(0, crouchHeight - normHeight);
+    //acceleration.add(0, -bounceHeight);
+    acceleration.y = 0;
   }
 
   void checkShot() {
@@ -179,6 +185,22 @@ class Player {
         sendShot(true);
         pastMillis = millis();
       } else if (isRight) {
+        facingLeft = false;
+        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+        sendShot(false);
+        pastMillis = millis();
+      }
+    }
+  }
+
+  void shoot(float dx, float dy) {
+    if (millisSinceReload >= reloadMillis) {
+      if (dx < width / 2) {
+        facingLeft = true;
+        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+        sendShot(true);
+        pastMillis = millis();
+      } else {
         facingLeft = false;
         shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
         sendShot(false);

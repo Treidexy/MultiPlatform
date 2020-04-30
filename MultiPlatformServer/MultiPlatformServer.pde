@@ -77,10 +77,12 @@ void serverEvent(Server server, Client client) {
 }
 
 void disposeClient(int id) {
-  clients.remove(selId);
+  clients.remove(id);
+  players.remove(id);
 
   for (int l = 0; l < clients.size(); l++) {
     clients.get(l).write("id " + l + "\n");
     clients.get(l).write("dc " + id + "\n");
+    players.get(l).setId(l);
   }
 }

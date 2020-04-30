@@ -21,6 +21,8 @@ PImage[]
   hell_map = new PImage[2], 
   land_map = new PImage[2];
 
+boolean mouseLock;
+
 void setup() {
   size(1250, 800);
   frameRate(60);
@@ -113,7 +115,6 @@ void draw() {
   //  text("Error compiling", width/2, height/2);
   //  print("~");
   //}
-
 
   fill(151);
   textSize(15);

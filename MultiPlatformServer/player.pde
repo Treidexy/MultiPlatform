@@ -28,4 +28,8 @@ class Player {
     x = nx;
     y = ny;
   }
+  
+  void setId(int value) {
+    id = value;
+  }
 }
