@@ -5,8 +5,6 @@ void parseData() {
     for (String in : input) {
       data = split(in, ' ');
 
-      //println(cInput);
-
       if (data[0].equals("id")) {
         id = Integer.valueOf(data[1]);
       }
@@ -32,11 +30,9 @@ void parseData() {
         break;
       case "cp":
         if (data[1].equals(String.valueOf(id))) {
-          println(2);
           switch(data[2]) {
           case "hp":
             player.health = int(data[3]);
-            println(in, player.health, int(data[3]));
             break;
           }
         }

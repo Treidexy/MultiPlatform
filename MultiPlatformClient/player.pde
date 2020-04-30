@@ -268,7 +268,6 @@ class Player {
   }
 
   void die() {
-    println("dead");
     exit();
   }
 }
@@ -309,7 +308,6 @@ boolean setMove(int k, boolean b) {
     return player.isCrouching = b;
 
   default:
-    //println(keyCode);
     return b;
   }
 }
