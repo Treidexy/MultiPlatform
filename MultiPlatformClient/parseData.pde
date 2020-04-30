@@ -14,6 +14,9 @@ void parseData() {
       data = split(in, ' ');
 
       switch(data[0]) {
+      case "map":
+        map = data[1];
+        break;
       case "c":
         if (data[1].equals(String.valueOf(id))) {
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));

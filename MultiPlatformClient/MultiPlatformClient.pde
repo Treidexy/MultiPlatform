@@ -12,8 +12,10 @@ ArrayList<Platform> platforms = new ArrayList<Platform>();
 PImage shot_left, shot_right;
 PImage[][] playerSprites = new PImage[4][2];
 
-
-PImage[] sky_map = new PImage[2];
+String map;
+PImage[]
+  sky_map = new PImage[2],
+  hell_map = new PImage[2];
 
 void setup() {
   size(1250, 800);
@@ -41,6 +43,9 @@ void setup() {
     //Sky
       sky_map[0] = loadImage("assets/sky_map/background.png");
       sky_map[1] = loadImage("assets/sky_map/platform.png");
+    //Hell
+      hell_map[0] = loadImage("assets/hell_map/background.png");
+      hell_map[1] = loadImage("assets/hell_map/platform.png");
 
   //c = new Client(this, "192.168.86.23", 6969);
   c = new Client(this, "127.0.0.1", 6969);
@@ -58,7 +63,7 @@ void draw() {
 
   background(100, 100, 255);
   
-  displayMap("sky_map");
+  displayMap(map);
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();

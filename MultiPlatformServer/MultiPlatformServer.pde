@@ -2,6 +2,10 @@ import java.awt.Point;
 
 import processing.net.*;
 
+//
+String map = "hell_map";
+//
+
 Server s;
 Client c;
 ArrayList<Client> clients = new ArrayList<Client>();
@@ -53,6 +57,7 @@ void serverEvent(Server server, Client client) {
   try {
     clients.add(client);
     client.write("id " + (clients.size() - 1) + "\n");
+    client.write("map " + map + "\n");
 
     players.add(new Player(clients.size() - 1));
 
