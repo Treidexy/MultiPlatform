@@ -17,42 +17,42 @@ HashMap<String, Integer> maps = new HashMap<String, Integer>();
 
 PImage backgroundImg;
 PImage[]
-  sky_map = new PImage[2],
-  hell_map = new PImage[2],
+  sky_map = new PImage[2], 
+  hell_map = new PImage[2], 
   land_map = new PImage[2];
 
 void setup() {
   size(1250, 800);
   frameRate(60);
   noSmooth();
-  
+
   //Shot sprites
-    shot_left = loadImage("assets/shot/shot_left.png");
-    shot_right = loadImage("assets/shot/shot_right.png");
+  shot_left = loadImage("assets/shot/shot_left.png");
+  shot_right = loadImage("assets/shot/shot_right.png");
 
   //Player sprites
-    playerSprites[0][0] = loadImage("assets/player/red_player_left.png");
-    playerSprites[0][1] = loadImage("assets/player/red_player_right.png");
-  
-    playerSprites[1][0] = loadImage("assets/player/blue_player_left.png");
-    playerSprites[1][1] = loadImage("assets/player/blue_player_right.png");
-  
-    playerSprites[2][0] = loadImage("assets/player/green_player_left.png");
-    playerSprites[2][1] = loadImage("assets/player/green_player_right.png");
-  
-    playerSprites[3][0] = loadImage("assets/player/pink_player_left.png");
-    playerSprites[3][1] = loadImage("assets/player/pink_player_right.png");
-    
+  playerSprites[0][0] = loadImage("assets/player/red_player_left.png");
+  playerSprites[0][1] = loadImage("assets/player/red_player_right.png");
+
+  playerSprites[1][0] = loadImage("assets/player/blue_player_left.png");
+  playerSprites[1][1] = loadImage("assets/player/blue_player_right.png");
+
+  playerSprites[2][0] = loadImage("assets/player/green_player_left.png");
+  playerSprites[2][1] = loadImage("assets/player/green_player_right.png");
+
+  playerSprites[3][0] = loadImage("assets/player/pink_player_left.png");
+  playerSprites[3][1] = loadImage("assets/player/pink_player_right.png");
+
   //Maps
-    //Sky
-      sky_map[0] = loadImage("assets/sky_map/background.png");
-      sky_map[1] = loadImage("assets/sky_map/platform.png");
-    //Hell
-      hell_map[0] = loadImage("assets/hell_map/background.png");
-      hell_map[1] = loadImage("assets/hell_map/platform.png");
-    //Land
-      land_map[0] = loadImage("assets/land_map/background.png");
-      land_map[1] = loadImage("assets/land_map/platform.png");
+  //Sky
+  sky_map[0] = loadImage("assets/sky_map/background.png");
+  sky_map[1] = loadImage("assets/sky_map/platform.png");
+  //Hell
+  hell_map[0] = loadImage("assets/hell_map/background.png");
+  hell_map[1] = loadImage("assets/hell_map/platform.png");
+  //Land
+  land_map[0] = loadImage("assets/land_map/background.png");
+  land_map[1] = loadImage("assets/land_map/platform_large.png");
 
   //c = new Client(this, "192.168.86.23", 6969);
   c = new Client(this, "127.0.0.1", 6969);
@@ -70,12 +70,14 @@ void draw() {
   }
 
   background(100, 100, 255);
-  
+
   camera.update();
-  
+
   try {
     background(backgroundImg);
-  } catch (Exception e) {}
+  } 
+  catch (Exception e) {
+  }
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();
@@ -94,8 +96,10 @@ void draw() {
   }
 
   player.update();
-  
-  camera.focus(player.position);
+
+  if (player.position.y > height); 
+  else
+    camera.focus(player.position);
 
   c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
 
@@ -120,10 +124,10 @@ void draw() {
   textSize(15);
   textAlign(RIGHT, TOP);
   text("HP: " + player.health, camera.location.x + width, camera.location.y);
-  
-  noStroke();
-  fill(0);
-  rect(camera.location.x, 800, width, height);
+
+  //noStroke();
+  //fill(0);
+  //rect(camera.location.x, 800, width, height);
 }
 
 void disconnect() {

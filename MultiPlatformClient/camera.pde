@@ -1,5 +1,6 @@
 class Camera {
   PVector location, wantLocation, velocity, acceleration;
+  float shakiness = 1;
   
   public Camera() {
     location = new PVector();
@@ -17,9 +18,12 @@ class Camera {
   }
   
   void update() {
-    acceleration = new PVector(wantLocation.x - width/2, wantLocation.y - height/2);
+    acceleration = PVector.sub(new PVector(wantLocation.x - width/2, wantLocation.y - height/2), location);
     
-    location = acceleration;
+    velocity.add(acceleration);
+    velocity.limit(shakiness);
+    
+    location.add(acceleration);
     
     translate(-location.x, -location.y);
   }
