@@ -1,6 +1,6 @@
 class Camera {
   PVector location, wantLocation, velocity, acceleration;
-  float shakiness = 1;
+  float shakiness = 10;
   
   public Camera() {
     location = new PVector();
@@ -23,7 +23,10 @@ class Camera {
     velocity.add(acceleration);
     velocity.limit(shakiness);
     
-    location.add(acceleration);
+    if (gameMode == "pro_gamer_mode")
+      location.add(velocity);
+    else
+      location.add(acceleration);
     
     translate(-location.x, -location.y);
   }

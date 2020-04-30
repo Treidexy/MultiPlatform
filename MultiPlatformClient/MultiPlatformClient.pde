@@ -1,5 +1,9 @@
 import processing.net.*; //<>//
 
+//
+String gameMode = "pro_gamer_mode";
+//
+
 Client c;
 String cInput, input[], data[]; 
 int id;

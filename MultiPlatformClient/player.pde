@@ -14,10 +14,10 @@ class Player {
     isCrouching, 
     pCrouching;
   float
-    maxSpeed = 50, 
-    jumpHeight = 20,
-    bounceHeight = 5,
-    speed = 5;
+    maxSpeed, 
+    jumpHeight, 
+    bounceHeight, 
+    speed;
   final int
     crouchHeight, 
     normHeight;
@@ -27,7 +27,7 @@ class Player {
     _rwidth = 80, 
     highestY;
   float
-    shotDamage = 3, 
+    shotDamage, 
     reloadMillis = 500, 
     pastMillis, 
     millisSinceReload;
@@ -37,6 +37,22 @@ class Player {
     highestY = height * 2;
     crouchHeight = 50;
     normHeight = 100;
+
+    if (gameMode == "pro_gamer_mode") {
+      maxSpeed = 50;
+      jumpHeight = 25;
+      bounceHeight = 15;
+      speed = 7;
+      
+      shotDamage = 1;
+    } else {
+      maxSpeed = 50;
+      jumpHeight = 20;
+      bounceHeight = 5;
+      speed = 5;
+      
+      shotDamage = 2;
+    }
 
     position = new PVector(625, 400);
     gravity = new PVector(0, 1);
@@ -72,7 +88,7 @@ class Player {
       position.x+= speed;
       facingLeft = false;
     }
-    
+
     //if (mousePressed)
     //  player.shoot(mouseX, mouseY);
 
@@ -88,7 +104,8 @@ class Player {
     }
     if (pCrouching == true && isCrouching == false) {
       unCrouch();
-    } if (pCrouching == false && isCrouching == true) {
+    } 
+    if (pCrouching == false && isCrouching == true) {
       crouch();
     }
 
@@ -172,7 +189,7 @@ class Player {
   void setId(int value) {
     playerId = value;
   }
-  
+
   void crouch() {
     if (isDown)
       position.add(0, normHeight - crouchHeight);
@@ -180,26 +197,26 @@ class Player {
 
   void unCrouch() {
     if (!isDown)
-    position.add(0, crouchHeight - normHeight);
+      position.add(0, crouchHeight - normHeight);
     //acceleration.add(0, -bounceHeight);
     acceleration.y = 0;
   }
 
   void checkShot() {
     if (!isCrouching)
-    if (millisSinceReload >= reloadMillis) {
-      if (isLeft) {
-        facingLeft = true;
-        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
-        sendShot(true);
-        pastMillis = millis();
-      } else if (isRight) {
-        facingLeft = false;
-        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
-        sendShot(false);
-        pastMillis = millis();
+      if (millisSinceReload >= reloadMillis) {
+        if (isLeft) {
+          facingLeft = true;
+          shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+          sendShot(true);
+          pastMillis = millis();
+        } else if (isRight) {
+          facingLeft = false;
+          shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+          sendShot(false);
+          pastMillis = millis();
+        }
       }
-    }
   }
 
   //void shoot(float dx, float dy) {
@@ -251,10 +268,10 @@ boolean setMove(int k, boolean b) {
 
   case 68:
     return isD = b;
-    
+
   case 83:
     return isDown = b;
-  
+
   case 32:
     return isJump = b;
 
