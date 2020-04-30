@@ -1,6 +1,7 @@
 class Shot {
   boolean facingLeft;
-  int playerSender, 
+  int
+    playerSender, 
     damage, 
     x, 
     y, 
@@ -16,11 +17,34 @@ class Shot {
     this.facingLeft = facingLeft;
     this.x = x;
     this.y = y;
-    w = 48;
-    h = 16;
-    rw = 96;
-    rh = 16;
-    speed = 6;
+    
+    
+    switch(damage) {
+      case 1:
+        w = 48;
+        h = 16;
+        rw = 96;
+        rh = 16;
+        speed = 9;
+      case 2:
+        w = 48;
+        h = 16;
+        rw = 96;
+        rh = 16;
+        speed = 6;
+      case 3:
+        w = 48;
+        h = 16;
+        rw = 96;
+        rh = 16;
+        speed = 5;
+      case 4:
+        w = 48;
+        h = 16;
+        rw = 96;
+        rh = 16;
+        speed = 3;
+    }
   }
 
   void show() {

@@ -28,7 +28,7 @@ class Player {
     highestY;
   float
     shotDamage, 
-    reloadMillis = 500, 
+    reloadMillis, 
     pastMillis, 
     millisSinceReload;
 
@@ -43,15 +43,25 @@ class Player {
       jumpHeight = 25;
       bounceHeight = 15;
       speed = 7;
-      
+
       shotDamage = 1;
+      reloadMillis = 400;
+    } else if (gameMode == "tank_mode") {
+      maxSpeed = 50;
+      jumpHeight = 10;
+      bounceHeight = 2.5;
+      speed = 3;
+
+      shotDamage = 4;
+      reloadMillis = 1000;
     } else {
       maxSpeed = 50;
       jumpHeight = 20;
       bounceHeight = 5;
       speed = 5;
-      
+
       shotDamage = 2;
+      reloadMillis = 500;
     }
 
     position = new PVector(625, 400);
@@ -112,9 +122,8 @@ class Player {
     acceleration.add(gravity);
     acceleration.limit(maxSpeed);
 
-    for (int i = 0; i < acceleration.y; i++) {
-      checkForPlatforms(position.x, position.y + i);
-    }
+    for (int i = 0; i < acceleration.y; i++)
+        checkForPlatforms(position.x, position.y + i);
 
     position.add(acceleration);
 
@@ -124,6 +133,18 @@ class Player {
   void checkForPlatforms(PVector position) {
     for (int i = 0; i < platforms.size(); i++) {
       Platform _plat = platforms.get(i);
+      
+      if (isCrouching) {
+        if (position.y + _height >= _plat.position.y &&
+          position.y + _height < _plat.position.y + _plat.h/2 &&
+          position.x > _plat.position.x + _plat.w) {
+            position.x--;
+        } else if (position.y + _height >= _plat.position.y &&
+          position.y + _height < _plat.position.y + _plat.h/2 &&
+          position.x - _width < _plat.position.x + _plat.w) {
+            position.x++;
+        }
+      }
 
       if (position.y + _height >= _plat.position.y &&
         position.y + _height < _plat.position.y + _plat.h/2 &&
