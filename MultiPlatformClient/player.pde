@@ -88,6 +88,8 @@ class Player {
     }
     if (pCrouching == true && isCrouching == false) {
       unCrouch();
+    } if (pCrouching == false && isCrouching == true) {
+      crouch();
     }
 
     acceleration.add(gravity);
@@ -170,14 +172,21 @@ class Player {
   void setId(int value) {
     playerId = value;
   }
+  
+  void crouch() {
+    if (isDown)
+      position.add(0, normHeight - crouchHeight);
+  }
 
   void unCrouch() {
+    if (!isDown)
     position.add(0, crouchHeight - normHeight);
     //acceleration.add(0, -bounceHeight);
     acceleration.y = 0;
   }
 
   void checkShot() {
+    if (!isCrouching)
     if (millisSinceReload >= reloadMillis) {
       if (isLeft) {
         facingLeft = true;
@@ -193,21 +202,21 @@ class Player {
     }
   }
 
-  void shoot(float dx, float dy) {
-    if (millisSinceReload >= reloadMillis) {
-      if (dx < width / 2) {
-        facingLeft = true;
-        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
-        sendShot(true);
-        pastMillis = millis();
-      } else {
-        facingLeft = false;
-        shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
-        sendShot(false);
-        pastMillis = millis();
-      }
-    }
-  }
+  //void shoot(float dx, float dy) {
+  //  if (millisSinceReload >= reloadMillis) {
+  //    if (dx < width / 2) {
+  //      facingLeft = true;
+  //      shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+  //      sendShot(true);
+  //      pastMillis = millis();
+  //    } else {
+  //      facingLeft = false;
+  //      shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
+  //      sendShot(false);
+  //      pastMillis = millis();
+  //    }
+  //  }
+  //}
 
   void sendShot(boolean facingLeft) {
     c.write("shot " + id + " " + int(shotDamage) + " " + facingLeft + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
@@ -219,7 +228,7 @@ class Player {
   }
 }
 
-boolean isA, isD, isJump, isLeft, isRight; 
+boolean isA, isD, isJump, isDown, isLeft, isRight; 
 
 void keyPressed() {
   setMove(keyCode, true);
@@ -242,7 +251,10 @@ boolean setMove(int k, boolean b) {
 
   case 68:
     return isD = b;
-
+    
+  case 83:
+    return isDown = b;
+  
   case 32:
     return isJump = b;
 
