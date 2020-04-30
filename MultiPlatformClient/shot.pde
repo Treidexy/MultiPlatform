@@ -48,6 +48,11 @@ class Shot {
         rh = 16;
         speed = 3;
         break;
+        
+      default:
+        w = 48;
+        h = 16;
+        speed = 7;
     }
   }
 

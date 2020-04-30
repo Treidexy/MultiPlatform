@@ -14,9 +14,34 @@ class Shot {
     this.facingLeft = facingLeft;
     this.x = x;
     this.y = y;
-    w = 48;
-    h = 16;
-    speed = 6;
+    
+    switch(damage) {
+      case 1:
+        w = 48;
+        h = 16;
+        speed = 9;
+        break;
+      case 2:
+        w = 48;
+        h = 16;
+        speed = 7;
+        break;
+      case 3:
+        w = 48;
+        h = 16;
+        speed = 5;
+        break;
+      case 4:
+        w = 48;
+        h = 16;
+        speed = 3;
+        break;
+      
+      default:
+        w = 48;
+        h = 16;
+        speed = 7;
+    }
   }
 
   void update() {
