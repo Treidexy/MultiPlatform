@@ -12,24 +12,35 @@ ArrayList<Platform> platforms = new ArrayList<Platform>();
 PImage shot_left, shot_right;
 PImage[][] playerSprites = new PImage[4][2];
 
+
+PImage[] sky_map = new PImage[2];
+
 void setup() {
   size(1250, 800);
   frameRate(60);
+  noSmooth();
+  
+  //Shot sprites
+    shot_left = loadImage("assets/shot/shot_left.png");
+    shot_right = loadImage("assets/shot/shot_right.png");
 
-  shot_left = loadImage("assets/shot_left.png");
-  shot_right = loadImage("assets/shot_right.png");
-
-  playerSprites[0][0] = loadImage("assets/red_player_left.png");
-  playerSprites[0][1] = loadImage("assets/red_player_right.png");
-
-  playerSprites[1][0] = loadImage("assets/blue_player_left.png");
-  playerSprites[1][1] = loadImage("assets/blue_player_right.png");
-
-  playerSprites[2][0] = loadImage("assets/green_player_left.png");
-  playerSprites[2][1] = loadImage("assets/green_player_right.png");
-
-  playerSprites[3][0] = loadImage("assets/pink_player_left.png");
-  playerSprites[3][1] = loadImage("assets/pink_player_right.png");
+  //Player sprites
+    playerSprites[0][0] = loadImage("assets/player/red_player_left.png");
+    playerSprites[0][1] = loadImage("assets/player/red_player_right.png");
+  
+    playerSprites[1][0] = loadImage("assets/player/blue_player_left.png");
+    playerSprites[1][1] = loadImage("assets/player/blue_player_right.png");
+  
+    playerSprites[2][0] = loadImage("assets/player/green_player_left.png");
+    playerSprites[2][1] = loadImage("assets/player/green_player_right.png");
+  
+    playerSprites[3][0] = loadImage("assets/player/pink_player_left.png");
+    playerSprites[3][1] = loadImage("assets/player/pink_player_right.png");
+    
+  //Maps
+    //Sky
+      sky_map[0] = loadImage("assets/sky_map/background.png");
+      sky_map[1] = loadImage("assets/sky_map/platform.png");
 
   //c = new Client(this, "192.168.86.23", 6969);
   c = new Client(this, "127.0.0.1", 6969);
@@ -37,8 +48,6 @@ void setup() {
   surface.setTitle("Multi Platform - " + c.ip());
 
   player = new Player(true);
-
-  platforms.add(new Platform(300, 600, 500, 50));
 }
 
 void draw() {
@@ -48,6 +57,8 @@ void draw() {
   }
 
   background(100, 100, 255);
+  
+  displayMap("sky_map");
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();
@@ -94,7 +105,6 @@ void draw() {
 }
 
 void disconnect() {
-  player.dispose();
   c.write("dc " + id + "\n");
 }
 

@@ -71,6 +71,9 @@ class Player {
       position.x+= speed;
       facingLeft = false;
     }
+    
+    if (health <= 0 || position.y > highestY)
+      die();
 
     if (isCrouching) {
       _height = crouchHeight;
@@ -150,22 +153,9 @@ class Player {
     c.write("shot " + id + " " + int(shotDamage) + " " + facingLeft + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");
   }
 
-  void dispose() {
-    //if (myPlayer)
-    //  ;
-    //else {
-    //  players.remove(this);
-    //}
-  }
-
-  //void takeDamage(float damage) {
-  //  health-= damage;
-  //  if (health <= 0)
-  //    die();
-  //}
-
   void die() {
     println("dead");
+    exit();
   }
 }
 

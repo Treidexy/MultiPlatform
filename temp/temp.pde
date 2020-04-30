@@ -15,6 +15,7 @@ PImage[][] playerSprites = new PImage[4][2];
 void setup() {
   size(1250, 800);
   frameRate(60);
+  noSmooth();
 
   shot_left = loadImage("assets/shot_left.png");
   shot_right = loadImage("assets/shot_right.png");
