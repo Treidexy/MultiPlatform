@@ -48,7 +48,7 @@ class Player {
       crouchSpeed = 5;
 
       shotDamage = 1;
-      reloadMillis = 400;
+      reloadMillis = 500;
     } else if (gameMode.equals("tank_mode")) {
       maxSpeed = 50;
       jumpHeight = 10;
@@ -57,7 +57,7 @@ class Player {
       crouchSpeed = 2;
 
       shotDamage = 4;
-      reloadMillis = 1000;
+      reloadMillis = 1200;
     } else {
       maxSpeed = 50;
       jumpHeight = 20;
@@ -66,7 +66,7 @@ class Player {
       crouchSpeed = 3;
 
       shotDamage = 2;
-      reloadMillis = 500;
+      reloadMillis = 800;
     }
 
     position = new PVector(625, 400);
