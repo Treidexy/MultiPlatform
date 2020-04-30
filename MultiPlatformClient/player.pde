@@ -17,8 +17,8 @@ class Player {
     maxSpeed, 
     jumpHeight, 
     bounceHeight, 
-    speed,
-    normSpeed,
+    speed, 
+    normSpeed, 
     crouchSpeed;
   final int
     crouchHeight, 
@@ -39,13 +39,13 @@ class Player {
     highestY = height * 2;
     crouchHeight = 50;
     normHeight = 100;
-    
+
     if (gameMode.equals("pro_gamer_mode")) {
       maxSpeed = 50;
       jumpHeight = 25;
       bounceHeight = 15;
       normSpeed = 7;
-      crouchSpeed = 5;
+      crouchSpeed = 3;
 
       shotDamage = 1;
       reloadMillis = 500;
@@ -54,7 +54,7 @@ class Player {
       jumpHeight = 10;
       bounceHeight = 2.5;
       normSpeed = 3;
-      crouchSpeed = 2;
+      crouchSpeed = 0;
 
       shotDamage = 4;
       reloadMillis = 1200;
@@ -63,7 +63,7 @@ class Player {
       jumpHeight = 20;
       bounceHeight = 5;
       normSpeed = 5;
-      crouchSpeed = 3;
+      crouchSpeed = 1;
 
       shotDamage = 2;
       reloadMillis = 800;
@@ -96,8 +96,13 @@ class Player {
     millisSinceReload = millis() - pastMillis;
 
     if (isA) {
-      position.x-= speed;
       facingLeft = true;
+      if (isCrouching) 
+        for (int i = 0; i < platforms.size(); i++) 
+          if (position.y + _height == platforms.get(i).position.y) 
+            if (position.x + _width >= platforms.get(i).position.x && position.x - 1 + _width < platforms.get(i).position.x + crouchSpeed)
+              position.x+= speed;
+      position.x-= speed;
     }
     if (isD) {
       position.x+= speed;
@@ -130,7 +135,7 @@ class Player {
     acceleration.limit(maxSpeed);
 
     for (int i = 0; i < acceleration.y; i++)
-        checkForPlatforms(position.x, position.y + i);
+      checkForPlatforms(position.x, position.y + i);
 
     position.add(acceleration);
 
@@ -140,16 +145,16 @@ class Player {
   void checkForPlatforms(PVector position) {
     for (int i = 0; i < platforms.size(); i++) {
       Platform _plat = platforms.get(i);
-      
+
       if (isCrouching) {
         if (position.y + _height >= _plat.position.y &&
           position.y + _height < _plat.position.y + _plat.h/2 &&
           position.x > _plat.position.x + _plat.w) {
-            position.x--;
+          position.x--;
         } else if (position.y + _height >= _plat.position.y &&
           position.y + _height < _plat.position.y + _plat.h/2 &&
           position.x - _width < _plat.position.x + _plat.w) {
-            position.x++;
+          position.x++;
         }
       }
 
