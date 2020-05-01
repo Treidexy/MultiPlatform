@@ -114,15 +114,15 @@ void draw() {
       player.setId(id);
       player.show();
 
-      fill(#cccccc);
-      textSize(15);
-      textAlign(LEFT, TOP);
-      text("FPS: " + frameRate, camera.location.x, camera.location.y);
+      //fill(#cccccc);
+      //textSize(15);
+      //textAlign(LEFT, TOP);
+      //text("FPS: " + frameRate, camera.location.x, camera.location.y);
 
-      fill(#ff0000);
-      textSize(15);
-      textAlign(RIGHT, TOP);
-      text("HP: " + player.health, camera.location.x + width, camera.location.y);
+      //fill(#ff0000);
+      //textSize(15);
+      //textAlign(RIGHT, TOP);
+      //text("HP: " + player.health, camera.location.x + width, camera.location.y);
 
       //noStroke();
       //fill(0);
