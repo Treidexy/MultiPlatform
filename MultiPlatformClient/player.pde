@@ -21,7 +21,7 @@ class Player {
     speed, 
     normSpeed, 
     crouchSpeed;
-  final int
+  int
     crouchHeight, 
     normHeight;
   int
@@ -56,6 +56,7 @@ class Player {
       jumpHeight = 10;
       bounceHeight = 2.5;
       normSpeed = 3;
+      crouchHeight = 75;
       crouchSpeed = 0;
 
       shotDamage = 4;
@@ -152,6 +153,7 @@ class Player {
     if (isCrouching) {
       _height = crouchHeight;
       speed = crouchSpeed;
+      println(3);
     } else {
       _height = normHeight;
       speed = normSpeed;
