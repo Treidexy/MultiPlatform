@@ -2,6 +2,12 @@ Multi Platform
 By JBT
 ==========
 
+Contributing to the Game
+----------
+If you are interested on improving the game, and know how to code in Processing, please clone the repository, make your edits, and send us a pull request. It would greatly help us, and would perhaps introduce a new feature we never would have thought of.
+
+If you are interested on improving the game, and do not yet know how to code in Processing, you can either learn to, or you can suggest an edit, and we'll try to implement it in a later version.
+
 Summary of the Game
 ----------
 A multiplayer shooter game that you can play with your friends! Host a game, and play, as long as you're on the same network! Choose from the three maps and game modes, and play with up to four player! Don't jump off the platforms, or you'll lose health. Don't get hit, or you'll lose health. Try to be the last one left, and show your family who's the best!
@@ -45,9 +51,3 @@ Controls
 Config
 ----------
 In the data folders of both Client and Server projects, there is a file named 'config.json'. You can edit all the values inside the file, though we reccomend not to edit the 'comment'. Also, don't change the values on the left. For a more in-depth tutorial check out [JSON Tutorial](https://www.w3schools.com/js/js_json_syntax.asp)
-
-Commiting to the Game
-----------
-If you are interested on improving the game, and know how to code in Processing, please clone the repository, make your edits, and send us a pull request. It would greatly help us, and would perhaps introduce a new feature we never would have thought of.
-
-If you are interested on improving the game, and do not yet know how to code in Processing, you can either learn to, or you can suggest an edit, and we'll try to implement it in a later version.
