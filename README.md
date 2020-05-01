@@ -14,7 +14,10 @@ To download the game, and play it, you can choose to download the client, the se
 
 If you are running the server, clients just need to press enter to join. No need to type the ip in that case!
 
+Download
+----------
 Download --> https://drive.google.com/drive/folders/15kGlsWLVm4nBdactt_JGDPSHH-GbdB8o?usp=sharing
+Download the zip file corresponding to your Operating System and extract its contents. The .exe file is the game, and the config.properties allows you to controll the game, more on that later.
 
 Controls
 ----------
