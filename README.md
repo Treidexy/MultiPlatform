@@ -17,6 +17,7 @@ Server Download -->
 
 Controls
 ----------
+>
 > Movement:
 >
 > 	Left/Right = A/D
@@ -33,3 +34,7 @@ Controls
 Config
 ----------
 In the data folders of both Client and Server projects, there is a file named 'config.json'. You can edit all the values inside the file, though we reccomend not to edit the 'comment'. Also, don't change the values on the left. For a more in-depth tutorial check out [JSON Tutorial](https://www.w3schools.com/js/js_json_syntax.asp)
+
+Commiting to the Game
+----------
+If you are interested on improving the game, please clone the repository, make your edits, and send us a pull request. It would greatly help us, and would perhaps introduce a new feature we never would have thought of.
