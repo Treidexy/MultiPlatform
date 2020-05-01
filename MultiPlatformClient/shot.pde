@@ -1,4 +1,4 @@
-class Shot {
+class Shot { //<>//
   boolean facingLeft;
   int
     playerSender, 
@@ -17,42 +17,42 @@ class Shot {
     this.facingLeft = facingLeft;
     this.x = x;
     this.y = y;
-    
-    
+
+
     switch(damage) {
-      case 1:
-        w = 48;
-        h = 16;
-        rw = 96;
-        rh = 16;
-        speed = 9;
-        break;
-      case 2:
-        w = 48;
-        h = 16;
-        rw = 96;
-        rh = 16;
-        speed = 7;
-        break;
-      case 3:
-        w = 48;
-        h = 16;
-        rw = 96;
-        rh = 16;
-        speed = 5;
-        break;
-      case 4:
-        w = 48;
-        h = 16;
-        rw = 96;
-        rh = 16;
-        speed = 3;
-        break;
-        
-      default:
-        w = 48;
-        h = 16;
-        speed = 7;
+    case 1:
+      w = 48;
+      h = 16;
+      rw = 96;
+      rh = 16;
+      speed = 9;
+      break;
+    case 2:
+      w = 48;
+      h = 16;
+      rw = 96;
+      rh = 16;
+      speed = 7;
+      break;
+    case 3:
+      w = 48;
+      h = 16;
+      rw = 96;
+      rh = 16;
+      speed = 5;
+      break;
+    case 4:
+      w = 48;
+      h = 16;
+      rw = 96;
+      rh = 16;
+      speed = 3;
+      break;
+
+    default:
+      w = 48;
+      h = 16;
+      speed = 7;
     }
   }
 
@@ -85,7 +85,7 @@ class Shot {
   }
 
   boolean collidingWithPlayer(Player _p) {
-    if (x + w > _p.position.x && x < _p.position.x + _p._width && y + h > _p.position.y && y < _p.position.y + _p._height) //<>//
+    if (x + w > _p.position.x && x < _p.position.x + _p._width && y + h > _p.position.y && y < _p.position.y + _p._height)
       return true;
     return false;
   }

@@ -247,7 +247,7 @@ class Player {
 
   void crouch() {
     if (isDown);
-      position.add(0, normHeight - crouchHeight);
+    position.add(0, normHeight - crouchHeight);
   }
 
   void unCrouch() {
