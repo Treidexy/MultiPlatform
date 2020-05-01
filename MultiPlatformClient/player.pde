@@ -81,6 +81,8 @@ class Player {
   }
 
   void show() {
+    updateHitbox();
+    
     if (facingLeft) image(playerSprites[playerId][0], position.x - _width/2, position.y, _rwidth, _height);
     else image(playerSprites[playerId][1], position.x, position.y, _rwidth, _height);
 
@@ -93,6 +95,16 @@ class Player {
     rect(position.x, position.y, _width, _height);
 
     healthBar();
+  }
+  
+  void updateHitbox() {
+    if (isCrouching) {
+      _height = crouchHeight;
+      speed = crouchSpeed;
+    } else {
+      _height = normHeight;
+      speed = normSpeed;
+    }
   }
 
   void healthBar() {
@@ -149,14 +161,6 @@ class Player {
     } 
     if (pCrouching == false && isCrouching == true) {
       crouch();
-    }
-    if (isCrouching) {
-      _height = crouchHeight;
-      speed = crouchSpeed;
-      println(3);
-    } else {
-      _height = normHeight;
-      speed = normSpeed;
     }
 
     acceleration.add(gravity);
