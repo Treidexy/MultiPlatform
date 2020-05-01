@@ -4,7 +4,7 @@ By JBT
 
 Summary of the Game
 ----------
-A multiplayer shooter game you can play with your friends! Host a game, and play, as long as you're on the same network! Choose from the two maps and play with up to four player! Don't jump off the platforms, or you'll lose health. Don't get hit, or you'll lose health. Try to be the last one left, and show your family who's the best!
+A multiplayer shooter game that you can play with your friends! Host a game, and play, as long as you're on the same network! Choose from the three maps and game modes, and play with up to four player! Don't jump off the platforms, or you'll lose health. Don't get hit, or you'll lose health. Try to be the last one left, and show your family who's the best!
 
 Play it Yourself
 ----------
