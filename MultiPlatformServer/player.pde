@@ -5,6 +5,7 @@ class Player {
     y, 
     health, 
     id;
+  int inActiveFrames = 0;
   boolean isCrouching, facingLeft;
 
   Player(int id) {

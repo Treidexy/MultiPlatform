@@ -25,6 +25,7 @@ void parseData() {
           players.get(selId).setPos(int(data[1]), int(data[2]));
           players.get(selId).isCrouching = boolean(data[3]);
           players.get(selId).facingLeft = boolean(data[4]);
+          players.get(selId).inActiveFrames = 0;
         }
 
         switch (data[0]) {
