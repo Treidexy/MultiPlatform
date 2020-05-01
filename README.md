@@ -12,9 +12,7 @@ Download the game, or run the code! Here on Github, you can clone this repositor
 
 To download the game, and play it, you can choose to download the client, the server, or both! The server is what allows you to run the game, and the clients are what let you play the game. ***IMPORTANT --> You need one server per group playing together. The client will not run on its own. The client will prompt you to input an ip, that will be shown on the server's window.***
 
-Client Download --> 
-
-Server Download --> 
+Download --> https://drive.google.com/drive/folders/15kGlsWLVm4nBdactt_JGDPSHH-GbdB8o?usp=sharing
 
 Controls
 ----------
