@@ -47,7 +47,7 @@ Download the game, or run the code! Here on Github, you can clone this repositor
 
 To download the game, and play it, you can choose to download the client, the server, or both! The server is what allows you to run the game, and the clients are what let you play the game. ***IMPORTANT --> You need one server per group playing together. The client will not run on its own. The client will prompt you to input an ip, that will be shown on the server's window.***
                               
-If you are running the server, clients just need to press enter to join. No need to type the ip in that case!
+If you are running the server, clients need to type the ip on your screen, then just press enter to join. No need to type the ip in that case!
 
 Config
 ----------
