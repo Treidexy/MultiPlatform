@@ -28,5 +28,12 @@ void initMap(String mapId) {
     backgroundImg = land_map[0];
     platforms.add(new Platform(0, 700, 1250, 50, land_map[1]));
     break;
+  default:
+    backgroundImg = sky_map[0];
+    platforms.add(new Platform(300, 700, 400, 50, sky_map[1]));
+    platforms.add(new Platform(800, 500, 400, 50, sky_map[1]));
+    platforms.add(new Platform(250, 450, 400, 50, sky_map[1]));
+    platforms.add(new Platform(650, 300, 400, 50, sky_map[1]));
+    break;
   }
 }
