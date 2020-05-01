@@ -53,6 +53,12 @@ void draw() {
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();
+  for (int i = 0; i < players.size(); i++) {
+    players.get(i).inActiveFrames++;
+    if (players.get(i).inActiveFrames > 300) {
+      disposeClient(i);
+    }
+  }
 }
 
 void serverEvent(Server server, Client client) {
