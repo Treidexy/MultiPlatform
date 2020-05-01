@@ -27,7 +27,8 @@ class Player {
     _height = 100, 
     _width = 50, 
     _rwidth = 80, 
-    highestY;
+    highestY, 
+    framesSinceLastCrouch = 0;
   float
     shotDamage, 
     reloadMillis, 
@@ -88,17 +89,17 @@ class Player {
       stroke(255, 0, 0);
 
     rect(position.x, position.y, _width, _height);
-    
+
     healthBar();
   }
-  
+
   void healthBar() {
     int healthBarWidth = (int) map(health, 0, 20, 0, _width);
-    
+
     noStroke();
     fill(#ff0000);
     rect(position.x + healthBarWidth, position.y - 15, _width - healthBarWidth, 10);
-    
+
     fill(#00ff00);
     rect(position.x, position.y - 15, healthBarWidth, 10);
   }
@@ -162,6 +163,8 @@ class Player {
     position.add(acceleration);
 
     pCrouching = isCrouching;
+
+    if (framesSinceLastCrouch < 100) framesSinceLastCrouch++;
   }
 
   void checkForPlatforms(PVector position) {
@@ -246,15 +249,16 @@ class Player {
   }
 
   void crouch() {
-    if (isDown)
+    if (isDown);
       position.add(0, normHeight - crouchHeight);
   }
 
   void unCrouch() {
-    if (!isDown)
+    if (!isDown && framesSinceLastCrouch == 100)
       position.add(0, crouchHeight - normHeight);
     //acceleration.add(0, -bounceHeight);
     acceleration.y = 0;
+    framesSinceLastCrouch = 0;
   }
 
   void checkShot() {
@@ -331,6 +335,7 @@ boolean setMove(int k, boolean b) {
 
   case 87:
     return isJump = b;
+
   case 16:
     return player.isCrouching = b;
 
