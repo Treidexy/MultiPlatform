@@ -29,6 +29,8 @@ int
 void setup() {
   size(500, 800);
   frameRate(60);
+  
+  parseConfig();
 
   s = new Server(this, 6969);
 

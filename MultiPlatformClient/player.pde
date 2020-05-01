@@ -12,7 +12,8 @@ class Player {
   boolean
     myPlayer, 
     isCrouching, 
-    pCrouching;
+    pCrouching, 
+    onPlatform;
   float
     maxSpeed, 
     jumpHeight, 
@@ -102,6 +103,11 @@ class Player {
 
     fill(#00ff00);
     rect(position.x, position.y - 15, healthBarWidth, 10);
+
+    fill(#ff0000);
+    textSize(15);
+    textAlign(CENTER, CENTER);
+    text(health + " HP", position.x + _width/2, position.y - 25);
   }
 
   void update() {
@@ -137,18 +143,18 @@ class Player {
     if (position.y > highestY)
       health--;
 
+    if (pCrouching == true && isCrouching == false) {
+      unCrouch();
+    } 
+    if (pCrouching == false && isCrouching == true) {
+      crouch();
+    }
     if (isCrouching) {
       _height = crouchHeight;
       speed = crouchSpeed;
     } else {
       _height = normHeight;
       speed = normSpeed;
-    }
-    if (pCrouching == true && isCrouching == false) {
-      unCrouch();
-    } 
-    if (pCrouching == false && isCrouching == true) {
-      crouch();
     }
 
     acceleration.add(gravity);
@@ -164,46 +170,10 @@ class Player {
     if (framesSinceLastCrouch < 10) framesSinceLastCrouch++;
   }
 
-  void checkForPlatforms(PVector position) {
-    for (int i = 0; i < platforms.size(); i++) {
-      Platform _plat = platforms.get(i);
-
-      if (isCrouching) {
-        if (position.y + _height >= _plat.position.y &&
-          position.y + _height < _plat.position.y + _plat.h/2 &&
-          position.x > _plat.position.x + _plat.w) {
-          position.x--;
-        } else if (position.y + _height >= _plat.position.y &&
-          position.y + _height < _plat.position.y + _plat.h/2 &&
-          position.x - _width < _plat.position.x + _plat.w) {
-          position.x++;
-        }
-      }
-
-      if (position.y + _height >= _plat.position.y &&
-        position.y + _height < _plat.position.y + _plat.h/2 &&
-        position.x < _plat.position.x + _plat.w &&
-        position.x + _width > _plat.position.x) {
-        acceleration.y = 0;
-        if (isJump)jump();
-        position.y = _plat.position.y - _height;
-      } else if (position.y + _height > _plat.position.y &&
-        position.y < _plat.position.y + _plat.h) {
-        if (position.x + _width > _plat.position.x &&
-          position.x < _plat.position.x) {
-          position.x = _plat.position.x - _width;
-        } else {
-          if (position.x + _width > _plat.position.x + _plat.w &&
-            position.x < _plat.position.x + _plat.w) {
-            position.x = _plat.position.x + _plat.w;
-          }
-        }
-      }
-    }
-  }
-
   void checkForPlatforms(float x, float y) {
     PVector position = new PVector(x, y);
+
+    onPlatform = false;
     for (int i = 0; i < platforms.size(); i++) {
       Platform _plat = platforms.get(i);
 
@@ -214,6 +184,8 @@ class Player {
         acceleration.y = 0;
         if (isJump)jump();
         position.y = _plat.position.y - _height;
+        onPlatform = true;
+        break;
       } else if (position.y + _height > _plat.position.y &&
         position.y < _plat.position.y + _plat.h) {
         if (position.x + _width > _plat.position.x &&
@@ -246,14 +218,17 @@ class Player {
   }
 
   void crouch() {
-    if (isDown);
-    position.add(0, normHeight - crouchHeight);
+    if (onPlatform)
+      position.add(0, normHeight - crouchHeight);
   }
 
   void unCrouch() {
-    if (!isDown && framesSinceLastCrouch == 10)
-      position.add(0, crouchHeight - normHeight);
-    acceleration.add(0, -bounceHeight);
+    if (framesSinceLastCrouch == 10) {
+      if (!isDown)
+        position.add(0, crouchHeight - normHeight);
+    } else
+      if (!onPlatform)
+        position.add(0, crouchHeight - normHeight);
     acceleration.y = 0;
     framesSinceLastCrouch = 0;
   }
