@@ -1,9 +1,7 @@
-import java.awt.Point;
-
 import processing.net.*;
 
 //
-String map = "hell_map";
+String map = "sky_map";
 String gameMode = "";
 //
 
@@ -39,18 +37,19 @@ void setup() {
 void draw() {
   framesNoFeedback++;      
 
-  if (framesNoFeedback >= 60) {
-    background(217);
 
-    fill(151);
-    textSize(50);
-    textAlign(CENTER, CENTER);
+  background(217);
+  if (framesNoFeedback >= 60) {
     text("Waiting for Players...", width/2, height/2 - 45);
-    textSize(40);
-    text("IP: " + Server.ip() + ":6969", width/2, height/2 + 45);
   }
 
   parseData();
+
+  fill(151);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  textSize(40);
+  text("IP: " + Server.ip() + ":6969", width/2, height/2 + 45);
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();

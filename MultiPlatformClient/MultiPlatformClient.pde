@@ -2,6 +2,10 @@ import processing.net.*;
 
 String gameMode;
 
+
+PApplet instance = this;
+
+String[] sketchArgs = { "" };
 Client c;
 String cInput, input[], data[]; 
 int id;
@@ -25,12 +29,16 @@ PImage[]
 
 boolean mouseLock;
 
-void setup() {
+void settings() {
   size(1250, 800);
-  frameRate(60);
   noSmooth();
-  surface.setResizable(true);
+}
 
+void setup() {
+  frameRate(60);
+  surface.setResizable(true);
+  surface.setTitle("Multi Platform");
+  
   //Shot sprites
   shot_left = loadImage("assets/shot/shot_left.png");
   shot_right = loadImage("assets/shot/shot_right.png");
@@ -59,76 +67,67 @@ void setup() {
   land_map[0] = loadImage("assets/land_map/background.png");
   land_map[1] = loadImage("assets/land_map/platform_large.png");
 
-  //c = new Client(this, "192.168.86.23", 6969);
-  c = new Client(this, "127.0.0.1", 6969);
-
-  surface.setTitle("Multi Platform - " + c.ip());
+  PApplet.runSketch(sketchArgs, new homeScreen());
 }
 
 void draw() {
-  //try {
-  if (c.available() > 0) {
-    parseData();
+  if (c == null)
+    background(0, 0, 0);
+  else {
+    surface.setTitle("Multi Platform - " + c.ip());
+    if (c.available() > 0) {
+      parseData();
 
-  background(100, 100, 255);
+      camera.update();
 
-  camera.update();
+      try {
+        backgroundImg.resize(width, height);
+        background(backgroundImg);
+      } 
+      catch (Exception e) {
+      }
 
-  try {
-    backgroundImg.resize(width, height);
-    background(backgroundImg);
-  } 
-  catch (Exception e) {
-  }
+      for (int i = 0; i < shots.size(); i++)
+        shots.get(i).update();
 
-  for (int i = 0; i < shots.size(); i++)
-    shots.get(i).update();
+      for (int i = 0; i < platforms.size(); i++) {
+        platforms.get(i).show();
+      }
 
-  for (int i = 0; i < platforms.size(); i++) {
-    platforms.get(i).show();
-  }
+      for (int i = 0; i < shots.size(); i++) {
+        shots.get(i).show();
+      }
 
-  for (int i = 0; i < shots.size(); i++) {
-    shots.get(i).show();
-  }
+      for (int i = 0; i < players.size(); i++) {
+        if (i != id)
+          players.get(i).show();
+      }
 
-  for (int i = 0; i < players.size(); i++) {
-    if (i != id)
-      players.get(i).show();
-  }
+      player.update();
 
-  player.update();
+      if (player.position.y > height); 
+      else
+        camera.focus(player.position);
 
-  if (player.position.y > height); 
-  else
-    camera.focus(player.position);
+      c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
 
-  c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
+      player.setId(id);
+      player.show();
 
-  player.setId(id);
-  player.show();
-  //} 
-  //catch (Exception e) {
-  //  fill(151);
-  //  textSize(15);
-  //  textAlign(CENTER, CENTER);
-  //  text("Error compiling", width/2, height/2);
-  //  print("~");
-  //}
+      fill(#cccccc);
+      textSize(15);
+      textAlign(LEFT, TOP);
+      text("FPS: " + frameRate, camera.location.x, camera.location.y);
 
-  fill(151);
-  textSize(15);
-  textAlign(LEFT, TOP);
-  text("FPS: " + frameRate, camera.location.x, camera.location.y);
+      fill(#ff0000);
+      textSize(15);
+      textAlign(RIGHT, TOP);
+      text("HP: " + player.health, camera.location.x + width, camera.location.y);
 
-  fill(#ff0000);
-  textSize(15);
-  textAlign(RIGHT, TOP);
-  text("HP: " + player.health, camera.location.x + width, camera.location.y);
-
-  //noStroke();
-  //fill(0);
-  //rect(camera.location.x, 800, width, height);
+      //noStroke();
+      //fill(0);
+      //rect(camera.location.x, 800, width, height);
+    }
   }
 }
 

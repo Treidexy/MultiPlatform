@@ -88,6 +88,19 @@ class Player {
       stroke(255, 0, 0);
 
     rect(position.x, position.y, _width, _height);
+    
+    healthBar();
+  }
+  
+  void healthBar() {
+    int healthBarWidth = (int) map(health, 0, 20, 0, _width);
+    
+    noStroke();
+    fill(#ff0000);
+    rect(position.x + healthBarWidth, position.y - 15, _width - healthBarWidth, 10);
+    
+    fill(#00ff00);
+    rect(position.x, position.y - 15, healthBarWidth, 10);
   }
 
   void update() {
