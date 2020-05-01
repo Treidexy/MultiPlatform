@@ -29,6 +29,7 @@ void setup() {
   size(1250, 800);
   frameRate(60);
   noSmooth();
+  surface.setResizable(true);
 
   //Shot sprites
   shot_left = loadImage("assets/shot/shot_left.png");
@@ -60,7 +61,6 @@ void setup() {
 
   //c = new Client(this, "192.168.86.23", 6969);
   c = new Client(this, "127.0.0.1", 6969);
-  parseData();
 
   surface.setTitle("Multi Platform - " + c.ip());
 }
@@ -75,6 +75,7 @@ void draw() {
   camera.update();
 
   try {
+    backgroundImg.resize(width, height);
     background(backgroundImg);
   } 
   catch (Exception e) {
