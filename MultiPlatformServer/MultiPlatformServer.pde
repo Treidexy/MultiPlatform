@@ -51,7 +51,7 @@ void draw() {
   textSize(50);
   textAlign(CENTER, CENTER);
   textSize(40);
-  text("IP: " + Server.ip() + ":6969", width/2, height/2 + 45);
+  text("IP: " + Server.ip(), width/2, height/2 + 45);
 
   for (int i = 0; i < shots.size(); i++)
     shots.get(i).update();
