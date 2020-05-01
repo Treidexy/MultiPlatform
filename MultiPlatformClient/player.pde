@@ -164,7 +164,7 @@ class Player {
 
     pCrouching = isCrouching;
 
-    if (framesSinceLastCrouch < 100) framesSinceLastCrouch++;
+    if (framesSinceLastCrouch < 10) framesSinceLastCrouch++;
   }
 
   void checkForPlatforms(PVector position) {
@@ -254,7 +254,7 @@ class Player {
   }
 
   void unCrouch() {
-    if (!isDown && framesSinceLastCrouch == 100)
+    if (!isDown && framesSinceLastCrouch == 10)
       position.add(0, crouchHeight - normHeight);
     //acceleration.add(0, -bounceHeight);
     acceleration.y = 0;
