@@ -18,6 +18,7 @@ PImage[][] playerSprites = new PImage[4][2];
 HashMap<String, Integer> maps = new HashMap<String, Integer>();
 
 PImage backgroundImg;
+HashMap<String, PImage> buttonSprites = new HashMap<String, PImage>();
 PImage[]
   sky_map = new PImage[2], 
   hell_map = new PImage[2], 
@@ -47,6 +48,15 @@ void setup() {
   playerSprites[3][0] = loadImage("assets/player/pink_player_left.png");
   playerSprites[3][1] = loadImage("assets/player/pink_player_right.png");
 
+  //Button sprites
+  buttonSprites.put("left", loadImage("assets/buttons/left.png"));
+  buttonSprites.put("right", loadImage("assets/buttons/right.png"));
+  buttonSprites.put("up", loadImage("assets/buttons/up.png"));
+  buttonSprites.put("down", loadImage("assets/buttons/down.png"));
+  buttonSprites.put("crouch", loadImage("assets/buttons/crouch.png"));
+  buttonSprites.put("shot-left", loadImage("assets/buttons/shot-left.png"));
+  buttonSprites.put("shot-right", loadImage("assets/buttons/shot-right.png"));
+
   //Maps
   //Sky
   sky_map[0] = loadImage("assets/sky_map/background.png");
@@ -63,13 +73,13 @@ void setup() {
   parseData();
 
   surface.setTitle("Multi Platform - " + c.ip());
-  
+
   initButtons();
 }
 
 void draw() {
   //try {
-  if (c.available() > 0) {
+  if (c.available() > 0)
     parseData();
 
   background(100, 100, 255);
@@ -108,7 +118,7 @@ void draw() {
 
   player.setId(id);
   player.show();
-  
+
   updateButtons();
   drawButtons();
 
@@ -125,7 +135,6 @@ void draw() {
   //noStroke();
   //fill(0);
   //rect(camera.location.x, 800, width, height);
-  }
 }
 
 void disconnect() {
@@ -138,6 +147,7 @@ void exit() {
     Thread.sleep(50);
   } 
   catch (Exception e) {
+    println(e);
   }
   super.exit();
 }

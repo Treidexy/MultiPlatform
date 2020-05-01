@@ -1,27 +1,32 @@
 class Button {
-  float
+  PImage sprite;
+  int
     x, 
     y, 
     w, 
     h;
   boolean isPressed, isOver;
 
-  Button(float x, float y, float width, float height) {
+  Button(int x, int y, int width, int height, PImage sprite) {
     this.x = x;
     this.y = y;
     w = width;
     h = height;
+    
+    this.sprite = sprite;
   }
   
   void draw() {
     stroke(255);
     if (isPressed)
-      fill(255);
+      fill(151, 151, 151, 151);
     else if (isOver)
-      fill(151);
+      fill(0, 0, 0, 151);
     else
-      fill(0);
-    rect(x + camera.location.x, y + camera.location.y, w, h);
+      fill(0, 0, 0, 0);
+    ellipseMode(CORNER);
+    image(sprite, x + camera.location.x, y + camera.location.y, w, h);
+    ellipse(x + camera.location.x, y + camera.location.y, w, h);
   }
   
   void update() {
@@ -40,14 +45,14 @@ class Button {
 }
 
 void initButtons() {
-  buttons.put("left", new Button(50,  height - 150, 50, 50));
-  buttons.put("right", new Button(150, height - 150, 50, 50));
-  buttons.put("up", new Button(100,  height - 200, 50, 50));
-  buttons.put("down", new Button(100, height - 100, 50, 50));
-  buttons.put("crouch", new Button(100, height - 150, 50, 50));
+  buttons.put("left", new Button(50,  height - 150, 50, 50, buttonSprites.get("left")));
+  buttons.put("right", new Button(150, height - 150, 50, 50, buttonSprites.get("right")));
+  buttons.put("up", new Button(100,  height - 200, 50, 50, buttonSprites.get("up")));
+  buttons.put("down", new Button(100, height - 100, 50, 50, buttonSprites.get("down")));
   
-  buttons.put("shot-left", new Button(width - 200,  height - 150, 50, 50));
-  buttons.put("shot-right", new Button(width - 150, height - 150, 50, 50));
+  buttons.put("crouch", new Button(width - 200, height - 150, 50, 50, buttonSprites.get("crouch")));
+  buttons.put("shot-left", new Button(width - 250,  height - 150, 50, 50, buttonSprites.get("shot-left")));
+  buttons.put("shot-right", new Button(width - 150, height - 150, 50, 50, buttonSprites.get("shot-right")));
 }
 
 void drawButtons() {

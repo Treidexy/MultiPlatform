@@ -11,11 +11,11 @@ void parseData() {
         cInput = c.readString();
         inputs = cInput.split("\n");
 
-        //println("IN:", "s", cInput);
-
         for (String input : inputs) {
           String pubMsg = null; 
           String[] data = split(input, ' ');
+          
+          println("IN:", "s", input);
 
           if (data[0].equals(String.valueOf(selId))) {
             pubMsg = "c " + selId + " " + data[1] + " " + data[2] + " " + players.get(selId).health + " " + data[3] + " " + data[4];
@@ -32,12 +32,13 @@ void parseData() {
             break;
           case "dc":
             disposeClient(int(data[1]));
+            pubMsg = input;
             break;
           }
 
           for (int l = 0; l < clients.size(); l++)
             clients.get(l).write(pubMsg + "\n");
-          //println("OUT:", pubMsg);
+          println("OUT:", pubMsg);
         }
         //console.draw(0, 0, width, height);
         //console.print();

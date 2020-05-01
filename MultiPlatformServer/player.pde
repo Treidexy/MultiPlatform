@@ -24,6 +24,7 @@ class Player {
     }
     for (int l = 0; l < clients.size(); l++)
       clients.get(l).write("cp " + id + " hp " + health + "\n");
+    println("OUT:", "cp " + id + " hp " + health + "\n");
   }
 
   void setPos(int nx, int ny) {
