@@ -35,6 +35,12 @@ void parseData() {
             player.health = int(data[3]);
             break;
           }
+        } else {
+          switch(data[2]) {
+          case "hp":
+            players.get(int(data[1])).health = int(data[3]);
+            break;
+          }
         }
         break;
       case "shot":

@@ -1,6 +1,6 @@
 import processing.net.*;
 
-String gameMode;
+String gameMode = "";
 
 
 PApplet instance = this;
@@ -27,7 +27,7 @@ PImage[]
   hell_map = new PImage[2], 
   land_map = new PImage[2];
 
-boolean mouseLock;
+boolean open;
 
 void settings() {
   size(1250, 800);
@@ -71,7 +71,7 @@ void setup() {
 }
 
 void draw() {
-  if (c == null)
+  if (c == null || !open)
     background(0, 0, 0);
   else {
     surface.setTitle("Multi Platform - " + c.ip());

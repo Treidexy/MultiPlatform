@@ -40,6 +40,11 @@ class homeScreen extends PApplet {
     if (c.active()) {
       surface.setVisible(false);
       frame.dispose();
+      
+      player = new Player(true);
+      camera = new Camera();
+      
+      open = true;
     } else {
       ip = "";
     }
