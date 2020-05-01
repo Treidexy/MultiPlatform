@@ -3,7 +3,6 @@ import processing.net.*;
 // Edit these values in config.json
 String map = "";
 String gameMode = "";
-//
 
 Server s;
 Client c;
