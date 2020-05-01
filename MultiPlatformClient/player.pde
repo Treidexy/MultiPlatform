@@ -99,14 +99,23 @@ class Player {
       facingLeft = true;
       if (isCrouching) 
         for (int i = 0; i < platforms.size(); i++) 
-          if (position.y + _height == platforms.get(i).position.y) 
+          if (position.y + _height == platforms.get(i).position.y) {
             if (position.x + _width >= platforms.get(i).position.x && position.x - 1 + _width < platforms.get(i).position.x + crouchSpeed)
               position.x+= speed;
+            break;
+          }
       position.x-= speed;
     }
     if (isD) {
-      position.x+= speed;
       facingLeft = false;
+      if (isCrouching) 
+        for (int i = 0; i < platforms.size(); i++) 
+          if (position.y + _height == platforms.get(i).position.y) {
+            if (position.x + 1 >= platforms.get(i).position.x + platforms.get(i).w && position.x < platforms.get(i).position.x + platforms.get(i).w + crouchSpeed)
+              position.x-= speed;
+            break;
+          }
+      position.x+= speed;
     }
 
     //if (mousePressed)
