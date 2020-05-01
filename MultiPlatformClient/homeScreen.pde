@@ -38,7 +38,7 @@ class homeScreen extends PApplet {
     c = new Client(instance, ip, 6969);
     
     if (c.active()) {
-      frame.setVisible(false);
+      surface.setVisible(false);
       frame.dispose();
     } else {
       ip = "";
