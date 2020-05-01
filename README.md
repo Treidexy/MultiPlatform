@@ -48,4 +48,6 @@ In the data folders of both Client and Server projects, there is a file named 'c
 
 Commiting to the Game
 ----------
-If you are interested on improving the game, please clone the repository, make your edits, and send us a pull request. It would greatly help us, and would perhaps introduce a new feature we never would have thought of.
+If you are interested on improving the game, and know how to code in Processing, please clone the repository, make your edits, and send us a pull request. It would greatly help us, and would perhaps introduce a new feature we never would have thought of.
+
+If you are interested on improving the game, and do not yet know how to code in Processing, you can either learn to, or you can suggest an edit, and we'll try to implement it in a later version.
