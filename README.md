@@ -13,6 +13,7 @@ Download the game, or run the code! Here on Github, you can clone this repositor
 To download the game, and play it, you can choose to download the client, the server, or both! The server is what allows you to run the game, and the clients are what let you play the game. ***IMPORTANT --> You need one server per group playing together. The client will not run on its own. The client will prompt you to input an ip, that will be shown on the server's window.***
 
 Client Download --> 
+
 Server Download --> 
 
 Controls
@@ -20,15 +21,17 @@ Controls
 >
 > Movement:
 >
-> 	Left/Right = A/D
+> 	- Left : A
 >
-> 	Jump = W
+>   - Right : D
 >
-> 	Crouch = Shift
+> 	- Jump : W
 >
-> 	Down = S
+> 	- Crouch : Shift
 >
-> Shooting = Left/Right Arrow keys
+> 	- Down : S + Shift OR Double Shift
+>
+> Shooting : Left/Right Arrow keys
 >
 
 Config
