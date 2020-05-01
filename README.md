@@ -11,10 +11,15 @@ Play it Yourself
 Controls
 ----------
 > Movement:
+
 > 	Left/Right = A/D
+
 > 	Jump = W
+
 > 	Crouch = Shift
+
 > 	Down = S
+
 > Shooting = Left/Right Arrow keys
 
 Config
