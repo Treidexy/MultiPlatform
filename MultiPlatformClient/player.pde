@@ -132,9 +132,6 @@ class Player {
       position.x+= speed;
     }
 
-    //if (mousePressed)
-    //  player.shoot(mouseX, mouseY);
-
     if (health <= 0)
       die();
     if (position.y > highestY)
@@ -256,7 +253,7 @@ class Player {
   void unCrouch() {
     if (!isDown && framesSinceLastCrouch == 10)
       position.add(0, crouchHeight - normHeight);
-    //acceleration.add(0, -bounceHeight);
+    acceleration.add(0, -bounceHeight);
     acceleration.y = 0;
     framesSinceLastCrouch = 0;
   }
@@ -277,22 +274,6 @@ class Player {
         }
       }
   }
-
-  //void shoot(float dx, float dy) {
-  //  if (millisSinceReload >= reloadMillis) {
-  //    if (dx < width / 2) {
-  //      facingLeft = true;
-  //      shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
-  //      sendShot(true);
-  //      pastMillis = millis();
-  //    } else {
-  //      facingLeft = false;
-  //      shots.add(new Shot(id, int(shotDamage), facingLeft, int(position.x), int(position.y + _height/4)));
-  //      sendShot(false);
-  //      pastMillis = millis();
-  //    }
-  //  }
-  //}
 
   void sendShot(boolean facingLeft) {
     c.write("shot " + id + " " + int(shotDamage) + " " + facingLeft + " " + int(position.x) + " " + int(position.y + _height/4) + "\n");

@@ -17,8 +17,6 @@ void parseData() {
         String pubMsg = null; 
         String[] data = split(input, ' ');
 
-        //println("IN:", input);
-
         if (data[0].equals(String.valueOf(selId))) {
           pubMsg = "c " + selId + " " + data[1] + " " + data[2] + " " + players.get(selId).health + " " + data[3] + " " + data[4];
 
@@ -41,10 +39,7 @@ void parseData() {
 
         for (int l = 0; l < clients.size(); l++)
           clients.get(l).write(pubMsg + "\n");
-        //println("OUT:", pubMsg);
       }
-      //console.draw(0, 0, width, height);
-      //console.print();
     } 
     catch(Exception e) {
       if (showErr)

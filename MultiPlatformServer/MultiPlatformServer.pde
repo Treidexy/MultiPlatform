@@ -1,7 +1,7 @@
 import processing.net.*;
 
-//
-String map = "sky_map";
+// Edit these values in config.json
+String map = "";
 String gameMode = "";
 //
 

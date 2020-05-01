@@ -57,15 +57,15 @@ void setup() {
   playerSprites[3][1] = loadImage("assets/player/pink_player_right.png");
 
   //Maps
-  //Sky
-  sky_map[0] = loadImage("assets/sky_map/background.png");
-  sky_map[1] = loadImage("assets/sky_map/platform.png");
-  //Hell
-  hell_map[0] = loadImage("assets/hell_map/background.png");
-  hell_map[1] = loadImage("assets/hell_map/platform.png");
-  //Land
-  land_map[0] = loadImage("assets/land_map/background.png");
-  land_map[1] = loadImage("assets/land_map/platform_large.png");
+    //Sky
+    sky_map[0] = loadImage("assets/sky_map/background.png");
+    sky_map[1] = loadImage("assets/sky_map/platform.png");
+    //Hell
+    hell_map[0] = loadImage("assets/hell_map/background.png");
+    hell_map[1] = loadImage("assets/hell_map/platform.png");
+    //Land
+    land_map[0] = loadImage("assets/land_map/background.png");
+    land_map[1] = loadImage("assets/land_map/platform_large.png");
 
   PApplet.runSketch(sketchArgs, new homeScreen());
 }
@@ -114,19 +114,10 @@ void draw() {
       player.setId(id);
       player.show();
 
-      //fill(#cccccc);
-      //textSize(15);
-      //textAlign(LEFT, TOP);
-      //text("FPS: " + frameRate, camera.location.x, camera.location.y);
-
-      //fill(#ff0000);
-      //textSize(15);
-      //textAlign(RIGHT, TOP);
-      //text("HP: " + player.health, camera.location.x + width, camera.location.y);
-
-      //noStroke();
-      //fill(0);
-      //rect(camera.location.x, 800, width, height);
+      fill(#cccccc);
+      textSize(15);
+      textAlign(LEFT, TOP);
+      text("FPS: " + frameRate, camera.location.x, camera.location.y);
     }
   }
 }
