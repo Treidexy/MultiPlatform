@@ -25,14 +25,19 @@ Controls
 >
 >   - Right : D
 >
-> 	- Jump : W
+> 	- Jump : W OR Space
 >
 > 	- Crouch : Shift
 >
-> 	- Down : S + Shift OR Double Shift
+> 	- Move Down a Platform : S + Shift OR Double Shift
 >
-> Shooting : Left/Right Arrow keys
+> Shooting : 
 >
+>   - Shoot Left : Left Arrow Key
+>
+>   - Shoot Right : Right Arrow Key
+>
+*When you crouch, your hitbox is shrinked greatly, and you are unable to fall off a platform, but you will not be able to shoot, and your speed will greatly decrease.*
 
 Config
 ----------
