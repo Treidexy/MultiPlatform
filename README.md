@@ -10,7 +10,7 @@ If you are interested on improving the game, and do not yet know how to code in 
 
 Summary of the Game
 ----------
-A multiplayer shooter game that you can play with your friends! Host a game, and play, as long as you're on the same network! Choose from the three maps and game modes, and play with up to four player! Don't jump off the platforms, or you'll lose health. Don't get hit, or you'll lose health. Try to be the last one left, and show your family who's the best!
+A multiplayer shooter game that you can play with your friends! Host a game, and play, as long as you're on the same network! Choose from the three maps and game modes, and play with up to four players! Don't jump off the platforms, or you'll lose health. Don't get hit, or you'll lose health. Try to be the last one left, and show your family who's the best!
 
 Download
 ----------
@@ -46,8 +46,6 @@ Play it Yourself
 Download the game, or run the code! Here on Github, you can clone this repository and open it in a Processing IDE to view, edit, and run the code! To download Processing, click here --> https://processing.org/download/!
 
 To download the game, and play it, you can choose to download the client, the server, or both! The server is what allows you to run the game, and the clients are what let you play the game. ***IMPORTANT --> You need one server per group playing together. The client will not run on its own. The client will prompt you to input an ip, that will be shown on the server's window.***
-                              
-If you are running the server, clients need to type the ip on your screen, then just press enter to join. No need to type the ip in that case!
 
 Config
 ----------
