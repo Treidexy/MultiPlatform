@@ -189,7 +189,7 @@ class Player {
         !_plat.vanished) {
         acceleration.y = 0;
         if (isJump)jump();
-        position.y = _plat.position.y - _height;
+        position.y = _plat.position.y - _height - 10;
         onPlatform = true;
         break;
       } else if (position.y + _height > _plat.position.y &&

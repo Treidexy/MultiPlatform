@@ -48,6 +48,13 @@ class Shot { //<>//
       rh = 16;
       speed = 3;
       break;
+    case 10:
+      w = 48;
+      h = 16;
+      rw = 96;
+      rh = 16;
+      speed = 1;
+      break;
 
     default:
       w = 48;

@@ -36,7 +36,7 @@
 {
 	"name": "Giant",
 	
-	"shakiness": 0,
+	"shakiness": 10,
 	
 	"max-speed": 50,
 	"normal-speed": 1,
@@ -45,7 +45,7 @@
 	"normal-height": 125,
 	"crouch-height": 100,
 	"jump-height": 5,
-	"bounce-height": 10,
+	"bounce-height": 0,
 	
 	"shot-damage": 10,
 	"reload-speed": 3000,
