@@ -1,5 +1,3 @@
-import java.awt.Dimension;
-
 import processing.net.*;
 
 String character = "Giant";
