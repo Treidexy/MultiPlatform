@@ -2,7 +2,7 @@ import java.awt.Dimension;
 
 import processing.net.*;
 
-String character = "Pro Gamer";
+String character = "Giant";
 JSONObject selCharacter;
 
 HashMap<String, JSONObject> characters = new HashMap<String, JSONObject>();

@@ -1,6 +1,5 @@
 {
-	"map": "hell_map",
-	"game-mode": "",
+	"map": "default",
 	
 	"comments": "So far in b1.0, there are three maps and game modes. Maps: 'sky_map', 'hell_map', 'lan_map'. Game Modes: 'tank_mode', 'pro_gamer_mode'"
 }

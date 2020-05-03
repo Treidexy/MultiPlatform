@@ -1,5 +1,22 @@
 [
 {
+	"name": "Default",
+	
+	"shakiness": 0,
+	
+	"max-speed": 50,
+	"normal-speed": 5,
+	"crouch-speed": 1,
+	
+	"normal-height": 100,
+	"crouch-height": 50,
+	"jump-height": 20,
+	"bounce-height": 5,
+	
+	"shot-damage": 2,
+	"reload-speed": 800,
+},
+{
 	"name": "Tank",
 	
 	"shakiness": 1,
@@ -17,20 +34,37 @@
 	"reload-speed": 1200,
 },
 {
+	"name": "Giant",
+	
+	"shakiness": 0,
+	
+	"max-speed": 50,
+	"normal-speed": 1,
+	"crouch-speed": 0,
+	
+	"normal-height": 125,
+	"crouch-height": 100,
+	"jump-height": 5,
+	"bounce-height": 10,
+	
+	"shot-damage": 10,
+	"reload-speed": 3000,
+},
+{
 	"name": "Pro Gamer",
 	
 	"shakiness": 7,
 	
 	"max-speed": 50,
 	"normal-speed": 7,
-	"crouch-speed": 5,
+	"crouch-speed": 4,
 	
 	"normal-height": 100,
 	"crouch-height": 45,
-	"jump-height": 20,
+	"jump-height": 25,
 	"bounce-height": 5,
 	
 	"shot-damage": 1,
-	"reload-speed": 900,
+	"reload-speed": 600,
 }
 ]

@@ -152,8 +152,6 @@ class Player {
 
     if (health <= 0)
       die();
-    if (position.y > highestY)
-      health--;
 
     if (pCrouching == true && isCrouching == false) {
       unCrouch();

@@ -32,6 +32,9 @@ class Player {
     if (health >= maxHealth) {
       health(SET, maxHealth);
     }
+    
+    if (y > voidY)
+      health(SUB, 1);
   }
 
   void health(int operation, int value) {

@@ -20,7 +20,9 @@ final boolean showErr = false;
 final float
   pWidth = 50, 
   pHeight = 100, 
-  pCrouchHeight = 50;
+  pCrouchHeight = 50,
+  
+  voidY = 1600;
 int
   screenHeight = 1250, 
   screenWidth = 800;
