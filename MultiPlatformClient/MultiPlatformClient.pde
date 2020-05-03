@@ -1,7 +1,12 @@
+import java.awt.Dimension;
+
 import processing.net.*;
 
-String gameMode = "";
+String character = "Pro Gamer";
+JSONObject selCharacter;
 
+HashMap<String, JSONObject> characters = new HashMap<String, JSONObject>();
+ArrayList<JSONObject> customCharacters = new ArrayList<JSONObject>();
 
 PApplet instance = this;
 
@@ -38,7 +43,7 @@ void setup() {
   frameRate(60);
   surface.setResizable(true);
   surface.setTitle("Multi Platform");
-  
+
   //Shot sprites
   shot_left = loadImage("assets/shot/shot_left.png");
   shot_right = loadImage("assets/shot/shot_right.png");
@@ -66,14 +71,17 @@ void setup() {
     //Land
     land_map[0] = loadImage("assets/land_map/background.png");
     land_map[1] = loadImage("assets/land_map/platform_large.png");
+    
+  initCharacters();
+  initCharacter();
 
   PApplet.runSketch(sketchArgs, new homeScreen());
 }
 
 void draw() {
-  if (c == null || !open)
+  if (c == null || !open) {
     background(0, 0, 0);
-  else {
+  } else {
     surface.setTitle("Multi Platform - " + c.ip());
     if (c.available() > 0) {
       parseData();
@@ -87,13 +95,13 @@ void draw() {
       catch (Exception e) {
       }
 
-      for (int i = 0; i < shots.size(); i++)
-        shots.get(i).update();
-
       for (int i = 0; i < platforms.size(); i++) {
+        platforms.get(i).update();
         platforms.get(i).show();
       }
 
+      for (int i = 0; i < shots.size(); i++)
+        shots.get(i).update();
       for (int i = 0; i < shots.size(); i++) {
         shots.get(i).show();
       }
@@ -120,6 +128,12 @@ void draw() {
       text("FPS: " + frameRate, camera.location.x, camera.location.y);
     }
   }
+} 
+
+void disconnectEvent(Client client) {
+  PApplet.runSketch(sketchArgs, new homeScreen());
+  
+  open = false;
 }
 
 void disconnect() {

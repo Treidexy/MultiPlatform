@@ -1,3 +1,7 @@
 {
+	"plugins": [
+		"plugin_folder/plugin_file"
+	]
+
 	"comments": "As of b1.0, there are no client configurations. Client configurations will be added in the near future."
 }

@@ -59,6 +59,8 @@ void draw() {
     if (players.get(i).inActiveFrames > 300) {
       disposeClient(i);
     }
+    
+    players.get(i).update();
   }
 }
 

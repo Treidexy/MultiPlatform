@@ -28,7 +28,10 @@ class Player {
     _height = 100, 
     _width = 50, 
     _rwidth = 80, 
-    highestY, 
+    maxHeight,
+    highestY,
+    minX,
+    maxX,
     framesSinceLastCrouch = 0;
   float
     shotDamage, 
@@ -38,39 +41,35 @@ class Player {
 
   Player(boolean _myPlayer) {
     myPlayer = _myPlayer;
+    maxHeight = -height * 2;
     highestY = height * 2;
-    crouchHeight = 50;
-    normHeight = 100;
+    minX = -width/2;
+    maxX = int(width * 1.5);
 
-    if (gameMode.equals("pro_gamer_mode")) {
-      maxSpeed = 50;
-      jumpHeight = 25;
-      bounceHeight = 15;
-      normSpeed = 7;
-      crouchSpeed = 3;
+    maxSpeed = selCharacter.getFloat("max-speed");
+    normSpeed = selCharacter.getFloat("normal-speed");
+    crouchSpeed = selCharacter.getFloat("crouch-speed");
+    
+    crouchHeight = selCharacter.getInt("crouch-height");
+    normHeight = selCharacter.getInt("normal-height");
+    jumpHeight = selCharacter.getFloat("jump-height");
+    bounceHeight = selCharacter.getFloat("bounce-height");
 
-      shotDamage = 1;
-      reloadMillis = 500;
-    } else if (gameMode.equals("tank_mode")) {
-      maxSpeed = 50;
-      jumpHeight = 10;
-      bounceHeight = 2.5;
-      normSpeed = 3;
-      crouchHeight = 75;
-      crouchSpeed = 0;
+    shotDamage = selCharacter.getFloat("shot-damage");
+    reloadMillis = selCharacter.getFloat("reload-speed");
+    
+    //defaults
+    //maxSpeed = 50;
+    //normSpeed = 5;
+    //crouchSpeed = 1;
+    //crouchHeight = 50;
+    //normHeight = 100;
+    
+    //jumpHeight = 20;
+    //bounceHeight = 5;
 
-      shotDamage = 4;
-      reloadMillis = 1200;
-    } else {
-      maxSpeed = 50;
-      jumpHeight = 20;
-      bounceHeight = 5;
-      normSpeed = 5;
-      crouchSpeed = 1;
-
-      shotDamage = 2;
-      reloadMillis = 800;
-    }
+    //shotDamage = 2;
+    //reloadMillis = 800;
 
     position = new PVector(625, 400);
     gravity = new PVector(0, 1);
@@ -170,6 +169,8 @@ class Player {
       checkForPlatforms(position.x, position.y + i);
 
     position.add(acceleration);
+    position.x = constrain(position.x, minX, maxX);
+    position.y = constrain(position.y, maxHeight, highestY + 1);
 
     pCrouching = isCrouching;
 
@@ -186,7 +187,8 @@ class Player {
       if (position.y + _height >= _plat.position.y &&
         position.y + _height < _plat.position.y + _plat.h/2 &&
         position.x < _plat.position.x + _plat.w &&
-        position.x + _width > _plat.position.x) {
+        position.x + _width > _plat.position.x &&
+        !_plat.vanished) {
         acceleration.y = 0;
         if (isJump)jump();
         position.y = _plat.position.y - _height;

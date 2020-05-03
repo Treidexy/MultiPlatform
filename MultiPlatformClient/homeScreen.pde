@@ -1,5 +1,6 @@
 class homeScreen extends PApplet {
   String ip = "";
+  String username = "";
 
   PImage background;
 
@@ -16,9 +17,16 @@ class homeScreen extends PApplet {
 
   void draw() {
     background(background);
+    
+    fill(#CCCCCC);
     textSize(50 - ip.length());
     textAlign(CENTER, CENTER);
-    text("IP: " + ip, width/2, height/2);
+    text("Groot", width/2, height/2 - 50);
+    
+    fill(map(ip.length(), 0, 6969, 0, 255));
+    textSize(constrain(50 - ip.length(), 15, 99));
+    textAlign(CENTER, CENTER);
+    text("IP: " + ip, width/2, height/2 + 50);
   }
 
   void keyTyped() {
@@ -37,16 +45,12 @@ class homeScreen extends PApplet {
   void exit() {
     c = new Client(instance, ip, 6969);
 
-    if (c.active()) {
-      surface.setVisible(false);
-      frame.dispose();
+    surface.setVisible(false);
+    frame.dispose();
 
-      player = new Player(true);
-      camera = new Camera();
+    player = new Player(true);
+    camera = new Camera();
 
-      open = true;
-    } else {
-      ip = "";
-    }
+    open = true;
   }
 }

@@ -3,12 +3,10 @@ class Camera {
   float shakiness;
 
   public Camera() {
-    if (gameMode.equals("pro_gamer_mode"))
-      shakiness = 7;
-    else if (gameMode.equals("tank_mode"))
-      shakiness = 1;
-    else
-      shakiness = 0;
+    shakiness = selCharacter.getFloat("shakiness");
+    
+    //default
+    //shakiness = 0;
     location = new PVector();
     wantLocation = new PVector();
     acceleration = new PVector();

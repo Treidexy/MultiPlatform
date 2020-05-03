@@ -12,7 +12,6 @@ void parseData() {
       switch(data[0]) {
       case "setting":
         initMap(data[1]);
-        gameMode = data[2];
 
         player = new Player(true);
         camera = new Camera();

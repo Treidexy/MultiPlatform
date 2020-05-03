@@ -1,0 +1,36 @@
+[
+{
+	"name": "Tank",
+	
+	"shakiness": 1,
+	
+	"max-speed": 50,
+	"normal-speed": 3,
+	"crouch-speed": 0,
+	
+	"normal-height": 100,
+	"crouch-height": 75,
+	"jump-height": 10,
+	"bounce-height": 2.5,
+	
+	"shot-damage": 4,
+	"reload-speed": 1200,
+},
+{
+	"name": "Pro Gamer",
+	
+	"shakiness": 7,
+	
+	"max-speed": 50,
+	"normal-speed": 7,
+	"crouch-speed": 5,
+	
+	"normal-height": 100,
+	"crouch-height": 45,
+	"jump-height": 20,
+	"bounce-height": 5,
+	
+	"shot-damage": 1,
+	"reload-speed": 900,
+}
+]
