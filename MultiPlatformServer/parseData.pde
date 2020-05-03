@@ -18,11 +18,15 @@ void parseData() {
         String[] data = split(input, ' ');
 
         if (data[0].equals(String.valueOf(selId))) {
-          pubMsg = "c " + selId + " " + data[1] + " " + data[2] + " " + players.get(selId).health + " " + data[3] + " " + data[4];
+            pubMsg = "c " + selId + " " + data[1] + " " + data[2] + " " + players.get(selId).health + " " + data[4] + " " + data[5] + " " + data[6];
 
           players.get(selId).setPos(int(data[1]), int(data[2]));
           players.get(selId).isCrouching = boolean(data[3]);
           players.get(selId).facingLeft = boolean(data[4]);
+
+          players.get(selId).w = int(data[5]);
+          players.get(selId).h = int(data[6]);
+
           players.get(selId).inActiveFrames = 0;
         }
 

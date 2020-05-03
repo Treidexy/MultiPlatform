@@ -4,7 +4,9 @@ class Player {
   String username;
   int
     x, 
-    y, 
+    y,
+    w,
+    h,
     health,
     maxHealth,
     id;

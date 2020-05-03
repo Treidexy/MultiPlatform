@@ -117,7 +117,7 @@ void draw() {
       else
         camera.focus(player.position);
 
-      c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + "\n");
+      c.write(id + " " + int(player.position.x) + " " + int(player.position.y) + " " + player.isCrouching + " " + player.facingLeft + " " + player._width + " " + player._height + "\n");
 
       player.setId(id);
       player.show();

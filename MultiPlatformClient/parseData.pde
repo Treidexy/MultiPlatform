@@ -23,8 +23,9 @@ void parseData() {
           while (players.get(int(data[1])) == null)
             players.add(new Player(false));
           players.get(int(data[1])).setPos(float(data[2]), float(data[3]));
-          players.get(int(data[1])).isCrouching = boolean(data[5]);
-          players.get(int(data[1])).facingLeft = boolean(data[6]);
+          players.get(int(data[1])).facingLeft = boolean(data[5]);
+          players.get(int(data[1]))._width = int(data[6]);
+          players.get(int(data[1]))._height = int(data[7]);
         }
         break;
       case "cp":
