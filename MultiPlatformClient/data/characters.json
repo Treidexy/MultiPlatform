@@ -66,5 +66,22 @@
 	
 	"shot-damage": 1,
 	"reload-speed": 600,
+},
+{
+	"name": "Thicc",
+	
+	"shakiness": 0,
+	
+	"max-speed": 50,
+	"normal-speed": 7,
+	"crouch-speed": 4,
+	
+	"normal-height": 75,
+	"crouch-height": 45,
+	"jump-height": 25,
+	"bounce-height": 5,
+	
+	"shot-damage": 1,
+	"reload-speed": 600,
 }
 ]

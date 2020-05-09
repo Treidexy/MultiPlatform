@@ -1,6 +1,6 @@
 import processing.net.*;
 
-String character = "Giant";
+String character = "Default";
 JSONObject selCharacter;
 
 HashMap<String, JSONObject> characters = new HashMap<String, JSONObject>();

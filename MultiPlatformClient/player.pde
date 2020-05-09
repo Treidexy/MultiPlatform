@@ -127,54 +127,56 @@ class Player {
   void update() {
     checkShot();
 
-    millisSinceReload = millis() - pastMillis;
+    if (myPlayer) {
+      millisSinceReload = millis() - pastMillis;
 
-    if (isA) {
-      facingLeft = true;
-      if (isCrouching) 
-        for (int i = 0; i < platforms.size(); i++) 
-          if (position.y + _height == platforms.get(i).position.y) {
-            if (position.x + _width >= platforms.get(i).position.x && position.x - 1 + _width < platforms.get(i).position.x + crouchSpeed)
-              position.x+= speed;
-            break;
-          }
-      position.x-= speed;
+      if (isA) {
+        facingLeft = true;
+        if (isCrouching) 
+          for (int i = 0; i < platforms.size(); i++) 
+            if (position.y + _height == platforms.get(i).position.y) {
+              if (position.x + _width >= platforms.get(i).position.x && position.x - 1 + _width < platforms.get(i).position.x + crouchSpeed)
+                position.x+= speed;
+              break;
+            }
+        position.x-= speed;
+      }
+      if (isD) {
+        facingLeft = false;
+        if (isCrouching) 
+          for (int i = 0; i < platforms.size(); i++) 
+            if (position.y + _height == platforms.get(i).position.y) {
+              if (position.x + 1 >= platforms.get(i).position.x + platforms.get(i).w && position.x < platforms.get(i).position.x + platforms.get(i).w + crouchSpeed)
+                position.x-= speed;
+              break;
+            }
+        position.x+= speed;
+      }
+
+      if (health <= 0)
+        die();
+
+      if (pCrouching == true && isCrouching == false) {
+        unCrouch();
+      } 
+      if (pCrouching == false && isCrouching == true) {
+        crouch();
+      }
+
+      acceleration.add(gravity);
+      acceleration.limit(maxSpeed);
+
+      for (int i = 0; i < acceleration.y; i++)
+        checkForPlatforms(position.x, position.y + i);
+
+      position.add(acceleration);
+      position.x = constrain(position.x, minX, maxX);
+      position.y = constrain(position.y, maxHeight, highestY + 1);
+
+      pCrouching = isCrouching;
+
+      if (framesSinceLastCrouch < 10) framesSinceLastCrouch++;
     }
-    if (isD) {
-      facingLeft = false;
-      if (isCrouching) 
-        for (int i = 0; i < platforms.size(); i++) 
-          if (position.y + _height == platforms.get(i).position.y) {
-            if (position.x + 1 >= platforms.get(i).position.x + platforms.get(i).w && position.x < platforms.get(i).position.x + platforms.get(i).w + crouchSpeed)
-              position.x-= speed;
-            break;
-          }
-      position.x+= speed;
-    }
-
-    if (health <= 0)
-      die();
-
-    if (pCrouching == true && isCrouching == false) {
-      unCrouch();
-    } 
-    if (pCrouching == false && isCrouching == true) {
-      crouch();
-    }
-
-    acceleration.add(gravity);
-    acceleration.limit(maxSpeed);
-
-    for (int i = 0; i < acceleration.y; i++)
-      checkForPlatforms(position.x, position.y + i);
-
-    position.add(acceleration);
-    position.x = constrain(position.x, minX, maxX);
-    position.y = constrain(position.y, maxHeight, highestY + 1);
-
-    pCrouching = isCrouching;
-
-    if (framesSinceLastCrouch < 10) framesSinceLastCrouch++;
   }
 
   void checkForPlatforms(float x, float y) {
