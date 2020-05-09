@@ -14,7 +14,7 @@ A multiplayer shooter game that you can play with your friends! Host a game, and
 
 Download
 ----------
-Download --> https://drive.google.com/drive/folders/15kGlsWLVm4nBdactt_JGDPSHH-GbdB8o?usp=sharing
+Download --> https://github.com/TeddyTelanoff/MultiPlatform/releases
 
 Download the zip file corresponding to your Operating System and extract its contents. The file with a play sign is the game, and the config.json allows you to controll the game, more on that later.
 
